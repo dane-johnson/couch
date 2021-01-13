@@ -4,7 +4,9 @@
 #include "types.h"
 
 struct Transform {
-  Position position;
-}
+  Transform();
+  Transform(Vector3 position);
+  Vector3 position;
+};
 
 #endif /* TRANSFORM_H */
