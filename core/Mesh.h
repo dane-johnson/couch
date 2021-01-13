@@ -1,6 +1,8 @@
 #ifndef MESH_H
 #define MESH_H
 
+#include <list>
+
 #include "types.h"
 #include "Vertex.h"
 #include "Index.h"
@@ -18,5 +20,7 @@ public:
 private:
   Id VAO, VBO, EBO;
 };
+
+typedef std::list<Mesh*> MeshList;
 
 #endif /* MESH_H */

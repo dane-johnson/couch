@@ -5,7 +5,7 @@
 - GLEW to wrangle extensions
 - GLFW3 for handling windows and whatnot
 - Targets Windows, Linux
-- Guile with GOOPS as scripting language
+- ~~Guile with GOOPS as scripting language~~ Lua is the scripting language with Guile as a strech goal
 - No editor planned
 
 ## Roadmap
