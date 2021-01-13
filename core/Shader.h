@@ -6,6 +6,8 @@
 #include <sstream>
 #include <iostream>
 
+#include <glm/gtc/type_ptr.hpp>
+
 #include "types.h"
 
 class Shader {
@@ -14,6 +16,9 @@ public:
 
   Shader(const char *vertexPath, const char *fragmentPath);
   void Use();
+  void UpdateView(Matrix view);
+  void UpdateModel(Matrix model);
+  void UpdateProjection(Matrix projection);
 };
 
 #endif /* SHADER_H */

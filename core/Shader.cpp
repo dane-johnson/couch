@@ -65,9 +65,22 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
 
   glDeleteShader(vertex);
   glDeleteShader(fragment);
-      
 }
+
+
 
 void Shader::Use() {
   glUseProgram(id);
+}
+
+void Shader::UpdateView(Matrix view) {
+  glUniformMatrix4fv(glGetUniformLocation(id, "VIEW"), 1, GL_FALSE, glm::value_ptr(view));
+}
+
+void Shader::UpdateModel(Matrix model) {
+  glUniformMatrix4fv(glGetUniformLocation(id, "MODEL"), 1, GL_FALSE, glm::value_ptr(model));
+}
+
+void Shader::UpdateProjection(Matrix projection) {
+  glUniformMatrix4fv(glGetUniformLocation(id, "PROJECTION"), 1, GL_FALSE, glm::value_ptr(projection));
 }

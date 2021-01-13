@@ -9,6 +9,7 @@
 
 typedef GLFWwindow Window;
 typedef glm::vec3 Vector3;
+typedef glm::mat4 Matrix;
 typedef GLfloat cfloat;
 typedef GLuint Id;
 
