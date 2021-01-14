@@ -20,6 +20,7 @@ extern "C" {
 #include "Shader.h"
 #include "Ball.h"
 #include "Camera.h"
+#include "Input.h"
 
 Window *window;
 
@@ -75,7 +76,11 @@ int main() {
     std::cerr << "Could not find main.lua" << std::endl;
     return 1;
   }
+  glfwSetWindowUserPointer(window, (void*) L);
 #endif // LUA_SCRIPTING
+
+  Input *input = Input::GetInstance();
+  input->Use(window);
 
   Camera defaultCamera;
   
