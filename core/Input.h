@@ -16,7 +16,9 @@ public:
   static Input *GetInstance();
   void Use(Window *window);
 private:
+  double lastx, lasty;
   Input();
   static void HandleKeys(Window *window, int key, int code, int action, int mods);
+  static void HandleMousePosition(Window *window, double xpos, double ypos);
   static Input *instance;
 };

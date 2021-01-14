@@ -13,6 +13,7 @@ local vz = 0.0
 local ballvy = -1.0
 
 local cam_rot_x = 0.0
+local cam_rot_y = 0.0
 
 function init()
    camera = couch.Camera()
@@ -30,7 +31,10 @@ end
 
 function update(delta)
    camera.transform:Translate(vx * delta, 0.0, vz * delta)
-   camera.transform.rotation.y = camera.transform.rotation.y + cam_rot_x * delta
+   camera.transform.rotation.y = camera.transform.rotation.y - cam_rot_x * delta
+   cam_rot_x = 0.0
+   camera.transform.rotation.x = camera.transform.rotation.x - cam_rot_y * delta
+   cam_rot_y = 0.0
 
    local loc = ball1.transform.position
    if loc.y > 4.0 then
@@ -46,7 +50,6 @@ function update(delta)
 end
 
 function onkey(key, code, action, mod)
-   print(key, code, action, mod)
    if key == LEFT and action == 1 then
       vx = -1.0
    elseif key == RIGHT and action == 1 then
@@ -70,4 +73,9 @@ function onkey(key, code, action, mod)
 	 cam_rot_x = 0.0
       end
    end
+end
+
+function onmousemotion(_, _, relx, rely)
+   cam_rot_x = relx
+   cam_rot_y = rely
 end
