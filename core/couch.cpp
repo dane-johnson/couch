@@ -100,6 +100,9 @@ int main() {
 
     Matrix view(1.0f);
     Camera *camera = Camera::GetCurrentCamera();
+    view = glm::rotate(view, -camera->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
+    view = glm::rotate(view, -camera->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
+    view = glm::rotate(view, -camera->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
     view = glm::translate(view, -camera->transform.position);
     shader.UpdateView(view);
 
@@ -112,10 +115,10 @@ int main() {
 
     for (Mesh *mesh : meshes) {
       Matrix model(1.0f);
-      model = glm::translate(model, mesh->transform.position);
       model = glm::rotate(model, mesh->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
       model = glm::rotate(model, mesh->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
       model = glm::rotate(model, mesh->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
+      model = glm::translate(model, mesh->transform.position);
       shader.UpdateModel(model);
       mesh->Draw();
     }
