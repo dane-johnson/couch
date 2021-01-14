@@ -46,6 +46,7 @@ function update(delta)
 end
 
 function onkey(key, code, action, mod)
+   print(key, code, action, mod)
    if key == LEFT and action == 1 then
       vx = -1.0
    elseif key == RIGHT and action == 1 then
@@ -65,7 +66,7 @@ function onkey(key, code, action, mod)
    if key == Q then
       if action == 1 then
 	 cam_rot_x = 1.0
-      else
+      elseif action == 0 then
 	 cam_rot_x = 0.0
       end
    end
