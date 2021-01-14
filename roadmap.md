@@ -21,3 +21,9 @@ Everything seems to work, but we need a system of what goes in the scene
 I think a scene tree like the one in Godot would be cool
 
 I keep switching scripting languages, can I make it so it's programmable in many languages, switchable via command line?
+
+### Windows Compatible
+I want to be able to build this for Windows
+- I have no clue what that entails
+- CMake?
+- How to run SWIG on windows?
