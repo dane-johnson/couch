@@ -4,8 +4,9 @@ Transform::Transform() {
   position = Vector3(0.0f);
 }
 
-Transform::Transform(Vector3 position) {
+Transform::Transform(Vector3 position, Vector3 rotation) {
   this->position = position;
+  this->rotation = rotation;
 }
 
 void Transform::Translate(cfloat x, cfloat y, cfloat z) {

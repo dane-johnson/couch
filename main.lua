@@ -14,6 +14,7 @@ local ballvy = -1.0
 function init()
    camera = couch.Camera()
    camera:MakeCurrent()
+   camera.transform:Translate(0.0, 0.0, 10.0)
    ball = couch.Ball()
    ball:SetupMesh()
    couch.AddMeshToList(ball)
@@ -33,7 +34,10 @@ function update(delta)
    elseif loc.y < 2.0 then
       ballvy = 1.0
    end
-   ball1.transform:Translate(0.0, ballvy * delta, 0.0)  
+   ball1.transform.position.y = ball1.transform.position.y + ballvy * delta
+
+   ball.transform.rotation.z = ball.transform.rotation.z + 1.0 * delta;
+   ball.transform.rotation.x = ball.transform.rotation.x + 1.0 * delta;
 end
 
 function onkey(key, code, action, mod)

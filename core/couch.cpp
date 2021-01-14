@@ -113,6 +113,9 @@ int main() {
     for (Mesh *mesh : meshes) {
       Matrix model(1.0f);
       model = glm::translate(model, mesh->transform.position);
+      model = glm::rotate(model, mesh->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
+      model = glm::rotate(model, mesh->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
+      model = glm::rotate(model, mesh->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
       shader.UpdateModel(model);
       mesh->Draw();
     }

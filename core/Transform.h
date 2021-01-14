@@ -5,8 +5,9 @@
 
 struct Transform {
   Transform();
-  Transform(Vector3 position);
+  Transform(Vector3 position, Vector3 rotation);
   Vector3 position;
+  Vector3 rotation;
   void Translate(cfloat x, cfloat y, cfloat z);
 };
 
