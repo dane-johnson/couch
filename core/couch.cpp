@@ -21,22 +21,38 @@ extern "C" {
 #include "Ball.h"
 #include "Camera.h"
 #include "Input.h"
+#include "Node.h"
 
 Window *window;
 
 const int width = 800;
 const int height = 600;
 
-MeshList meshes;
+Node *root;
 
-void AddMeshToList(Mesh &mesh) {
-  meshes.push_front(&mesh);
-}
 #ifdef LUA_SCRIPTING
 
 extern "C" int luaopen_couch(lua_State* L);
 
 #endif // LUA_SCRIPTING
+
+void render(Node *curr, Shader shader, Matrix model) {
+  if (curr->IsDrawable()) {
+    if (curr->IsTransformable()) {
+      Spatial *spatial = dynamic_cast<Spatial*>(curr);
+      model = glm::rotate(model, spatial->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
+      model = glm::rotate(model, spatial->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
+      model = glm::rotate(model, spatial->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
+      model = glm::translate(model, spatial->transform.position);
+      shader.UpdateModel(model);
+    }
+    Drawable *drawable = dynamic_cast<Drawable*>(curr);
+    drawable->Draw();
+  }
+  for (Node *child : curr->children) {
+    render(child, shader, model);   
+  }
+}
 
 
 int main() {
@@ -62,6 +78,8 @@ int main() {
   }
 
   glViewport(0, 0, width, height);
+
+  root = Node::GetRoot();
 
 #ifdef LUA_SCRIPTING
   lua_State *L;
@@ -113,15 +131,8 @@ int main() {
     lua_call(L, 1, 0);
 #endif // LUA_SCRIPTING
 
-    for (Mesh *mesh : meshes) {
-      Matrix model(1.0f);
-      model = glm::rotate(model, mesh->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
-      model = glm::rotate(model, mesh->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
-      model = glm::rotate(model, mesh->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
-      model = glm::translate(model, mesh->transform.position);
-      shader.UpdateModel(model);
-      mesh->Draw();
-    }
+    // Render the scene tree
+    render(root, shader, Matrix(1.0f));
 
     
     glfwSwapBuffers(window);

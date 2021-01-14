@@ -4,18 +4,18 @@
 #include <list>
 
 #include "types.h"
+#include "Spatial.h"
+#include "Drawable.h"
 #include "Vertex.h"
 #include "Index.h"
-#include "Transform.h"
 
-class Mesh {
+class Mesh : public Spatial, public Drawable {
 public:
   VertexList vertices;
   IndexList indices;
-  Transform transform;
   Mesh();
   Mesh(VertexList vertices, IndexList indices);
-  void Draw();
+  virtual void Draw();
   virtual void SetupMesh();
 private:
   Id VAO, VBO, EBO;

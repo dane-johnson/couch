@@ -1,4 +1,5 @@
 local ball
+local ball1
 local camera
 
 local LEFT = 263
@@ -21,10 +22,10 @@ function init()
    camera.transform:Translate(0.0, 0.0, 10.0)
    ball = couch.Ball()
    ball:SetupMesh()
-   couch.AddMeshToList(ball)
+   couch.Node.GetRoot().children:Append(ball)
    ball1 = couch.Ball()
    ball1:SetupMesh()
-   couch.AddMeshToList(ball1)
+   couch.Node.GetRoot().children:Append(ball1)
 
    ball1.transform:Translate(0.0, 3.0, 0.0)
 end

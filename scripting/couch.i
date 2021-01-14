@@ -4,18 +4,22 @@
   $1 = (cfloat) lua_tonumber(L, $input);
  }
 %{
+#include "Node.h"
 #include "Transform.h"
+#include "Spatial.h"
+#include "Drawable.h"
 #include "Mesh.h"
 #include "Ball.h"
 #include "Camera.h"
-extern void AddMeshToList(Mesh &mesh);
 %}
+typedef float cfloat;
 struct Vector3 {
-  double x, y, z;
+  cfloat x, y, z;
 };
+%include "Node.h"
+%include "Spatial.h"
 %include "Transform.h"
+%include "Drawable.h"
 %include "Mesh.h"
 %include "Ball.h"
 %include "Camera.h"
-
-extern void AddMeshToList(Mesh &mesh);
