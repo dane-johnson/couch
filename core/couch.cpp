@@ -1,15 +1,6 @@
 // C++ includes
 #include <iostream>
 
-#ifdef LUA_SCRIPTING
-// Lua includes
-extern "C" {
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>  
-}
-#endif // LUA_SCRIPTING
-
 // OpenGL Includes
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -22,6 +13,7 @@ extern "C" {
 #include "Camera.h"
 #include "Input.h"
 #include "Node.h"
+#include "Lua.h"
 
 Window *window;
 
@@ -29,12 +21,6 @@ const int width = 800;
 const int height = 600;
 
 Node *root;
-
-#ifdef LUA_SCRIPTING
-
-extern "C" int luaopen_couch(lua_State* L);
-
-#endif // LUA_SCRIPTING
 
 void render(Node *curr, Shader shader, Matrix model) {
   if (curr->IsDrawable()) {
@@ -81,22 +67,6 @@ int main() {
 
   root = Node::GetRoot();
 
-#ifdef LUA_SCRIPTING
-  lua_State *L;
-  L = luaL_newstate();
-  luaopen_base(L);
-  luaopen_couch(L);
-  if (luaL_loadfile(L, "main.lua") == 0){
-    lua_call(L, 0, 0);
-    lua_getglobal(L, "init");
-    lua_call(L, 0, 0);
-  } else {
-    std::cerr << "Could not find main.lua" << std::endl;
-    return 1;
-  }
-  glfwSetWindowUserPointer(window, (void*) L);
-#endif // LUA_SCRIPTING
-
   Input *input = Input::GetInstance();
   input->Use(window);
 
@@ -108,6 +78,10 @@ int main() {
   Matrix projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
   shader.UpdateProjection(projection);
 
+  // TODO Allow multiple scripting languages
+  Lua *lua = new Lua();
+  lua->Initialize();
+
   double lastTime = glfwGetTime();
   double delta = 0.0;
 
@@ -115,6 +89,7 @@ int main() {
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    lua->Update(delta);
 
     Matrix view(1.0f);
     Camera *camera = Camera::GetCurrentCamera();
@@ -124,16 +99,8 @@ int main() {
     view = glm::translate(view, -camera->transform.position);
     shader.UpdateView(view);
 
-
-#ifdef LUA_SCRIPTING
-    lua_getglobal(L, "update");
-    lua_pushnumber(L, delta);
-    lua_call(L, 1, 0);
-#endif // LUA_SCRIPTING
-
     // Render the scene tree
     render(root, shader, Matrix(1.0f));
-
     
     glfwSwapBuffers(window);
     glfwPollEvents();
@@ -143,12 +110,7 @@ int main() {
     lastTime = curTime;
   }
 
-#ifdef LUA_SCRIPTING
-
-  lua_close(L);
-
-#endif // LUA_SCRIPTING
-  
+  lua->Close();
   glfwDestroyWindow(window);
   glfwTerminate();
   return 0;

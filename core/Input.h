@@ -1,20 +1,21 @@
+#ifndef COUCH_H
+#define COUCH_H
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#ifdef LUA_SCRIPTING
-extern "C" {
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
-}
-#endif // LUA_SCRIPTING
+#include <vector>
 
 #include "types.h"
+
+typedef void (*KeyHandler)(Window *window, int key, int code, int action, int mods);
+typedef void (*MousePositionHandler)(Window *window, double xpos, double ypos, double xrel, double yrel);
 
 class Input {
 public:
   static Input *GetInstance();
   void Use(Window *window);
+  std::vector<KeyHandler> keyHandlers;
+  std::vector<MousePositionHandler> mousePositionHandlers;
 private:
   double lastx, lasty;
   Input();
@@ -22,3 +23,5 @@ private:
   static void HandleMousePosition(Window *window, double xpos, double ypos);
   static Input *instance;
 };
+
+#endif // COUCH_H

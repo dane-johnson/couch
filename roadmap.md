@@ -27,3 +27,12 @@ I want to be able to build this for Windows
 - I have no clue what that entails
 - CMake?
 - How to run SWIG on windows?
+
+### Windows Compatible Postmortem
+Pretty brittle as a result of needing to download Windows binaries, but it works
+Eventually, we might need to include the source files as submodules, and build them all with CMake
+For now, what we've got is good
+
+### Better error messages
+Okay, now I want a message other than "main.lua not found!" if the lua file fucks up.
+Also, I want Lua errors to kill the program with an error message and a stack trace.

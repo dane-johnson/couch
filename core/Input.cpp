@@ -20,29 +20,17 @@ void Input::Use(Window *window){
 }
 
 void Input::HandleKeys(Window *window, int keys, int code, int action, int mods) {
-#ifdef LUA_SCRIPTING
-  lua_State *L = (lua_State*) glfwGetWindowUserPointer(window);
-  lua_getglobal(L, "onkey");
-  lua_pushinteger(L, keys);
-  lua_pushinteger(L, code);
-  lua_pushinteger(L, action);
-  lua_pushinteger(L, mods);
-  lua_call(L, 4, 0);
-#endif // LUA_SCRIPTING
+  for (KeyHandler keyHandler : instance->keyHandlers) {
+    keyHandler(window, keys, code, action, mods);
+  }
 }
 
 void Input::HandleMousePosition(Window *window, double xpos, double ypos) {
   double relx = xpos - instance->lastx;
   double rely = ypos - instance->lasty;
-#ifdef LUA_SCRIPTING
-  lua_State *L = (lua_State*) glfwGetWindowUserPointer(window);
-  lua_getglobal(L, "onmousemotion");
-  lua_pushnumber(L, xpos);
-  lua_pushnumber(L, ypos);
-  lua_pushnumber(L, relx);
-  lua_pushnumber(L, rely);
-  lua_call(L, 4, 0);
-#endif // LUA_SCRIPTING
+  for (MousePositionHandler mousePositionHandler : instance->mousePositionHandlers) {
+    mousePositionHandler(window, xpos, ypos, relx, rely);
+  }
   instance->lastx = xpos;
   instance->lasty = ypos;
 }
