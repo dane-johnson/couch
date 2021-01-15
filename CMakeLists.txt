@@ -21,8 +21,8 @@ add_executable(couch ${sources})
 include_directories(core)
 target_link_libraries(couch glfw)
 target_link_libraries(couch OpenGL::GL)
-target_link_libraries(couch GLEW)
-target_link_libraries(couch lua)
+target_link_libraries(couch GLEW::GLEW)
+target_link_libraries(couch ${LUA_LIBRARIES})
 
 file(COPY shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -32,6 +32,7 @@ swig_add_library(couchlua
   TYPE STATIC
   LANGUAGE lua
   SOURCES scripting/couch.i)
+target_link_libraries(couchlua ${LUA_LIBRARIES})
 target_link_libraries(couch couchlua)
 
 
