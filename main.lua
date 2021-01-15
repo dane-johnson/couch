@@ -31,7 +31,10 @@ function init()
 end
 
 function update(delta)
-   camera.transform:Translate(vx * delta, 0.0, vz * delta)
+   local cam_forwards = camera.transform:Forward()
+   --local vec1 = couch.Vector3() + couch.Vector3()
+   --camera.transform.position = camera.transform.position + cam_forwards
+   --camera.transform:Translate(vx * delta, 0.0, vz * delta)
    camera.transform.rotation.y = camera.transform.rotation.y - cam_rot_x * delta
    cam_rot_x = 0.0
    camera.transform.rotation.x = camera.transform.rotation.x - cam_rot_y * delta
