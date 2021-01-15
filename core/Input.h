@@ -17,6 +17,7 @@ public:
   std::vector<KeyHandler> keyHandlers;
   std::vector<MousePositionHandler> mousePositionHandlers;
 private:
+  bool firstMousePositionUpdate = true;
   double lastx, lasty;
   Input();
   static void HandleKeys(Window *window, int key, int code, int action, int mods);

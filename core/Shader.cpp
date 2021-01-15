@@ -84,3 +84,7 @@ void Shader::UpdateModel(Matrix model) {
 void Shader::UpdateProjection(Matrix projection) {
   glUniformMatrix4fv(glGetUniformLocation(id, "PROJECTION"), 1, GL_FALSE, glm::value_ptr(projection));
 }
+
+Name Shader::GetName() const {
+  return "Unnamed Shader";
+}

@@ -26,8 +26,15 @@ void Input::HandleKeys(Window *window, int keys, int code, int action, int mods)
 }
 
 void Input::HandleMousePosition(Window *window, double xpos, double ypos) {
-  double relx = xpos - instance->lastx;
-  double rely = ypos - instance->lasty;
+  double relx, rely;
+  if (instance->firstMousePositionUpdate) {
+    relx = 0.0;
+    rely = 0.0;
+    instance->firstMousePositionUpdate = false;
+  } else {
+    relx = xpos - instance->lastx;
+    rely = ypos - instance->lasty;
+  }
   for (MousePositionHandler mousePositionHandler : instance->mousePositionHandlers) {
     mousePositionHandler(window, xpos, ypos, relx, rely);
   }

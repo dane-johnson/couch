@@ -8,7 +8,7 @@
 
 #include "types.h"
 
-#include "Shader.h"
+#include "Shaders/FlatShader.h"
 #include "Ball.h"
 #include "Camera.h"
 #include "Input.h"
@@ -22,7 +22,7 @@ const int height = 600;
 
 Node *root;
 
-void render(Node *curr, Shader shader, Matrix model) {
+void render(Node *curr, Shader *shader, Matrix model) {
   if (curr->IsDrawable()) {
     if (curr->IsTransformable()) {
       Spatial *spatial = dynamic_cast<Spatial*>(curr);
@@ -30,7 +30,7 @@ void render(Node *curr, Shader shader, Matrix model) {
       model = glm::rotate(model, spatial->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
       model = glm::rotate(model, spatial->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
       model = glm::translate(model, spatial->transform.position);
-      shader.UpdateModel(model);
+      shader->UpdateModel(model);
     }
     Drawable *drawable = dynamic_cast<Drawable*>(curr);
     drawable->Draw();
@@ -72,11 +72,12 @@ int main() {
 
   Camera defaultCamera;
   
-  Shader shader("shaders/flat.vert", "shaders/flat.frag");
-  shader.Use();
+  FlatShader *shader = new FlatShader();
+  shader->Use();
+  shader->UpdateColor(Vector3(0.0f, 1.0f, 0.0f));
   
   Matrix projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
-  shader.UpdateProjection(projection);
+  shader->UpdateProjection(projection);
 
   // TODO Allow multiple scripting languages
   Lua *lua = new Lua();
@@ -97,7 +98,7 @@ int main() {
     view = glm::rotate(view, -camera->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
     view = glm::rotate(view, -camera->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
     view = glm::translate(view, -camera->transform.position);
-    shader.UpdateView(view);
+    shader->UpdateView(view);
 
     // Render the scene tree
     render(root, shader, Matrix(1.0f));

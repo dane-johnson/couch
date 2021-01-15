@@ -19,6 +19,8 @@ public:
   void UpdateView(Matrix view);
   void UpdateModel(Matrix model);
   void UpdateProjection(Matrix projection);
+
+  virtual Name GetName() const;
 };
 
 #endif /* SHADER_H */
