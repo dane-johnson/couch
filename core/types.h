@@ -15,4 +15,7 @@ typedef std::string Name;
 typedef GLfloat cfloat;
 typedef GLuint Id;
 
+Vector3 operator*(const Vector3 &r, const cfloat &l);
+Vector3 operator+(const Vector3 &r, const Vector3 &l);
+
 #endif /* TYPES_H */

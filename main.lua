@@ -1,3 +1,5 @@
+local min = math.min
+local max = math.max
 local ball
 local ball1
 local camera
@@ -16,6 +18,8 @@ local ballvy = -1.0
 local cam_rot_x = 0.0
 local cam_rot_y = 0.0
 
+local SPEED = 30
+
 function init()
    camera = couch.Camera()
    camera:MakeCurrent()
@@ -32,12 +36,15 @@ end
 
 function update(delta)
    local cam_forwards = camera.transform:Forward()
-   --local vec1 = couch.Vector3() + couch.Vector3()
-   --camera.transform.position = camera.transform.position + cam_forwards
-   --camera.transform:Translate(vx * delta, 0.0, vz * delta)
+
+   local move_vec = couch.Vector3()
+   move_vec = camera.transform.position + cam_forwards * delta * vz * SPEED
+   camera.transform.position = move_vec
+   
    camera.transform.rotation.y = camera.transform.rotation.y - cam_rot_x * delta
    cam_rot_x = 0.0
    camera.transform.rotation.x = camera.transform.rotation.x - cam_rot_y * delta
+   camera.transform.rotation.x = min(max(camera.transform.rotation.x, -3.14), 3.14)
    cam_rot_y = 0.0
 
    local loc = ball1.transform.position
@@ -63,9 +70,9 @@ function onkey(key, code, action, mod)
    end
 
    if key == UP and action == 1 then
-      vz = -1.0
-   elseif key == DOWN and action == 1 then
       vz = 1.0
+   elseif key == DOWN and action == 1 then
+      vz = -1.0
    elseif (key == DOWN or key == UP) and action == 0 then
       vz = 0.0
    end

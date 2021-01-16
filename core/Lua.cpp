@@ -11,7 +11,7 @@ void Lua::Initialize() {
   language = this;
   int err;
   // Initialize Lua
-  luaopen_base(L);
+  luaL_openlibs(L);
   luaopen_couch(L);
   err = luaL_loadfile(L, "main.lua");
   if (err == LUA_OK) {
