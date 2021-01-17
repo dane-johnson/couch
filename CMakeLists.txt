@@ -37,7 +37,10 @@ swig_add_library(couchlua
 target_link_libraries(couchlua ${LUA_LIBRARIES})
 target_link_libraries(couch couchlua)
 
+add_subdirectory(thirdparty)
+
 if(WIN32)
   target_link_libraries(couch glfw3dll)
+  target_link_libraries(couch ssp)
   set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 endif(WIN32)

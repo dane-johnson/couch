@@ -3,15 +3,15 @@
 Ball::Ball() {
   // It's a cube really
   // Front
-  vertices.push_back(Vertex(1.0f, 1.0f, 1.0f));
-  vertices.push_back(Vertex(1.0f, -1.0f, 1.0f));
-  vertices.push_back(Vertex(-1.0f, 1.0f, 1.0f));
-  vertices.push_back(Vertex(-1.0f, -1.0f, 1.0f));
+  vertices.push_back(Vertex(1.0f, 1.0f, 1.0f, 0.0f, 1.0f));
+  vertices.push_back(Vertex(1.0f, -1.0f, 1.0f, 0.0f, 0.0f));
+  vertices.push_back(Vertex(-1.0f, 1.0f, 1.0f, 1.0f, 1.0f));
+  vertices.push_back(Vertex(-1.0f, -1.0f, 1.0f, 1.0f, 0.0f));
   // Back
-  vertices.push_back(Vertex(1.0f, 1.0f, -1.0f));
-  vertices.push_back(Vertex(1.0f, -1.0f, -1.0f));
-  vertices.push_back(Vertex(-1.0f, 1.0f, -1.0f));
-  vertices.push_back(Vertex(-1.0f, -1.0f, -1.0f));
+  vertices.push_back(Vertex(1.0f, 1.0f, -1.0f, 0.0f, 0.0f));
+  vertices.push_back(Vertex(1.0f, -1.0f, -1.0f, 0.0f, 1.0f));
+  vertices.push_back(Vertex(-1.0f, 1.0f, -1.0f, 1.0f, 0.0f));
+  vertices.push_back(Vertex(-1.0f, -1.0f, -1.0f, 1.0f, 1.0f));
 
   //Front
   indices.push_back(Index(0, 1, 2));

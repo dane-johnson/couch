@@ -20,15 +20,23 @@ local cam_rot_y = 0.0
 
 local SPEED = 30
 
+local RED = couch.Color(1.0, 0.0, 0.0)
+local BLUE = couch.Color(0.0, 0.0, 1.0)
+
 function init()
    camera = couch.Camera()
    camera:MakeCurrent()
    camera.transform:Translate(0.0, 0.0, 10.0)
    ball = couch.Ball()
    ball:SetupMesh()
+   ball.material.color = RED
+   ball.material.usesColor = true
    couch.Node.GetRoot().children:Append(ball)
    ball1 = couch.Ball()
    ball1:SetupMesh()
+   ball1.material.tex = couch.Texture.FromFile("container.png")
+   ball1.material.usesTex = true
+   print(ball1.material.tex.width, ball1.material.tex.height)
    couch.Node.GetRoot().children:Append(ball1)
 
    ball1.transform:Translate(0.0, 3.0, 0.0)

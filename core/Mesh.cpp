@@ -1,6 +1,12 @@
 #include "Mesh.h"
 
-Mesh::Mesh() {}
+Mesh::Mesh() {
+  material = new Material();
+}
+
+Mesh::~Mesh() {
+  delete material;
+}
 
 Mesh::Mesh(VertexList vertices, IndexList indices) {
   this->vertices = vertices;
@@ -24,7 +30,10 @@ void Mesh::SetupMesh() {
   // Vertex positions
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) 0);
-  // TODO normals, uv
+  // Vertex UV
+  glEnableVertexAttribArray(1);
+  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float)));
+  // TODO normals
 
   glBindVertexArray(0);
 }

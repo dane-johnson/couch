@@ -9,6 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "types.h"
+#include "Material.h"
 
 class Shader {
 public:
@@ -19,6 +20,10 @@ public:
   void UpdateView(Matrix view);
   void UpdateModel(Matrix model);
   void UpdateProjection(Matrix projection);
+  void UpdateColor(bool usesColor);
+  void UpdateColor(bool usesColor, Color color);
+  void UpdateTex(bool usesTex);
+  void UpdateTex(bool usesTex, Texture tex);
 
   virtual Name GetName() const;
 };

@@ -14,6 +14,7 @@ public:
   VertexList vertices;
   IndexList indices;
   Mesh();
+  ~Mesh();
   Mesh(VertexList vertices, IndexList indices);
   virtual void Draw();
   virtual void SetupMesh();

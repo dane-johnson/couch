@@ -67,8 +67,6 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath) {
   glDeleteShader(fragment);
 }
 
-
-
 void Shader::Use() {
   glUseProgram(id);
 }
@@ -83,6 +81,23 @@ void Shader::UpdateModel(Matrix model) {
 
 void Shader::UpdateProjection(Matrix projection) {
   glUniformMatrix4fv(glGetUniformLocation(id, "PROJECTION"), 1, GL_FALSE, glm::value_ptr(projection));
+}
+
+void Shader::UpdateColor(bool usesColor) {
+  glUniform1i(glGetUniformLocation(id, "material.usesColor"), (int) usesColor);
+}
+
+void Shader::UpdateColor(bool usesColor, Color color) {
+  glUniform1i(glGetUniformLocation(id, "material.usesColor"), (int) usesColor);
+  glUniform3f(glGetUniformLocation(id, "material.color"), color.r, color.g, color.b);
+}
+
+void Shader::UpdateTex(bool usesTex) {
+  glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) usesTex);
+}
+void Shader::UpdateTex(bool usesTex, Texture tex) {
+  glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) usesTex);
+  glBindTexture(GL_TEXTURE_2D, tex.id);
 }
 
 Name Shader::GetName() const {
