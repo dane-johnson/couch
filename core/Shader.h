@@ -1,11 +1,6 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-
 #include <glm/gtc/type_ptr.hpp>
 
 #include "types.h"
@@ -15,7 +10,7 @@ class Shader {
 public:
   Id id;
 
-  Shader(const char *vertexPath, const char *fragmentPath);
+  Shader(const char *vertexCode, const char *fragmentCode);
   void Use();
   void UpdateView(Matrix view);
   void UpdateModel(Matrix model);

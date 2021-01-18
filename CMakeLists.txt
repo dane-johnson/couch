@@ -14,7 +14,6 @@ find_package(SWIG REQUIRED)
 find_package(Lua REQUIRED)
 
 file(GLOB_RECURSE sources core/*.cpp core/*.h)
-file(GLOB shaders shaders/*)
 
 add_compile_definitions(LUA_SCRIPTING)
 add_executable(couch ${sources})
@@ -26,8 +25,6 @@ target_link_libraries(couch OpenGL::GL)
 target_link_libraries(couch GLEW::GLEW)
 target_link_libraries(couch ${LUA_LIBRARIES})
 
-file(COPY shaders DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
 include(UseSWIG)
 set_property(SOURCE scripting/couch.i PROPERTY CPLUSPLUS ON)
 swig_add_library(couchlua
@@ -38,6 +35,11 @@ target_link_libraries(couchlua ${LUA_LIBRARIES})
 target_link_libraries(couch couchlua)
 
 add_subdirectory(thirdparty)
+
+add_subdirectory(shaders)
+target_include_directories(couch
+  PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/shaders")
+
 
 if(WIN32)
   target_link_libraries(couch glfw3dll)
