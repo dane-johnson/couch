@@ -5,17 +5,20 @@
 
 #include "types.h"
 #include "Spatial.h"
-#include "Drawable.h"
 #include "Vertex.h"
 #include "Index.h"
+#include "Material.h"
 
-class Mesh : public Spatial, public Drawable {
+class Mesh : public Spatial {
 public:
   VertexList vertices;
   IndexList indices;
+  Material *material;
   Mesh();
   ~Mesh();
   Mesh(VertexList vertices, IndexList indices);
+  static Mesh FromFile(const char *filename);
+  virtual bool IsDrawable() const {return true;}
   virtual void Draw();
   virtual void SetupMesh();
 private:

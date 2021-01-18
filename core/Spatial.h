@@ -4,7 +4,7 @@
 #include "Node.h"
 #include "Transform.h"
 
-class Spatial : virtual public Node {
+class Spatial : public Node {
 public:
   Transform transform;
   virtual bool IsTransformable() const { return true;}

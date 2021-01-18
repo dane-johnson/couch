@@ -14,6 +14,7 @@ public:
   NodeList children;
   static Node *GetRoot();
   virtual bool IsDrawable() const;
+  virtual void Draw(){};
   virtual bool IsTransformable() const;
 private:
   static Node *root;

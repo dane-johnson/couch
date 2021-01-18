@@ -38,6 +38,10 @@ void Mesh::SetupMesh() {
   glBindVertexArray(0);
 }
 
+Mesh Mesh::FromFile(const char *filename) {
+  return Mesh();
+}
+
 void Mesh::Draw() {
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);

@@ -36,18 +36,18 @@ void render(Node *curr, Shader *shader, Matrix model) {
       model = glm::translate(model, spatial->transform.position);
       shader->UpdateModel(model);
     }
-    Drawable *drawable = dynamic_cast<Drawable*>(curr);
-    if (drawable->material->usesColor) {
-      shader->UpdateColor(true, drawable->material->color);
+    Mesh *mesh = dynamic_cast<Mesh*>(curr);
+    if (mesh->material->usesColor) {
+      shader->UpdateColor(true, mesh->material->color);
     } else {
       shader->UpdateColor(false);
     }
-    if (drawable->material->usesTex) {
-      shader->UpdateTex(true, drawable->material->tex);
+    if (mesh->material->usesTex) {
+      shader->UpdateTex(true, mesh->material->tex);
     } else {
       shader->UpdateTex(false);
     }
-    drawable->Draw();
+    mesh->Draw();
   }
   for (Node *child : curr->children) {
     render(child, shader, model);   
