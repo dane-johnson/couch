@@ -40,6 +40,12 @@ function init()
    couch.Node.GetRoot().children:Append(ball1)
 
    ball1.transform:Translate(0.0, 3.0, 0.0)
+
+   cube = couch.Mesh.FromFile("cube.glb")
+   cube:SetupMesh();
+   cube.material.tex = couch.Texture.FromFile("container.png")
+   cube.material.usesTex = true
+   couch.Node.GetRoot().children:Append(cube)
 end
 
 function update(delta)

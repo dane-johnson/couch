@@ -5,7 +5,9 @@ Mesh::Mesh() {
 }
 
 Mesh::~Mesh() {
-  delete material;
+  if (material) {
+    delete material;
+  }
 }
 
 Mesh::Mesh(VertexList vertices, IndexList indices) {
@@ -38,8 +40,26 @@ void Mesh::SetupMesh() {
   glBindVertexArray(0);
 }
 
-Mesh Mesh::FromFile(const char *filename) {
-  return Mesh();
+Mesh* Mesh::FromFile(const char *filename) {
+  // HOCUS: https://assimp-docs.readthedocs.io/en/latest/usage/use_the_lib.html
+  Assimp::Importer importer;
+
+  const aiScene* scene = importer.ReadFile(
+    filename, // Read the file
+    aiProcess_Triangulate | // We only do triangles
+    aiProcess_GenNormals | // We want normals precalculated
+    aiProcess_GenUVCoords // We want UV mappings precalculated
+    );
+
+  if (!scene) {
+    std::cerr << importer.GetErrorString() << std::endl;
+    exit(1);
+  }
+
+  aiNode *root = scene->mRootNode;
+  aiMesh *mesh_to_import = scene->mMeshes[root->mMeshes[0]];
+
+  return Util::aiMesh2Mesh(mesh_to_import);
 }
 
 void Mesh::Draw() {

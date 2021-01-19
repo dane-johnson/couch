@@ -1,33 +1,27 @@
 use strict;
 use warnings;
+use File::Basename;
 
-sub convert {
-    my $filename = $1;
-    
-    my $headerguard = "$filename.h";
-    $headerguard =~ tr/a-z./A-Z_/;
-    
-    my $constname = "$filename";
-    $constname =~ tr/./_/;
+my ($filename, $outfilename) = @ARGV;
 
-    open my $fin, '<', $filename;
-    open my $fout, '>', "$filename.h";
-    
-    print $fout "#ifndef $headerguard \n#define $headerguard\nconst char * $constname = \n";
+my $headerguard = basename $outfilename;
+$headerguard =~ tr/a-z./A-Z_/;
 
-    while(my $line = <$fin>) {
-	$line =~ s/\n/\\n/;
-	print $fout "\"$line\"\n";
-    }
+my $constname = basename "$filename";
+$constname =~ tr/./_/;
 
-    print $fout ";\n#endif // $headerguard\n";
-    close $fin;
-    close $fout;
+open(my $fin, '<', $filename) or die("Couldn't find $filename");
+open my $fout, '>', $outfilename;
+
+print $fout "#ifndef $headerguard \n#define $headerguard\nconst char * $constname = \n";
+
+while(my $line = <$fin>) {
+    $line =~ s/\n/\\n/;
+    print $fout "\"$line\"\n";
 }
 
-opendir DIR, ".";
-while (readdir DIR) {
-    if (/(.*\.(frag|vert))/) {
-	convert;
-    }
-}
+print $fout ";\n#endif // $headerguard\n";
+close $fin;
+close $fout;
+print "Generated $outfilename\n";
+
