@@ -25,8 +25,7 @@ void Lua::Initialize() {
       Error();
     }
   } else if (err == LUA_ERRFILE) {
-    std::cerr << "Could not find main.lua." << std::endl;
-    exit(1);
+    Util::Die("Could not find main.lua.");
   } else {
     // Syntax error
     Error();
@@ -38,8 +37,7 @@ void Lua::Initialize() {
   input->keyHandlers.push_back(LuaKeyHandler);
   input->mousePositionHandlers.push_back(LuaMousePositionHandler);
 #else // LUA_SCRIPTING
-  std::cerr << "Lua is selected as scripting language, but this binary was built without Lua support." << std::endl;
-  exit(1);
+  Util::Die("Lua is selected as scripting language, but this binary was built without Lua support.");
 #endif // LUA_SCRIPTING
 }
 
@@ -60,9 +58,9 @@ void Lua::Close() {
 void Lua::Error() {
 #ifdef LUA_SCRIPTING
   const char *error = lua_tolstring(L, -1, 0);
-  std::cerr << error << std::endl;
+  Util::Die(error);
 #endif // LUA_SCRIPTING
-  exit(1);
+  Util::Die("Whut?");
 }
 
 void Lua::LuaKeyHandler(Window *window, int key, int code, int action, int mods) {

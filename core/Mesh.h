@@ -2,8 +2,6 @@
 #define MESH_H
 
 #include <list>
-#include <iostream>
-#include <stdlib.h>
 
 // Thirdpart includes
 #include <assimp/Importer.hpp>
@@ -31,6 +29,7 @@ public:
   virtual void SetupMesh();
 private:
   Id VAO, VBO, EBO;
+  static Mesh *aiMesh2Mesh(aiMesh *mesh);
 };
 
 typedef std::list<Mesh*> MeshList;
