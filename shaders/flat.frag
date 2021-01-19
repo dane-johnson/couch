@@ -1,6 +1,6 @@
 #version 330 core
 
-in vec2 UV;
+in vec3 UV;
 
 out vec4 FragColor;
 
@@ -19,6 +19,6 @@ void main() {
     FragColor += vec4(material.color, 1.0);
   }
   if (material.usesTex) {
-    FragColor += texture(material.tex, UV);
+    FragColor += texture(material.tex, UV.xy / UV.z);
   }
 }

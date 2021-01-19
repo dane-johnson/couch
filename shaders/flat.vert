@@ -7,9 +7,10 @@ uniform mat4 MODEL;
 uniform mat4 VIEW;
 uniform mat4 PROJECTION;
 
-out vec2 UV;
+out vec3 UV;
 
 void main() {
-  gl_Position = PROJECTION * VIEW * MODEL * vec4(pos, 1.0);
-  UV = uv;
+  vec4 vertex = PROJECTION * VIEW * MODEL * vec4(pos, 1.0);
+  gl_Position = vertex;
+  UV = vec3(uv * vertex.z, vertex.z);
 }
