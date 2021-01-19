@@ -32,8 +32,7 @@ Texture Texture::FromFile(const char *filename) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex.width, tex.height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
   } else {
-    std::cout << "Error loading texture file: " << filename << std::endl;
-    exit(1);
+    Util::Die("Error loading texture file: ",  filename);
   }
 
   stbi_image_free(data);

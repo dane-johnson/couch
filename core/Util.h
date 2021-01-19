@@ -1,15 +1,14 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-// Thirdparty includes
-#include <assimp/mesh.h>
-
-// Gahhhhhh mutual inclusion!
-#include "Mesh.h"
-class Mesh;
+#include <iostream>
+#include <string>
+#include <stdlib.h>
 
 namespace Util {
-  Mesh *aiMesh2Mesh(aiMesh *mesh);
+  void Die(const char *msg);
+  void Die(const char * msg, const char * more);
+  void Die(std::string msg);
 }
 
 #endif /* UTIL_H */

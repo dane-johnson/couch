@@ -1,13 +1,11 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <iostream>
-#include <stdlib.h>
-
 #include <GL/glew.h>
 #include "stb_image.h"
 
 #include "types.h"
+#include "Util.h"
 
 struct Color {
   cfloat r, g, b;
