@@ -36,3 +36,19 @@ For now, what we've got is good
 ### Better error messages
 Okay, now I want a message other than "main.lua not found!" if the lua file fucks up.
 Also, I want Lua errors to kill the program with an error message and a stack trace.
+
+### Added model importing
+I did this without writing about it in the roadmap. I still want to add a way to get multiple meshes on the same model, but 
+I'll save skeletal animation until we have a working physics system
+
+### Refactoring pass
+I want to clean things up and see if some of the code can be combined into multiple files.
+Also, I want a better user experience, so I might wind up removeing the %includes from the 
+swig files and customizing the interface by hand. I also want to add a whole mess of constants
+so that I don't have to test for keypresses. Lastly, I want to test if a function exists before
+calling it from the lua file, so stubs aren't necessary to prevent a crash
+
+- [ ] Combine files
+- [ ] Better interface
+- [ ] Constants for keys and the like
+- [ ] No crash on calling non-existant scripting hooks

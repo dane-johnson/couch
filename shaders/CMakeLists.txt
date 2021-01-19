@@ -10,7 +10,9 @@ endmacro()
 
 add_shader(flat.vert)
 add_shader(flat.frag)
+add_shader(screen.vert)
+add_shader(screen.frag)
 
 add_custom_target(shader_headers
-  DEPENDS flat.vert.h flat.frag.h
+  DEPENDS flat.vert.h flat.frag.h screen.vert.h screen.frag.h
   COMMENT "Generated shaders headers.")
