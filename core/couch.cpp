@@ -9,6 +9,10 @@
 #include "types.h"
 
 #include "Shaders/FlatShader.h"
+#include "Shaders/ScreenShader.h"
+
+#include "Screen.h"
+
 #include "Ball.h"
 #include "Camera.h"
 #include "Input.h"
@@ -80,7 +84,6 @@ int main() {
   }
 
   glViewport(0, 0, width, height);
-  glEnable(GL_DEPTH_TEST);
 
   root = Node::GetRoot();
 
@@ -88,12 +91,13 @@ int main() {
   input->Use(window);
 
   Camera defaultCamera;
+
+  Screen screen;
+  ScreenShader *screenShader = new ScreenShader();
   
   FlatShader *shader = new FlatShader();
-  shader->Use();
   
   Matrix projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
-  shader->UpdateProjection(projection);
 
   // TODO Allow multiple scripting languages
   Lua *lua = new Lua();
@@ -103,11 +107,13 @@ int main() {
   double delta = 0.0;
 
   while(!glfwWindowShouldClose(window)) {
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Start rendering to texture;
+    screen.Enable();
 
     lua->Update(delta);
 
+    shader->Use();
+    shader->UpdateProjection(projection);
     Matrix view(1.0f);
     Camera *camera = Camera::GetCurrentCamera();
     view = glm::rotate(view, -camera->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
@@ -118,6 +124,14 @@ int main() {
 
     // Render the scene tree
     render(root, shader, Matrix(1.0f));
+
+    // Stop rendering to texture
+    screen.Disable();
+    // // Render the screen
+    screenShader->Use();
+    screenShader->UpdateTex(true, screen.tex);
+    glViewport(0, 0, width, height);
+    screen.Draw();
     
     glfwSwapBuffers(window);
     glfwPollEvents();
