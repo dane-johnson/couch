@@ -17,7 +17,7 @@
 #include "Camera.h"
 #include "Input.h"
 #include "Node.h"
-#include "Lua.h"
+#include "Scripting/Lua.h"
 
 // Thirdparty Includes
 #define STB_IMAGE_IMPLEMENTATION
