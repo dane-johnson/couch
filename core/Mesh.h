@@ -2,8 +2,16 @@
 #define MESH_H
 
 #include <list>
+#include <iostream>
+#include <stdlib.h>
+
+// Thirdpart includes
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 #include "types.h"
+#include "Util.h"
 #include "Spatial.h"
 #include "Vertex.h"
 #include "Index.h"
@@ -17,7 +25,7 @@ public:
   Mesh();
   ~Mesh();
   Mesh(VertexList vertices, IndexList indices);
-  static Mesh FromFile(const char *filename);
+  static Mesh *FromFile(const char *filename);
   virtual bool IsDrawable() const {return true;}
   virtual void Draw();
   virtual void SetupMesh();

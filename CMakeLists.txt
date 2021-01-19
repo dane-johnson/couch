@@ -37,9 +37,9 @@ target_link_libraries(couch couchlua)
 add_subdirectory(thirdparty)
 
 add_subdirectory(shaders)
+add_dependencies(couch shader_headers)
 target_include_directories(couch
-  PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/shaders")
-
+  PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/shaders/")
 
 if(WIN32)
   target_link_libraries(couch glfw3dll)
