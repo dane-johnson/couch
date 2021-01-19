@@ -41,11 +41,12 @@ function init()
 
    ball1.transform:Translate(0.0, 3.0, 0.0)
 
-   cube = couch.Mesh.FromFile("cube.glb")
-   cube:SetupMesh();
-   cube.material.tex = couch.Texture.FromFile("container.png")
-   cube.material.usesTex = true
-   couch.Node.GetRoot().children:Append(cube)
+   trough = couch.Mesh.FromFile("trough.glb")
+   trough:SetupMesh()
+   trough.material.tex = couch.Texture.FromFile("wood_lowres.png")
+   trough.material.usesTex = true
+   couch.Node.GetRoot().children:Append(trough)
+   trough.transform:Translate(10.0, 0.0, 0.0)
 end
 
 function update(delta)
