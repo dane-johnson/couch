@@ -28,7 +28,7 @@ target_link_libraries(couch ${LUA_LIBRARIES})
 include(UseSWIG)
 set_property(SOURCE scripting/couch.i PROPERTY CPLUSPLUS ON)
 swig_add_library(couchlua
-  TYPE STATIC
+  TYPE SHARED
   LANGUAGE lua
   SOURCES scripting/couch.i scripting/lua/helpers.i)
 target_link_libraries(couchlua ${LUA_LIBRARIES})
@@ -46,3 +46,5 @@ if(WIN32)
   target_link_libraries(couch ssp)
   set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 endif(WIN32)
+
+install(TARGETS couch couchlua)
