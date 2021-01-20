@@ -31,14 +31,14 @@ function init()
    camera.transform:Translate(0.0, 0.0, 10.0)
    ball = couch.Ball()
    ball:SetupMesh()
-   material = couch.Material.new()
+   material = couch.Material()
    material.color = RED
    material.usesColor = true
    ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
    ball1 = couch.Ball()
    ball1:SetupMesh()
-   material = couch.Material.new()
+   material = couch.Material()
    material.tex = couch.Texture.FromFile("container.png")
    material.usesTex = true
    ball1:SetMaterial(0, material)
@@ -48,7 +48,7 @@ function init()
 
    trough = couch.Mesh.FromFile("trough.glb")
    trough:SetupMesh()
-   material = couch.Material.new()
+   material = couch.Material()
    material.tex = couch.Texture.FromFile("wood_lowres.png")
    material.usesTex = true
    trough:SetMaterial(0, material)
@@ -57,11 +57,11 @@ function init()
 
    scaffold = couch.Mesh.FromFile("scaffold.glb")
    scaffold:SetupMesh()
-   material = couch.Material.new()
+   material = couch.Material()
    material.tex = couch.Texture.FromFile("grate_floor_lowres.png")
    material.usesTex = true
    scaffold:SetMaterial(0, material)
-   material = couch.Material.new()
+   material = couch.Material()
    material.tex = couch.Texture.FromFile("railing.png")
    material.usesTex = true
    scaffold:SetMaterial(1, material)

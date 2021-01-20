@@ -1,8 +1,6 @@
 #include "Mesh.h"
 
-SubMesh::SubMesh() {
-  material = new Material();
-}
+SubMesh::SubMesh() {}
 
 SubMesh::SubMesh(VertexList vertices, IndexList indices) {
   this->vertices = vertices;
@@ -35,8 +33,8 @@ void SubMesh::SetupSubMesh() {
 }
 
 void SubMesh::Draw(Shader *shader) {
-  shader->UpdateColor(material->usesColor, material->color);
-  shader->UpdateTex(material->usesTex, material->tex);
+  shader->UpdateColor(material.usesColor, material.color);
+  shader->UpdateTex(material.usesTex, material.tex);
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
@@ -56,7 +54,7 @@ void Mesh::SetupMesh() {
   }
 }
 
-void Mesh::SetMaterial(int submesh, Material *material) {
+void Mesh::SetMaterial(int submesh, Material material) {
   submeshes[submesh]->material = material;
 }
 
