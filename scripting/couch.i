@@ -7,11 +7,13 @@
 #include "Node.h"
 #include "Transform.h"
 #include "Spatial.h"
-#include "Material.h"
 #include "Mesh.h"
 #include "Ball.h"
+#include "Material.h"
 #include "Camera.h"
 %}
+
+%rename("%(strip:[script_])s") "";
 
 typedef float cfloat;
 %ignore "cfloat";
@@ -21,6 +23,7 @@ public:
   Vector3();
   cfloat x, y, z;
 };
+
 %extend Vector3 {
   Vector3 operator+(const Vector3 &o) const {
     return *$self + o;
@@ -31,12 +34,18 @@ public:
 }
 %ignore "Vector3";
 
+%extend Material {
+  static Material* Material::script_new() {
+    return new Material();
+  }
+}
+
 %include "types.h"
 %include "Node.h"
 %include "Spatial.h"
-%include "Transform.h"
-%include "Material.h"
 %include "Mesh.h"
 %include "Ball.h"
+%include "Transform.h"
+%include "Material.h"
 %include "Camera.h"
 

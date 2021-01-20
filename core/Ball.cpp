@@ -1,6 +1,8 @@
 #include "Ball.h"
 
 Ball::Ball() {
+  IndexList indices;
+  VertexList vertices;
   // It's a cube really
   // Front
   vertices.push_back(Vertex(1.0f, 1.0f, 1.0f, 0.0f, 1.0f));
@@ -31,5 +33,7 @@ Ball::Ball() {
   // Right side
   indices.push_back(Index(2, 3, 7));
   indices.push_back(Index(2, 6, 7));
+
+  submeshes.push_back(new SubMesh(vertices, indices));
 }
 

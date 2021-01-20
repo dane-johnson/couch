@@ -41,17 +41,7 @@ void render(Node *curr, Shader *shader, Matrix model) {
       shader->UpdateModel(model);
     }
     Mesh *mesh = dynamic_cast<Mesh*>(curr);
-    if (mesh->material->usesColor) {
-      shader->UpdateColor(true, mesh->material->color);
-    } else {
-      shader->UpdateColor(false);
-    }
-    if (mesh->material->usesTex) {
-      shader->UpdateTex(true, mesh->material->tex);
-    } else {
-      shader->UpdateTex(false);
-    }
-    mesh->Draw();
+    mesh->Draw(shader);
   }
   for (Node *child : curr->children) {
     render(child, shader, model);   
@@ -84,9 +74,6 @@ int main() {
   }
 
   glViewport(0, 0, width, height);
-
-  glEnable(GL_CULL_FACE);
-  glCullFace(GL_BACK);
 
   root = Node::GetRoot();
 
