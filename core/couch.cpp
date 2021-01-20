@@ -38,6 +38,7 @@ void render(Node *curr, Shader *shader, Matrix model) {
       model = glm::rotate(model, spatial->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
       model = glm::rotate(model, spatial->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
       model = glm::translate(model, spatial->transform.position);
+      model = glm::scale(model, spatial->transform.scale);
       shader->UpdateModel(model);
     }
     Mesh *mesh = dynamic_cast<Mesh*>(curr);

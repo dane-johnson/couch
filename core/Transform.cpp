@@ -3,12 +3,21 @@
 Transform::Transform() {
   position = Vector3(0.0f);
   rotation = Vector3(0.0f);
+  scale = Vector3(1.0f, 1.0f, 1.0f);
 }
 
 Transform::Transform(Vector3 position, Vector3 rotation) {
   this->position = position;
   this->rotation = rotation;
+  this->scale = Vector3(1.0f, 1.0f, 1.0f);
 }
+
+Transform::Transform(Vector3 position, Vector3 rotation, Vector3 scale) {
+  this->position = position;
+  this->rotation = rotation;
+  this->scale = scale;
+}
+
 
 void Transform::Translate(cfloat x, cfloat y, cfloat z) {
   position = position + Vector3(x, y, z);

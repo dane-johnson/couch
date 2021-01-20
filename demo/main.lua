@@ -49,6 +49,7 @@ function init()
    trough = couch.TexturedMesh("trough.glb", "wood_lowres.png")
    couch.Node.GetRoot().children:Append(trough)
    trough.transform:Translate(10.0, 0.0, 0.0)
+   trough.transform.scale = trough.transform.scale * 3.0
 
    scaffold = couch.TexturedMesh("scaffold.glb", "grate_floor_lowres.png", "railing.png")
    couch.Node.GetRoot().children:Append(scaffold)
