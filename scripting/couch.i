@@ -34,12 +34,6 @@ public:
 }
 %ignore "Vector3";
 
-%extend Material {
-  static Material* Material::script_new() {
-    return new Material();
-  }
-}
-
 %include "types.h"
 %include "Node.h"
 %include "Spatial.h"

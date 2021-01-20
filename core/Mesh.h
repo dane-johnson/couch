@@ -24,7 +24,7 @@ public:
   SubMesh(VertexList vertices, IndexList indices);
   VertexList vertices;
   IndexList indices;
-  Material *material;
+  Material material;
   void SetupSubMesh();
   void Draw(Shader *shader);
 private:
@@ -37,7 +37,7 @@ class Mesh : public Spatial {
 public:
   Mesh();
   ~Mesh();
-  void SetMaterial(int submesh, Material *material);
+  void SetMaterial(int submesh, Material material);
   static Mesh *FromFile(const char *filename);
   virtual bool IsDrawable() const {return true;}
   virtual void Draw(Shader *shader);
