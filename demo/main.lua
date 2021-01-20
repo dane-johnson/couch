@@ -36,7 +36,6 @@ function init()
    ball1:SetupMesh()
    ball1.material.tex = couch.Texture.FromFile("container.png")
    ball1.material.usesTex = true
-   print(ball1.material.tex.width, ball1.material.tex.height)
    couch.Node.GetRoot().children:Append(ball1)
 
    ball1.transform:Translate(0.0, 3.0, 0.0)
@@ -47,6 +46,13 @@ function init()
    trough.material.usesTex = true
    couch.Node.GetRoot().children:Append(trough)
    trough.transform:Translate(10.0, 0.0, 0.0)
+
+   scaffold = couch.Mesh.FromFile("scaffold.glb")
+   scaffold:SetupMesh()
+   scaffold.material.tex = couch.Texture.FromFile("grate_floor_lowres.png")
+   scaffold.material.usesTex = true
+   couch.Node.GetRoot().children:Append(scaffold)
+   scaffold.transform:Translate(-10.0, 0.0, 0.0)
 end
 
 function update(delta)
