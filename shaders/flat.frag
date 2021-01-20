@@ -2,8 +2,6 @@
 
 in vec3 UV;
 
-out vec4 FragColor;
-
 struct Material {
   vec3 color;
   bool usesColor;
@@ -14,11 +12,14 @@ struct Material {
 uniform Material material;
 
 void main() {
-  FragColor = vec4(0.0);
+  gl_FragColor = vec4(0.0);
   if (material.usesColor) {
-    FragColor += vec4(material.color, 1.0);
+    gl_FragColor += vec4(material.color, 1.0);
   }
   if (material.usesTex) {
-    FragColor += texture(material.tex, UV.xy / UV.z);
+    gl_FragColor += texture(material.tex, UV.xy / UV.z);
+  }
+  if (gl_FragColor.w < 0.99) {
+    discard;
   }
 }

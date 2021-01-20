@@ -85,6 +85,9 @@ int main() {
 
   glViewport(0, 0, width, height);
 
+  glEnable(GL_CULL_FACE);
+  glCullFace(GL_BACK);
+
   root = Node::GetRoot();
 
   Input *input = Input::GetInstance();
