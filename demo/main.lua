@@ -24,33 +24,47 @@ local RED = couch.Color(1.0, 0.0, 0.0)
 local BLUE = couch.Color(0.0, 0.0, 1.0)
 
 function init()
+   local material
+   
    camera = couch.Camera()
    camera:MakeCurrent()
    camera.transform:Translate(0.0, 0.0, 10.0)
    ball = couch.Ball()
    ball:SetupMesh()
-   ball.material.color = RED
-   ball.material.usesColor = true
+   material = couch.Material.new()
+   material.color = RED
+   material.usesColor = true
+   ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
    ball1 = couch.Ball()
    ball1:SetupMesh()
-   ball1.material.tex = couch.Texture.FromFile("container.png")
-   ball1.material.usesTex = true
+   material = couch.Material.new()
+   material.tex = couch.Texture.FromFile("container.png")
+   material.usesTex = true
+   ball1:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball1)
 
    ball1.transform:Translate(0.0, 3.0, 0.0)
 
    trough = couch.Mesh.FromFile("trough.glb")
    trough:SetupMesh()
-   trough.material.tex = couch.Texture.FromFile("wood_lowres.png")
-   trough.material.usesTex = true
+   material = couch.Material.new()
+   material.tex = couch.Texture.FromFile("wood_lowres.png")
+   material.usesTex = true
+   trough:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(trough)
    trough.transform:Translate(10.0, 0.0, 0.0)
 
    scaffold = couch.Mesh.FromFile("scaffold.glb")
    scaffold:SetupMesh()
-   scaffold.material.tex = couch.Texture.FromFile("grate_floor_lowres.png")
-   scaffold.material.usesTex = true
+   material = couch.Material.new()
+   material.tex = couch.Texture.FromFile("grate_floor_lowres.png")
+   material.usesTex = true
+   scaffold:SetMaterial(0, material)
+   material = couch.Material.new()
+   material.tex = couch.Texture.FromFile("railing.png")
+   material.usesTex = true
+   scaffold:SetMaterial(1, material)
    couch.Node.GetRoot().children:Append(scaffold)
    scaffold.transform:Translate(-10.0, 0.0, 0.0)
 end

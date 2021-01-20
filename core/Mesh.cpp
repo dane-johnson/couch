@@ -1,21 +1,15 @@
 #include "Mesh.h"
 
-Mesh::Mesh() {
+SubMesh::SubMesh() {
   material = new Material();
 }
 
-Mesh::~Mesh() {
-  if (material) {
-    delete material;
-  }
-}
-
-Mesh::Mesh(VertexList vertices, IndexList indices) {
+SubMesh::SubMesh(VertexList vertices, IndexList indices) {
   this->vertices = vertices;
   this->indices = indices;
 }
 
-void Mesh::SetupMesh() {
+void SubMesh::SetupSubMesh() {
   glGenVertexArrays(1, &VAO);
   glGenBuffers(1, &VBO);
   glGenBuffers(1, &EBO);
@@ -40,6 +34,32 @@ void Mesh::SetupMesh() {
   glBindVertexArray(0);
 }
 
+void SubMesh::Draw(Shader *shader) {
+  shader->UpdateColor(material->usesColor, material->color);
+  shader->UpdateTex(material->usesTex, material->tex);
+  glBindVertexArray(VAO);
+  glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
+  glBindVertexArray(0);
+}
+
+Mesh::Mesh() {}
+
+Mesh::~Mesh() {
+  for (SubMesh *sub : submeshes) {
+    delete sub;
+  }
+}
+
+void Mesh::SetupMesh() {
+  for (SubMesh *sub : submeshes) {
+    sub->SetupSubMesh();
+  }
+}
+
+void Mesh::SetMaterial(int submesh, Material *material) {
+  submeshes[submesh]->material = material;
+}
+
 Mesh* Mesh::FromFile(const char *filename) {
   // HOCUS: https://assimp-docs.readthedocs.io/en/latest/usage/use_the_lib.html
   Assimp::Importer importer;
@@ -56,31 +76,34 @@ Mesh* Mesh::FromFile(const char *filename) {
   }
 
   aiNode *root = scene->mRootNode;
-  aiMesh *mesh_to_import = scene->mMeshes[root->mMeshes[0]];
+  Mesh *my_mesh = new Mesh();
+  for (int i = 0; i < root->mNumMeshes; i++) {
+    aiMesh *mesh_to_import = scene->mMeshes[root->mMeshes[i]];
+    my_mesh->submeshes.push_back(aiMesh2SubMesh(mesh_to_import));
+  }
 
-  return aiMesh2Mesh(mesh_to_import);
+  return my_mesh;
 }
 
-Mesh *Mesh::aiMesh2Mesh(aiMesh *aimesh){
-  Mesh *mymesh = new Mesh();
+SubMesh *Mesh::aiMesh2SubMesh(aiMesh *aimesh){
+  SubMesh *sub = new SubMesh();
   for (int i = 0; i < aimesh->mNumVertices; i++) {
     aiVector3D aiPosition = aimesh->mVertices[i];
     aiVector3D aiUV = aimesh->mTextureCoords[0][i]; // TODO get ALL texture coords
     Vertex vertex(aiPosition.x, aiPosition.y, aiPosition.z, aiUV.x, aiUV.y);
-    mymesh->vertices.push_back(vertex);
+    sub->vertices.push_back(vertex);
   }
   for (int i = 0; i < aimesh->mNumFaces; i++) {
     // We're importing triangulated meshes, so each face is three indices
     unsigned int *face = aimesh->mFaces[i].mIndices;
     Index index(face[0], face[1], face[2]);
-    mymesh->indices.push_back(index);
+    sub->indices.push_back(index);
   }
-  return mymesh;
+  return sub;
 }
 
-
-void Mesh::Draw() {
-  glBindVertexArray(VAO);
-  glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
-  glBindVertexArray(0);
+void Mesh::Draw(Shader *shader) {
+  for (SubMesh *sub : submeshes) {
+    sub->Draw(shader);
+  }
 }

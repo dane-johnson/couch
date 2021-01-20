@@ -1,7 +1,12 @@
+#ifndef FLATSHADER_H
+#define FLATSHADER_H
+
 #include "Shader.h"
 
 class FlatShader : public Shader {
 public:
   FlatShader();
-  void UpdateColor(Vector3 color);
 };
+
+#endif /* FLATSHADER_H */
+
