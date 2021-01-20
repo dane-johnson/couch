@@ -30,7 +30,7 @@ set_property(SOURCE scripting/couch.i PROPERTY CPLUSPLUS ON)
 swig_add_library(couchlua
   TYPE STATIC
   LANGUAGE lua
-  SOURCES scripting/couch.i)
+  SOURCES scripting/couch.i scripting/lua/helpers.i)
 target_link_libraries(couchlua ${LUA_LIBRARIES})
 target_link_libraries(couch couchlua)
 

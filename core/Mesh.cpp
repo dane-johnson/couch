@@ -80,6 +80,8 @@ Mesh* Mesh::FromFile(const char *filename) {
     my_mesh->submeshes.push_back(aiMesh2SubMesh(mesh_to_import));
   }
 
+  my_mesh->SetupMesh();
+
   return my_mesh;
 }
 

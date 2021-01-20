@@ -29,15 +29,15 @@ function init()
    camera = couch.Camera()
    camera:MakeCurrent()
    camera.transform:Translate(0.0, 0.0, 10.0)
-   ball = couch.Ball()
-   ball:SetupMesh()
+   
+   ball = couch.Mesh.FromFile("cube.glb")
    material = couch.Material()
    material.color = RED
    material.usesColor = true
    ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
-   ball1 = couch.Ball()
-   ball1:SetupMesh()
+   
+   ball1 = couch.Mesh.FromFile("cube.glb")
    material = couch.Material()
    material.tex = couch.Texture.FromFile("container.png")
    material.usesTex = true
@@ -46,25 +46,11 @@ function init()
 
    ball1.transform:Translate(0.0, 3.0, 0.0)
 
-   trough = couch.Mesh.FromFile("trough.glb")
-   trough:SetupMesh()
-   material = couch.Material()
-   material.tex = couch.Texture.FromFile("wood_lowres.png")
-   material.usesTex = true
-   trough:SetMaterial(0, material)
+   trough = couch.TexturedMesh("trough.glb", "wood_lowres.png")
    couch.Node.GetRoot().children:Append(trough)
    trough.transform:Translate(10.0, 0.0, 0.0)
 
-   scaffold = couch.Mesh.FromFile("scaffold.glb")
-   scaffold:SetupMesh()
-   material = couch.Material()
-   material.tex = couch.Texture.FromFile("grate_floor_lowres.png")
-   material.usesTex = true
-   scaffold:SetMaterial(0, material)
-   material = couch.Material()
-   material.tex = couch.Texture.FromFile("railing.png")
-   material.usesTex = true
-   scaffold:SetMaterial(1, material)
+   scaffold = couch.TexturedMesh("scaffold.glb", "grate_floor_lowres.png", "railing.png")
    couch.Node.GetRoot().children:Append(scaffold)
    scaffold.transform:Translate(-10.0, 0.0, 0.0)
 end
