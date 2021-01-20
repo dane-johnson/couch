@@ -1,6 +1,9 @@
 %module couch
 
 %include "typemaps.i"
+#ifdef SWIGLUA
+%include "lua/helpers.i"
+#endif // SWIGLUA
 
 %{
 #include "types.h"
@@ -8,7 +11,6 @@
 #include "Transform.h"
 #include "Spatial.h"
 #include "Mesh.h"
-#include "Ball.h"
 #include "Material.h"
 #include "Camera.h"
 %}
@@ -38,7 +40,6 @@ public:
 %include "Node.h"
 %include "Spatial.h"
 %include "Mesh.h"
-%include "Ball.h"
 %include "Transform.h"
 %include "Material.h"
 %include "Camera.h"

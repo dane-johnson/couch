@@ -25,10 +25,11 @@ public:
   VertexList vertices;
   IndexList indices;
   Material material;
-  void SetupSubMesh();
   void Draw(Shader *shader);
 private:
   Id VAO, VBO, EBO;
+  void SetupSubMesh();
+  friend class Mesh;  
 };
 
 typedef std::vector<SubMesh*> SubMeshList;
@@ -41,9 +42,9 @@ public:
   static Mesh *FromFile(const char *filename);
   virtual bool IsDrawable() const {return true;}
   virtual void Draw(Shader *shader);
-  virtual void SetupMesh();
 protected:
   SubMeshList submeshes;
+  virtual void SetupMesh();
 private:
   static SubMesh *aiMesh2SubMesh(aiMesh *mesh);
 };
