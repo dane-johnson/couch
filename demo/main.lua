@@ -4,10 +4,6 @@ local ball
 local ball1
 local camera
 
-local UP = 265
-local DOWN = 264
-local Q = 81
-
 local vx = 0.0
 local vz = 0.0
 
@@ -90,28 +86,12 @@ function update(delta)
 end
 
 function onkey(key, code, action, mod)
-   if key == KEY_LEFT and action == 1 then
-      vx = -1.0
-   elseif key == KEY_RIGHT and action == 1 then
-      vx = 1.0
-   elseif (key == KEY_LEFT or key == KEY_RIGHT) and action == 0 then
-      vx = 0.0
-   end
-
-   if key == couch.KEY_W and action == 1 then
+   if key == couch.KEY_W and action == couch.ACTION_PRESS then
       vz = 1.0
-   elseif key == couch.KEY_S and action == 1 then
+   elseif key == couch.KEY_S and action == couch.ACTION_PRESS then
       vz = -1.0
-   elseif (key == couch.KEY_W or key == couch.KEY_S) and action == 0 then
+   elseif (key == couch.KEY_W or key == couch.KEY_S) and action == couch.ACTION_RELEASE then
       vz = 0.0
-   end
-
-   if key == Q then
-      if action == 1 then
-	 cam_rot_x = 1.0
-      elseif action == 0 then
-	 cam_rot_x = 0.0
-      end
    end
 end
 
