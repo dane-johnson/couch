@@ -15,5 +15,5 @@ void main() {
   vec4 vertex = PROJECTION * VIEW * MODEL * vec4(pos, 1.0);
   gl_Position = vertex;
   UV = vec3(uv * vertex.z, vertex.z);
-  NORMAL = normal;
+  NORMAL = (PROJECTION * VIEW * MODEL * vec4(normal, 0.0)).xyz;
 }

@@ -39,7 +39,11 @@ void main() {
 
   if (!material.unshaded) {
     vec3 ambient = directionalLight.ambient * directionalLight.color;
-    vec3 diffuse = directionalLight.diffuse * reflect(directionalLight.direction, NORMAL) * directionalLight.color;
-    FragColor *= vec4(ambient, 1.0);
+    ambient = max(ambient, 0.0);
+    
+    vec3 diffuse = directionalLight.diffuse * dot(directionalLight.direction, NORMAL) * directionalLight.color;
+    diffuse = max(diffuse, 0.0);
+    
+    FragColor *= vec4(ambient + diffuse, 1.0);
   }
 }
