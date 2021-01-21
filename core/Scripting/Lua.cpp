@@ -52,7 +52,10 @@ void Lua::Update(double delta) {
   if (HasHook("update")) {
     lua_getglobal(L, "update");
     lua_pushnumber(L, delta);
-    lua_call(L, 1, 0);
+    int err = lua_pcall(L, 1, 0, 0);
+    if (err != LUA_OK) {
+      Error();
+    }
   }
 #endif // LUA_SCRIPTING
 }
@@ -89,7 +92,10 @@ void Lua::LuaKeyHandler(Window *window, int key, int code, int action, int mods)
   lua_pushinteger(L, code);
   lua_pushinteger(L, action);
   lua_pushinteger(L, mods);
-  lua_call(L, 4, 0);
+  int err = lua_pcall(L, 4, 0, 0);
+  if (err != LUA_OK) {
+    Error();
+  }
 #endif // LUA_SCRIPTING
 }
 
@@ -101,6 +107,9 @@ void Lua::LuaMousePositionHandler(Window *window, double xpos, double ypos, doub
   lua_pushnumber(L, ypos);
   lua_pushnumber(L, relx);
   lua_pushnumber(L, rely);
-  lua_call(L, 4, 0);
+  int err = lua_pcall(L, 4, 0, 1);
+  if (err != LUA_OK) {
+    Error();
+  }
 #endif // LUA_SCRIPTING
 }

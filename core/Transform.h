@@ -14,6 +14,9 @@ struct Transform {
   Vector3 scale;
   void Translate(cfloat x, cfloat y, cfloat z);
   Vector3 Forward();
+  Vector3 Right();
+  Vector3 Up();
+  Matrix RotationMatrix();
 };
 
 #endif /* TRANSFORM_H */

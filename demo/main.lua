@@ -61,12 +61,11 @@ end
 
 function update(delta)
    local cam_forwards = camera.transform:Forward()
-   local cam_rotation = camera.transform.rotation
-   print (cam_forwards.x, cam_forwards.y, cam_forwards.z)
-   print (cam_rotation.x, cam_rotation.y, cam_rotation.z)
-
+   local cam_right = camera.transform:Right()
+   
    local move_vec = couch.Vector3()
    move_vec = camera.transform.position + cam_forwards * delta * vz * SPEED
+   move_vec = move_vec + cam_right * delta * vx * SPEED
    camera.transform.position = move_vec
    
    camera.transform.rotation.y = camera.transform.rotation.y - cam_rot_x * delta
@@ -93,6 +92,14 @@ function onkey(key, code, action, mod)
       vz = -1.0
    elseif (key == couch.KEY_W or key == couch.KEY_S) and action == couch.ACTION_RELEASE then
       vz = 0.0
+   end
+
+   if key == couch.KEY_A and action == couch.ACTION_PRESS then
+      vx = -1.0
+   elseif key == couch.KEY_D and action == couch.ACTION_PRESS then
+      vx = 1.0
+   elseif (key == couch.KEY_D or key == couch.KEY_A) and action == couch.ACTION_RELEASE then
+      vx = 0.0
    end
 end
 

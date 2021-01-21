@@ -21,7 +21,7 @@ public:
   void Initialize();
   void Update(double delta);
   void Close();
-  void Error();
+  static void Error();
   bool HasHook(const char *name);
 private:
 #ifdef LUA_SCRIPTING
