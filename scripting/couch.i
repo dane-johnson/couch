@@ -7,6 +7,7 @@
 
 %{
 #include "types.h"
+#include "constants.h"
 #include "Node.h"
 #include "Transform.h"
 #include "Spatial.h"
@@ -37,6 +38,7 @@ public:
 %ignore "Vector3";
 
 %include "types.h"
+%include "constants.h"
 %include "Node.h"
 %include "Spatial.h"
 %include "Mesh.h"

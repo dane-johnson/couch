@@ -19,10 +19,12 @@ void Lua::Initialize() {
     if (err != LUA_OK) {
       Error();
     }
-    lua_getglobal(L, "init");
-    err = lua_pcall(L, 0, 0, 0);
-    if (err != LUA_OK) {
-      Error();
+    if (HasHook("init")) {
+      lua_getglobal(L, "init");
+      err = lua_pcall(L, 0, 0, 0);
+      if (err != LUA_OK) {
+	Error();
+      }
     }
   } else if (err == LUA_ERRFILE) {
     Util::Die("Could not find main.lua.");
@@ -34,8 +36,12 @@ void Lua::Initialize() {
   // Bind input functions
   //glfwSetWindowUserPointer(window, (void*) L);
   Input *input = Input::GetInstance();
-  input->keyHandlers.push_back(LuaKeyHandler);
-  input->mousePositionHandlers.push_back(LuaMousePositionHandler);
+  if (HasHook("onkey")) {
+    input->keyHandlers.push_back(LuaKeyHandler);
+  }
+  if (HasHook("onmousemotion")) {
+    input->mousePositionHandlers.push_back(LuaMousePositionHandler);
+  }
 #else // LUA_SCRIPTING
   Util::Die("Lua is selected as scripting language, but this binary was built without Lua support.");
 #endif // LUA_SCRIPTING
@@ -43,9 +49,11 @@ void Lua::Initialize() {
 
 void Lua::Update(double delta) {
 #ifdef LUA_SCRIPTING
-  lua_getglobal(L, "update");
-  lua_pushnumber(L, delta);
-  lua_call(L, 1, 0);
+  if (HasHook("update")) {
+    lua_getglobal(L, "update");
+    lua_pushnumber(L, delta);
+    lua_call(L, 1, 0);
+  }
 #endif // LUA_SCRIPTING
 }
 
@@ -61,6 +69,16 @@ void Lua::Error() {
   Util::Die(error);
 #endif // LUA_SCRIPTING
   Util::Die("Whut?");
+}
+
+bool Lua::HasHook(const char *name) {
+  bool exists = false;
+#ifdef LUA_SCRIPTING
+  int type = lua_getglobal(L, name);
+  lua_pop(L, -1);
+  exists = type != LUA_TNIL;
+#endif // LUA_SCRIPTING
+  return exists;
 }
 
 void Lua::LuaKeyHandler(Window *window, int key, int code, int action, int mods) {

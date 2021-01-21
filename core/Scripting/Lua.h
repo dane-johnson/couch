@@ -22,6 +22,7 @@ public:
   void Update(double delta);
   void Close();
   void Error();
+  bool HasHook(const char *name);
 private:
 #ifdef LUA_SCRIPTING
   static lua_State *L;
