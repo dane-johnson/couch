@@ -69,6 +69,9 @@ void Shader::UpdateTex(bool usesTex, Texture tex) {
   glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) usesTex);
   glBindTexture(GL_TEXTURE_2D, tex.id);
 }
+void Shader::UpdateAlphaScissor(cfloat alphaScissor) {
+  glUniform1f(glGetUniformLocation(id, "material.alphaScissor"), alphaScissor);
+}
 
 Name Shader::GetName() const {
   return "Unnamed Shader";

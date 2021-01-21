@@ -52,6 +52,15 @@ function init()
    trough.transform.scale = trough.transform.scale * 3.0
 
    scaffold = couch.TexturedMesh("scaffold.glb", "grate_floor_lowres.png", "railing.png")
+   
+   material = scaffold:GetMaterial(0)
+   material.alphaScissor = 0.9
+   scaffold:SetMaterial(0, material)
+
+   material = scaffold:GetMaterial(1)
+   material.alphaScissor = 0.1
+   scaffold:SetMaterial(1, material)
+   
    couch.Node.GetRoot().children:Append(scaffold)
    scaffold.transform:Translate(-10.0, 0.0, 0.0)
 end

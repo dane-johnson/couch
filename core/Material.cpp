@@ -15,8 +15,6 @@ Color::Color(cfloat r, cfloat g, cfloat b) {
 Texture::Texture() {}
 
 Texture Texture::FromFile(const char *filename) {
-  // Lotta hocus pocus
-  // https://learnopengl.com/Getting-started/Textures
   Texture tex;
   glGenTextures(1, &tex.id);
   glBindTexture(GL_TEXTURE_2D, tex.id);
@@ -43,4 +41,5 @@ Texture Texture::FromFile(const char *filename) {
 Material::Material() {
   usesColor = false;
   usesTex = false;
+  alphaScissor = 0.0f;
 }
