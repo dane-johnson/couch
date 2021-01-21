@@ -61,6 +61,9 @@ end
 
 function update(delta)
    local cam_forwards = camera.transform:Forward()
+   local cam_rotation = camera.transform.rotation
+   print (cam_forwards.x, cam_forwards.y, cam_forwards.z)
+   print (cam_rotation.x, cam_rotation.y, cam_rotation.z)
 
    local move_vec = couch.Vector3()
    move_vec = camera.transform.position + cam_forwards * delta * vz * SPEED
@@ -69,7 +72,7 @@ function update(delta)
    camera.transform.rotation.y = camera.transform.rotation.y - cam_rot_x * delta
    cam_rot_x = 0.0
    camera.transform.rotation.x = camera.transform.rotation.x - cam_rot_y * delta
-   camera.transform.rotation.x = min(max(camera.transform.rotation.x, -3.14), 3.14)
+   camera.transform.rotation.x = min(max(camera.transform.rotation.x, -3.14 / 2.0), 3.14 / 2.0)
    cam_rot_y = 0.0
 
    local loc = ball1.transform.position
@@ -81,8 +84,6 @@ function update(delta)
    ball1.transform.position.y = ball1.transform.position.y + ballvy * delta
 
    ball.transform.rotation.z = ball.transform.rotation.z + 1.0 * delta;
-   ball.transform.rotation.y = ball.transform.rotation.y + 1.0 * delta;
-   ball.transform.rotation.x = ball.transform.rotation.x + 1.0 * delta;
 end
 
 function onkey(key, code, action, mod)
