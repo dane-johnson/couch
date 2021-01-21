@@ -1,5 +1,7 @@
 #include "Node.h"
 
+Name Node::GetType() const {return "Node";}
+
 Node *Node::root = {new Node()};
 Node *Node::GetRoot() {
   return root;

@@ -43,6 +43,7 @@ public:
   static Mesh *FromFile(const char *filename);
   virtual bool IsDrawable() const {return true;}
   virtual void Draw(Shader *shader);
+  virtual Name GetType() const;
 protected:
   SubMeshList submeshes;
   virtual void SetupMesh();

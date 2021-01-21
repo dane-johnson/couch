@@ -17,12 +17,21 @@ local SPEED = 30
 local RED = couch.Color(1.0, 0.0, 0.0)
 local BLUE = couch.Color(0.0, 0.0, 1.0)
 
+local light
+
 function init()
    local material
    
    camera = couch.Camera()
    camera:MakeCurrent()
    camera.transform:Translate(0.0, 0.0, 10.0)
+
+   light = couch.DirectionalLight.new()
+   light.direction = couch.Vector3(0.0, 0.0, -1.0)
+   light.color = couch.Vector3(1.0, 1.0, 1.0)
+   light.ambient = 0.4
+   light.diffuse = 1.0
+   couch.Node.GetRoot().children:Append(light)
    
    ball = couch.Mesh.FromFile("cube.glb")
    material = couch.Material()
@@ -100,6 +109,12 @@ function onkey(key, code, action, mod)
       vx = 1.0
    elseif (key == couch.KEY_D or key == couch.KEY_A) and action == couch.ACTION_RELEASE then
       vx = 0.0
+   end
+
+   if key == couch.KEY_DOWN and action == couch.ACTION_PRESS then
+      light.ambient = light.ambient - 0.1
+   elseif key == couch.KEY_UP and action == couch.ACTION_PRESS then
+      light.ambient = light.ambient + 0.1
    end
 end
 

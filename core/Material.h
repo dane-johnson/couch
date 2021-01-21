@@ -27,6 +27,7 @@ struct Material {
   Texture tex;
   bool usesTex;
   cfloat alphaScissor;
+  bool unshaded;
   Material();
 };
 
