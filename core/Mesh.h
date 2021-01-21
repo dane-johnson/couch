@@ -38,6 +38,7 @@ class Mesh : public Spatial {
 public:
   Mesh();
   ~Mesh();
+  Material GetMaterial(int submesh);
   void SetMaterial(int submesh, Material material);
   static Mesh *FromFile(const char *filename);
   virtual bool IsDrawable() const {return true;}

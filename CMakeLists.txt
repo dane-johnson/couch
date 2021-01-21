@@ -27,10 +27,18 @@ target_link_libraries(couch ${LUA_LIBRARIES})
 
 include(UseSWIG)
 set_property(SOURCE scripting/couch.i PROPERTY CPLUSPLUS ON)
+if (NOT WIN32)
 swig_add_library(couchlua
   TYPE SHARED
   LANGUAGE lua
   SOURCES scripting/couch.i scripting/lua/helpers.i)
+else()
+  swig_add_library(couchlua
+  TYPE STATIC
+  LANGUAGE lua
+  SOURCES scripting/couch.i scripting/lua/helpers.i)
+endif()
+
 target_link_libraries(couchlua ${LUA_LIBRARIES})
 target_link_libraries(couch couchlua)
 

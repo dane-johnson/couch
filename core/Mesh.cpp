@@ -35,6 +35,7 @@ void SubMesh::SetupSubMesh() {
 void SubMesh::Draw(Shader *shader) {
   shader->UpdateColor(material.usesColor, material.color);
   shader->UpdateTex(material.usesTex, material.tex);
+  shader->UpdateAlphaScissor(material.alphaScissor);
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
@@ -52,6 +53,10 @@ void Mesh::SetupMesh() {
   for (SubMesh *sub : submeshes) {
     sub->SetupSubMesh();
   }
+}
+
+Material Mesh::GetMaterial(int submesh) {
+  return submeshes[submesh]->material;
 }
 
 void Mesh::SetMaterial(int submesh, Material material) {

@@ -19,6 +19,7 @@ public:
   void UpdateColor(bool usesColor, Color color);
   void UpdateTex(bool usesTex);
   void UpdateTex(bool usesTex, Texture tex);
+  void UpdateAlphaScissor(cfloat alphaScissor);
 
   virtual Name GetName() const;
 };

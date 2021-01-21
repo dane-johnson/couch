@@ -3,3 +3,5 @@
 #include "screen.frag.h"
 
 ScreenShader::ScreenShader() : Shader(screen_vert, screen_frag) {}
+
+Name ScreenShader::GetName() const {return "Screen Shader";}
