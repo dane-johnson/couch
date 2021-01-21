@@ -42,4 +42,5 @@ Material::Material() {
   usesColor = false;
   usesTex = false;
   alphaScissor = 0.0f;
+  unshaded = false;
 }

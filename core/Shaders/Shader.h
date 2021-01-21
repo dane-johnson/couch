@@ -5,6 +5,7 @@
 
 #include "types.h"
 #include "Material.h"
+#include "Light.h"
 
 class Shader {
 public:
@@ -20,6 +21,9 @@ public:
   void UpdateTex(bool usesTex);
   void UpdateTex(bool usesTex, Texture tex);
   void UpdateAlphaScissor(cfloat alphaScissor);
+  void UpdateUnshaded(bool unshaded);
+
+  void UpdateDirectionalLight(DirectionalLight directionalLight);
 
   virtual Name GetName() const;
 };

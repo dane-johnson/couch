@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "types.h"
+
 class Node; // Forwards declare
 class NodeList : public std::vector<Node*> {
 public:
@@ -16,6 +18,7 @@ public:
   virtual bool IsDrawable() const;
   virtual void Draw(){};
   virtual bool IsTransformable() const;
+  virtual Name GetType() const;
 private:
   static Node *root;
 };

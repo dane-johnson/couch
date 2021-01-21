@@ -24,10 +24,12 @@ void SubMesh::SetupSubMesh() {
   // Vertex positions
   glEnableVertexAttribArray(0);
   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) 0);
-  // Vertex UV
+  // Vertex normal
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(float)));
-  // TODO normals
+  glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) (3 * sizeof(float)));
+  // Vertex UV
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) (6 * sizeof(float)));
 
   glBindVertexArray(0);
 }
@@ -36,10 +38,13 @@ void SubMesh::Draw(Shader *shader) {
   shader->UpdateColor(material.usesColor, material.color);
   shader->UpdateTex(material.usesTex, material.tex);
   shader->UpdateAlphaScissor(material.alphaScissor);
+  shader->UpdateUnshaded(material.unshaded);
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
 }
+
+Name Mesh::GetType() const {return "Mesh";}
 
 Mesh::Mesh() {}
 
@@ -94,8 +99,11 @@ SubMesh *Mesh::aiMesh2SubMesh(aiMesh *aimesh){
   SubMesh *sub = new SubMesh();
   for (int i = 0; i < aimesh->mNumVertices; i++) {
     aiVector3D aiPosition = aimesh->mVertices[i];
+    aiVector3D aiNormal = aimesh->mNormals[i];
     aiVector3D aiUV = aimesh->mTextureCoords[0][i]; // TODO get ALL texture coords
-    Vertex vertex(aiPosition.x, aiPosition.y, aiPosition.z, aiUV.x, aiUV.y);
+    Vertex vertex(aiPosition.x, aiPosition.y, aiPosition.z,
+		  aiNormal.x, aiNormal.y, aiNormal.z,
+		  aiUV.x, aiUV.y);
     sub->vertices.push_back(vertex);
   }
   for (int i = 0; i < aimesh->mNumFaces; i++) {

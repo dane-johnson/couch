@@ -8,6 +8,8 @@
 
 #include "types.h"
 
+#include "Util.h"
+
 #include "Shaders/FlatShader.h"
 #include "Shaders/ScreenShader.h"
 
@@ -17,6 +19,7 @@
 #include "Input.h"
 #include "Node.h"
 #include "Mesh.h"
+#include "Light.h"
 #include "Scripting/Lua.h"
 
 // Thirdparty Includes
@@ -48,7 +51,6 @@ void render(Node *curr, Shader *shader, Matrix model) {
     render(child, shader, model);   
   }
 }
-
 
 int main() {
 
@@ -112,6 +114,15 @@ int main() {
     view = glm::rotate(view, -camera->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
     view = glm::translate(view, -camera->transform.position);
     shader->UpdateView(view);
+
+    // Find the lights
+    DirectionalLight *dirLight = Util::FindNodeByType<DirectionalLight>(root, "DirectionalLight");
+    if (dirLight) {
+      shader->UpdateDirectionalLight(*dirLight);
+    } else {
+      // No light in scene
+      shader->UpdateDirectionalLight(DirectionalLight());
+    }
 
     // Render the scene tree
     render(root, shader, Matrix(1.0f));

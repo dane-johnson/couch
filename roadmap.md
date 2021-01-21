@@ -48,7 +48,13 @@ swig files and customizing the interface by hand. I also want to add a whole mes
 so that I don't have to test for keypresses. Lastly, I want to test if a function exists before
 calling it from the lua file, so stubs aren't necessary to prevent a crash
 
-- [ ] Combine files
-- [ ] Better interface
-- [ ] Constants for keys and the like
-- [ ] No crash on calling non-existant scripting hooks
+- [X] Combine files
+- [X] Better interface
+- [X] Constants for keys and the like
+- [X] No crash on calling non-existant scripting hooks
+
+## Lighting
+
+I'm a bit happier with the system now, I think it's time I started the lighting.
+We're going to use a pretty basic Phong lighting system, with 
+Flat and Garourd shaders available (This was all that was available on the PSX!)

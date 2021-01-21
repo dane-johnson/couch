@@ -14,6 +14,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "Light.h"
 %}
 
 %rename("%(strip:[script_])s") "";
@@ -24,6 +25,7 @@ typedef float cfloat;
 class Vector3 {
 public:
   Vector3();
+  Vector3(cfloat x, cfloat y, cfloat z);
   cfloat x, y, z;
 };
 
@@ -37,6 +39,13 @@ public:
 }
 %ignore "Vector3";
 
+%extend DirectionalLight {
+  static DirectionalLight* script_new() {
+    return new DirectionalLight();
+  }
+}
+
+
 %include "types.h"
 %include "constants.h"
 %include "Node.h"
@@ -45,4 +54,5 @@ public:
 %include "Transform.h"
 %include "Material.h"
 %include "Camera.h"
+%include "Light.h"
 

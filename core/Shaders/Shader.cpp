@@ -72,6 +72,18 @@ void Shader::UpdateTex(bool usesTex, Texture tex) {
 void Shader::UpdateAlphaScissor(cfloat alphaScissor) {
   glUniform1f(glGetUniformLocation(id, "material.alphaScissor"), alphaScissor);
 }
+void Shader::UpdateUnshaded(bool unshaded) {
+  glUniform1i(glGetUniformLocation(id, "material.unshaded"), (int) unshaded);
+}
+
+void Shader::UpdateDirectionalLight(DirectionalLight directionalLight) {
+  glUniform3fv(glGetUniformLocation(id, "directionalLight.direction"), 1, glm::value_ptr(directionalLight.direction));
+  glUniform3fv(glGetUniformLocation(id, "directionalLight.color"), 1, glm::value_ptr(directionalLight.color));
+
+  glUniform1f(glGetUniformLocation(id, "directionalLight.ambient"), directionalLight.ambient);
+  glUniform1f(glGetUniformLocation(id, "directionalLight.diffuse"), directionalLight.diffuse);
+  glUniform1f(glGetUniformLocation(id, "directionalLight.specular"), directionalLight.specular);
+}
 
 Name Shader::GetName() const {
   return "Unnamed Shader";
