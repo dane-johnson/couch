@@ -8,7 +8,7 @@ uniform mat4 MODEL;
 uniform mat4 VIEW;
 uniform mat4 PROJECTION;
 
-out vec3 UV;
+noperspective out vec2 UV; // PSX use affine texture mapping
 out vec3 NORMAL;
 flat out vec3 LIGHT;
 
@@ -25,7 +25,8 @@ uniform DirectionalLight directionalLight;
 void main() {
   vec4 vertex = PROJECTION * VIEW * MODEL * vec4(pos, 1.0);
   gl_Position = vertex;
-  UV = vec3(uv * vertex.z, vertex.z);
+
+  UV = uv;
 
   NORMAL = (VIEW * MODEL * vec4(normal, 0.0)).xyz;
 
