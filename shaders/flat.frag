@@ -2,7 +2,7 @@
 
 in vec3 UV;
 in vec3 NORMAL;
-in vec3 LIGHT;
+flat in vec3 LIGHT;
 
 out vec4 FragColor;
 
