@@ -1,6 +1,6 @@
 #version 330 core
 
-in vec3 UV;
+noperspective in vec2 UV;
 in vec3 NORMAL;
 flat in vec3 LIGHT;
 
@@ -23,7 +23,7 @@ void main() {
     FragColor += vec4(material.color, 1.0);
   }
   if (material.usesTex) {
-    FragColor += texture(material.tex, UV.xy / UV.z);
+    FragColor += texture(material.tex, UV);
   }
   if (FragColor.w < material.alphaScissor) {
     discard;
