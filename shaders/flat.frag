@@ -2,6 +2,7 @@
 
 in vec3 UV;
 in vec3 NORMAL;
+in vec3 LIGHT;
 
 out vec4 FragColor;
 
@@ -14,16 +15,7 @@ struct Material {
   bool unshaded;
 };
 
-struct DirectionalLight {
-  vec3 direction;
-  vec3 color;
-  float ambient;
-  float diffuse;
-  float specular;
-};
-
 uniform Material material;
-uniform DirectionalLight directionalLight;
 
 void main() {
   FragColor = vec4(0.0);
@@ -38,12 +30,6 @@ void main() {
   }
 
   if (!material.unshaded) {
-    vec3 ambient = directionalLight.ambient * directionalLight.color;
-    ambient = max(ambient, 0.0);
-    
-    vec3 diffuse = directionalLight.diffuse * dot(directionalLight.direction, NORMAL) * directionalLight.color;
-    diffuse = max(diffuse, 0.0);
-    
-    FragColor *= vec4(ambient + diffuse, 1.0);
+    FragColor *= vec4(LIGHT, 1.0);
   }
 }

@@ -27,10 +27,11 @@ function init()
    camera.transform:Translate(0.0, 0.0, 10.0)
 
    light = couch.DirectionalLight.new()
-   light.direction = couch.Vector3(0.0, 0.0, -1.0)
+   light.direction = couch.Vector3(0.0, -1.0, 0.0)
    light.color = couch.Vector3(1.0, 1.0, 1.0)
-   light.ambient = 0.4
+   light.ambient = 0.2
    light.diffuse = 1.0
+   light.specular = 0.0001
    couch.Node.GetRoot().children:Append(light)
    
    ball = couch.Mesh.FromFile("cube.glb")
@@ -112,9 +113,10 @@ function onkey(key, code, action, mod)
    end
 
    if key == couch.KEY_DOWN and action == couch.ACTION_PRESS then
-      light.ambient = light.ambient - 0.1
+      light.ambient = max(light.ambient - 0.1, 0.0)
    elseif key == couch.KEY_UP and action == couch.ACTION_PRESS then
       light.ambient = light.ambient + 0.1
+      print(light.ambient)
    end
 end
 
