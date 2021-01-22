@@ -10,7 +10,7 @@ uniform mat4 PROJECTION;
 
 out vec3 UV;
 out vec3 NORMAL;
-out vec3 LIGHT;
+flat out vec3 LIGHT;
 
 struct DirectionalLight {
   vec3 direction;

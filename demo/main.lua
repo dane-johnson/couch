@@ -31,7 +31,7 @@ function init()
    light.color = couch.Vector3(1.0, 1.0, 1.0)
    light.ambient = 0.2
    light.diffuse = 1.0
-   light.specular = 0.0001
+   light.specular = 0.01
    couch.Node.GetRoot().children:Append(light)
    
    ball = couch.Mesh.FromFile("cube.glb")
@@ -41,7 +41,7 @@ function init()
    ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
    
-   ball1 = couch.Mesh.FromFile("cube.glb")
+   ball1 = couch.Mesh.FromFile("ball.glb")
    material = couch.Material()
    material.tex = couch.Texture.FromFile("container.png")
    material.usesTex = true
