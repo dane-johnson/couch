@@ -53,27 +53,19 @@ void Shader::UpdateProjection(Matrix projection) {
   glUniformMatrix4fv(glGetUniformLocation(id, "PROJECTION"), 1, GL_FALSE, glm::value_ptr(projection));
 }
 
-void Shader::UpdateColor(bool usesColor) {
-  glUniform1i(glGetUniformLocation(id, "material.usesColor"), (int) usesColor);
-}
-
-void Shader::UpdateColor(bool usesColor, Color color) {
-  glUniform1i(glGetUniformLocation(id, "material.usesColor"), (int) usesColor);
-  glUniform3f(glGetUniformLocation(id, "material.color"), color.r, color.g, color.b);
-}
-
-void Shader::UpdateTex(bool usesTex) {
-  glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) usesTex);
-}
-void Shader::UpdateTex(bool usesTex, Texture tex) {
-  glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) usesTex);
-  glBindTexture(GL_TEXTURE_2D, tex.id);
-}
-void Shader::UpdateAlphaScissor(cfloat alphaScissor) {
-  glUniform1f(glGetUniformLocation(id, "material.alphaScissor"), alphaScissor);
-}
-void Shader::UpdateUnshaded(bool unshaded) {
-  glUniform1i(glGetUniformLocation(id, "material.unshaded"), (int) unshaded);
+void Shader::UpdateMaterial(Material material) {
+  glUniform1i(glGetUniformLocation(id, "material.usesColor"), (int) material.usesColor);
+  glUniform3f(glGetUniformLocation(id, "material.color"),
+	      material.color.r,
+	      material.color.g,
+	      material.color.b);
+  glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) material.usesTex);
+  if (material.usesTex) {
+    glBindTexture(GL_TEXTURE_2D, material.tex.id);
+  }
+  glUniform1f(glGetUniformLocation(id, "material.alphaScissor"), material.alphaScissor);
+  glUniform1i(glGetUniformLocation(id, "material.unshaded"), (int) material.unshaded);
+  glUniform1i(glGetUniformLocation(id, "material.cullBack"), (int) material.cullBack);
 }
 
 void Shader::UpdateDirectionalLight(DirectionalLight directionalLight) {

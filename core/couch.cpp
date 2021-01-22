@@ -131,7 +131,7 @@ int main() {
     screen.Disable();
     // // Render the screen
     screenShader->Use();
-    screenShader->UpdateTex(true, screen.tex);
+    screenShader->UpdateTex(screen.tex);
     glViewport(0, 0, width, height);
     screen.Draw();
     

@@ -35,10 +35,7 @@ void SubMesh::SetupSubMesh() {
 }
 
 void SubMesh::Draw(Shader *shader) {
-  shader->UpdateColor(material.usesColor, material.color);
-  shader->UpdateTex(material.usesTex, material.tex);
-  shader->UpdateAlphaScissor(material.alphaScissor);
-  shader->UpdateUnshaded(material.unshaded);
+  shader->UpdateMaterial(material);
   glBindVertexArray(VAO);
   glDrawElements(GL_TRIANGLES, indices.size() * 3, GL_UNSIGNED_INT, 0);
   glBindVertexArray(0);
