@@ -2,7 +2,10 @@
 
 noperspective in vec2 UV;
 in vec3 NORMAL;
-flat in vec3 LIGHT;
+
+flat in vec3 AMBIENT;
+flat in vec3 DIFFUSE;
+flat in vec3 SPECULAR;
 
 out vec4 FragColor;
 
@@ -30,6 +33,6 @@ void main() {
   }
 
   if (!material.unshaded) {
-    FragColor *= vec4(LIGHT, 1.0);
+    FragColor *= vec4(AMBIENT + DIFFUSE + SPECULAR, 1.0);
   }
 }

@@ -10,7 +10,10 @@ uniform mat4 PROJECTION;
 
 noperspective out vec2 UV; // PSX use affine texture mapping
 out vec3 NORMAL;
-flat out vec3 LIGHT;
+
+flat out vec3 AMBIENT;
+flat out vec3 DIFFUSE;
+flat out vec3 SPECULAR;
 
 struct DirectionalLight {
   vec3 direction;
@@ -31,19 +34,17 @@ void main() {
   NORMAL = (VIEW * MODEL * vec4(normal, 0.0)).xyz;
 
   // Flat shading, we compute light per vertex
-  vec3 ambient = directionalLight.ambient * directionalLight.color;
+  AMBIENT = directionalLight.ambient * directionalLight.color;
 
   vec3 direction = -(VIEW * vec4(directionalLight.direction, 0.0)).xyz;
   float diff = dot(normalize(direction), normalize(NORMAL));
   diff = max(diff, 0.0);
-  vec3 diffuse = directionalLight.diffuse * diff * directionalLight.color;
+  DIFFUSE = directionalLight.diffuse * diff * directionalLight.color;
 
   vec3 viewDir = (VIEW * MODEL * vec4(pos, 1.0)).xyz;
   vec3 reflectionDir = reflect(normalize(direction), normalize(NORMAL));
   float spec = dot(viewDir, reflectionDir);
   spec = max(spec, 0.0);
   spec = pow(spec, 2);
-  vec3 specular = directionalLight.specular * spec * directionalLight.color;
-
-  LIGHT = ambient + diffuse + specular;
+  SPECULAR = directionalLight.specular * spec * directionalLight.color;
 }
