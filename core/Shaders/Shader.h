@@ -16,13 +16,9 @@ public:
   void UpdateView(Matrix view);
   void UpdateModel(Matrix model);
   void UpdateProjection(Matrix projection);
-  void UpdateColor(bool usesColor);
-  void UpdateColor(bool usesColor, Color color);
-  void UpdateTex(bool usesTex);
-  void UpdateTex(bool usesTex, Texture tex);
-  void UpdateAlphaScissor(cfloat alphaScissor);
-  void UpdateUnshaded(bool unshaded);
 
+  void UpdateMaterial(Material material);
+  
   void UpdateDirectionalLight(DirectionalLight directionalLight);
 
   virtual Name GetName() const;

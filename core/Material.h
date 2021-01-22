@@ -28,6 +28,7 @@ struct Material {
   bool usesTex;
   cfloat alphaScissor;
   bool unshaded;
+  bool cullBack;
   Material();
 };
 

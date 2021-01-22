@@ -43,4 +43,5 @@ Material::Material() {
   usesTex = false;
   alphaScissor = 0.0f;
   unshaded = false;
+  cullBack = true;
 }

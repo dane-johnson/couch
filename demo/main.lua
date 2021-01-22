@@ -27,7 +27,7 @@ function init()
    camera.transform:Translate(0.0, 0.0, 10.0)
 
    light = couch.DirectionalLight.new()
-   light.direction = couch.Vector3(0.0, -1.0, 0.0)
+   light.direction = couch.Vector3(0.0, -1.0, 1.0)
    light.color = couch.Vector3(1.0, 1.0, 1.0)
    light.ambient = 0.2
    light.diffuse = 1.0
@@ -60,6 +60,9 @@ function init()
    material = scaffold:GetMaterial(0)
    material.alphaScissor = 0.9
    scaffold:SetMaterial(0, material)
+   material = scaffold:GetMaterial(1)
+   material.cullBack = false
+   scaffold:SetMaterial(1, material)
 
    material = scaffold:GetMaterial(1)
    material.alphaScissor = 0.1
