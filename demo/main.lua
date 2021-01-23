@@ -32,20 +32,21 @@ function init()
    light.color = couch.Vector3(1.0, 1.0, 1.0)
    light.ambient = 0.2
    light.diffuse = 1.0
-   light.specular = 0.01
+   light.specular = 0.1
    couch.Node.GetRoot().children:Append(light)
    
    ball = couch.Mesh.FromFile("cube.obj")
    material = ball:GetMaterial(0)
-   material.ambient = WHITE
+   material.ambient = RED
+   material.diffuse = RED
+   material.usesTex = true
+   material.tex = couch.Texture.FromFile("railing.png")
    ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
    
    ball1 = couch.Mesh.FromFile("ball.obj")
    print(material.diffuse.b)
    material = ball1:GetMaterial(0)
-   material.tex = couch.Texture.FromFile("container.png")
-   material.usesTex = true
    ball1:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball1)
 
