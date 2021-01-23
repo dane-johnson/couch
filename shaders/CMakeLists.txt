@@ -12,7 +12,9 @@ add_shader(flat.vert)
 add_shader(flat.frag)
 add_shader(screen.vert)
 add_shader(screen.frag)
+add_shader(skybox.vert)
+add_shader(skybox.frag)
 
 add_custom_target(shader_headers
-  DEPENDS flat.vert.h flat.frag.h screen.vert.h screen.frag.h
+  DEPENDS flat.vert.h flat.frag.h screen.vert.h screen.frag.h skybox.vert.h skybox.frag.h
   COMMENT "Generated shaders headers.")

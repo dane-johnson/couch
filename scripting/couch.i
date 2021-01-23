@@ -15,6 +15,7 @@
 #include "Material.h"
 #include "Camera.h"
 #include "Light.h"
+#include "Skybox.h"
 %}
 
 %rename("%(strip:[script_])s") "";
@@ -45,7 +46,6 @@ public:
   }
 }
 
-
 %include "types.h"
 %include "constants.h"
 %include "Node.h"
@@ -55,4 +55,4 @@ public:
 %include "Material.h"
 %include "Camera.h"
 %include "Light.h"
-
+%include "Skybox.h"

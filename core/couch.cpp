@@ -12,6 +12,7 @@
 
 #include "Shaders/FlatShader.h"
 #include "Shaders/ScreenShader.h"
+#include "Shaders/SkyboxShader.h"
 
 #include "Screen.h"
 
@@ -20,6 +21,8 @@
 #include "Node.h"
 #include "Mesh.h"
 #include "Light.h"
+#include "Skybox.h"
+
 #include "Scripting/Lua.h"
 
 // Thirdparty Includes
@@ -87,6 +90,8 @@ int main() {
 
   Screen screen;
   ScreenShader *screenShader = new ScreenShader();
+
+  SkyboxShader *skyboxShader = new SkyboxShader();
   
   FlatShader *shader = new FlatShader();
   
@@ -126,6 +131,18 @@ int main() {
 
     // Render the scene tree
     render(root, shader, Matrix(1.0f));
+
+    // Render the skybox
+    Skybox *skybox = Util::FindNodeByType<Skybox>(root, "Skybox");
+    if (skybox) {
+      glDepthFunc(GL_LEQUAL);
+      skyboxShader->Use();
+      skyboxShader->UpdateView(glm::mat4(glm::mat3(view)));
+      skyboxShader->UpdateProjection(projection);
+      skyboxShader->UpdateSkybox(*skybox);
+      skybox->DrawSkybox();
+      glDepthFunc(GL_LESS);
+    }
 
     // Stop rendering to texture
     screen.Disable();
