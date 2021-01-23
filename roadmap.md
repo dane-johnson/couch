@@ -54,7 +54,6 @@ calling it from the lua file, so stubs aren't necessary to prevent a crash
 - [X] No crash on calling non-existant scripting hooks
 
 ## Lighting
-
 I'm a bit happier with the system now, I think it's time I started the lighting.
 We're going to use a pretty basic Phong lighting system, with 
 Flat and Garourd shaders available (This was all that was available on the PSX!)

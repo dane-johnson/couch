@@ -44,6 +44,7 @@ public:
   virtual bool IsDrawable() const {return true;}
   virtual void Draw(Shader *shader);
   virtual Name GetType() const;
+  Mesh *Duplicate();
 protected:
   SubMeshList submeshes;
   virtual void SetupMesh();

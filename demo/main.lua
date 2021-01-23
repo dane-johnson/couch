@@ -45,6 +45,8 @@ function init()
       "skybox/nz.png"
    )
    couch.Node.GetRoot().children:Append(skybox)
+
+   make_ground()
    
    ball = couch.Mesh.FromFile("cube.obj")
    material = ball:GetMaterial(0)
@@ -146,4 +148,18 @@ end
 function onmousemotion(_, _, relx, rely)
    cam_rot_x = relx
    cam_rot_y = rely
+end
+
+function make_ground()
+   local ground = couch.TexturedMesh("ground.obj", "grass_lowres.png")
+   ground.transform.position = couch.Vector3(0.0, -2.0, 0.0)
+   ground.transform.scale = couch.Vector3(3.0, 1.0, 3.0)
+
+   for x = -20, 20, 1 do
+      for z = -20, 20, 1 do
+	 local piece = ground:Duplicate()
+	 piece.transform.position = couch.Vector3(3.0 * x, -2.0, 3.0 * z)
+	 couch.Node.GetRoot().children:Append(piece)
+      end
+   end
 end
