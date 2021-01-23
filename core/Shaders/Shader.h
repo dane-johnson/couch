@@ -16,6 +16,7 @@ public:
   void UpdateView(Matrix view);
   void UpdateModel(Matrix model);
   void UpdateProjection(Matrix projection);
+  void UpdateNormal(glm::mat3 normal);
 
   void UpdateMaterial(Material material);
   

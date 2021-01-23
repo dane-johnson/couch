@@ -1,7 +1,6 @@
 #version 330 core
 
 noperspective in vec2 UV;
-in vec3 NORMAL;
 
 in vec3 AMBIENT;
 in vec3 DIFFUSE;

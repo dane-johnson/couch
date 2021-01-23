@@ -53,6 +53,10 @@ void Shader::UpdateProjection(Matrix projection) {
   glUniformMatrix4fv(glGetUniformLocation(id, "PROJECTION"), 1, GL_FALSE, glm::value_ptr(projection));
 }
 
+void Shader::UpdateNormal(glm::mat3 normal) {
+  glUniformMatrix3fv(glGetUniformLocation(id, "NORMAL"), 1, GL_FALSE, glm::value_ptr(normal));
+}
+
 void Shader::UpdateMaterial(Material material) {
   glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) material.usesTex);
   if (material.usesTex) {
