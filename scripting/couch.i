@@ -40,6 +40,12 @@ public:
 }
 %ignore "Vector3";
 
+%extend Spatial {
+  static Spatial* script_new() {
+    return new Spatial();
+  }
+}
+
 %extend DirectionalLight {
   static DirectionalLight* script_new() {
     return new DirectionalLight();
