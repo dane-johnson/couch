@@ -37,12 +37,12 @@ function init()
    couch.Node.GetRoot().children:Append(light)
 
    skybox = couch.Skybox.FromFiles(
-      "skybox/right.jpg",
-      "skybox/left.jpg",
-      "skybox/top.jpg",
-      "skybox/bottom.jpg",
-      "skybox/front.jpg",
-      "skybox/back.jpg"
+      "skybox/px.png",
+      "skybox/nx.png",
+      "skybox/py.png",
+      "skybox/ny.png",
+      "skybox/pz.png",
+      "skybox/nz.png"
    )
    couch.Node.GetRoot().children:Append(skybox)
    

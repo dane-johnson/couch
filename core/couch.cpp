@@ -46,6 +46,7 @@ void render(Node *curr, Shader *shader, Matrix model) {
       model = glm::translate(model, spatial->transform.position);
       model = glm::scale(model, spatial->transform.scale);
       shader->UpdateModel(model);
+      shader->UpdateNormal(glm::mat3(glm::transpose(glm::inverse(model))));
     }
     Mesh *mesh = dynamic_cast<Mesh*>(curr);
     mesh->Draw(shader);
