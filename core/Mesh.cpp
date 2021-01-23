@@ -51,6 +51,11 @@ Mesh::~Mesh() {
   }
 }
 
+Mesh *Mesh::Duplicate() {
+  Mesh *dup = new Mesh(*this);
+  return dup;
+}
+
 void Mesh::SetupMesh() {
   for (SubMesh *sub : submeshes) {
     sub->SetupSubMesh();
