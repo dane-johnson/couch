@@ -5,6 +5,7 @@ local ball1
 local camera
 
 local vx = 0.0
+local vy = 0.0
 local vz = 0.0
 
 local ballvy = -1.0
@@ -28,7 +29,7 @@ function init()
    camera.transform:Translate(0.0, 0.0, 10.0)
 
    light = couch.DirectionalLight.new()
-   light.direction = couch.Vector3(0.0, -1.0, 1.0)
+   light.direction = couch.Vector3(0.0, -1.0, -1.0)
    light.color = couch.Vector3(1.0, 1.0, 1.0)
    light.ambient = 0.2
    light.diffuse = 1.0
@@ -39,8 +40,6 @@ function init()
    material = ball:GetMaterial(0)
    material.ambient = RED
    material.diffuse = RED
-   material.usesTex = true
-   material.tex = couch.Texture.FromFile("railing.png")
    ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
    
@@ -55,38 +54,36 @@ function init()
    trough = couch.TexturedMesh("trough.obj", "wood_lowres.png")
    couch.Node.GetRoot().children:Append(trough)
    trough.transform:Translate(10.0, 0.0, 0.0)
-   trough.transform.scale = trough.transform.scale * 3.0
 
    scaffold = couch.TexturedMesh("scaffold.obj", "grate_floor_lowres.png", "railing.png")
-   
    material = scaffold:GetMaterial(0)
    material.alphaScissor = 0.9
    scaffold:SetMaterial(0, material)
    material = scaffold:GetMaterial(1)
    material.cullBack = false
    scaffold:SetMaterial(1, material)
-
    material = scaffold:GetMaterial(1)
    material.alphaScissor = 0.1
    scaffold:SetMaterial(1, material)
-   
    couch.Node.GetRoot().children:Append(scaffold)
-   scaffold.transform:Translate(-10.0, 0.0, 0.0)
+   scaffold.transform:Translate(-3.0, 3.0, 0.0)
 
    barn = couch.TexturedMesh("barn.obj", "paintedwood.jpg", "barnroof_lowres.png", "wood_lowres.png")
    material = barn:GetMaterial(0)
    material.cullBack = false
    barn:SetMaterial(0, material)
+   material = barn:GetMaterial(1)
+   material.cullBack = false
+   barn:SetMaterial(1, material)
    couch.Node.GetRoot().children:Append(barn)
+   barn.transform:Translate(-15.0, 0.0, 0.0)
 end
 
 function update(delta)
-   local cam_forwards = camera.transform:Forward()
-   local cam_right = camera.transform:Right()
-   
    local move_vec = couch.Vector3()
-   move_vec = camera.transform.position + cam_forwards * delta * vz * SPEED
-   move_vec = move_vec + cam_right * delta * vx * SPEED
+   move_vec = camera.transform.position + camera.transform:Forward() * delta * vz * SPEED
+   move_vec = move_vec + camera.transform:Right() * delta * vx * SPEED
+   move_vec = move_vec + camera.transform:Up() * delta * vy * SPEED
    camera.transform.position = move_vec
    
    camera.transform.rotation.y = camera.transform.rotation.y - cam_rot_x * delta
@@ -106,23 +103,22 @@ function update(delta)
    ball.transform.rotation.z = ball.transform.rotation.z + 1.0 * delta;
 end
 
+function action_dir(key, action, pos, neg, curr)
+   if key == pos and action == couch.ACTION_PRESS then
+      return 1.0
+   elseif key == neg and action == couch.ACTION_PRESS then
+      return -1.0
+   elseif (key == pos or key == neg) and action == couch.ACTION_RELEASE then
+      return 0.0
+   else
+      return curr
+   end
+end
+
 function onkey(key, code, action, mod)
-   if key == couch.KEY_W and action == couch.ACTION_PRESS then
-      vz = 1.0
-   elseif key == couch.KEY_S and action == couch.ACTION_PRESS then
-      vz = -1.0
-   elseif (key == couch.KEY_W or key == couch.KEY_S) and action == couch.ACTION_RELEASE then
-      vz = 0.0
-   end
-
-   if key == couch.KEY_A and action == couch.ACTION_PRESS then
-      vx = -1.0
-   elseif key == couch.KEY_D and action == couch.ACTION_PRESS then
-      vx = 1.0
-   elseif (key == couch.KEY_D or key == couch.KEY_A) and action == couch.ACTION_RELEASE then
-      vx = 0.0
-   end
-
+   vz = action_dir(key, action, couch.KEY_W, couch.KEY_S, vz)
+   vx = action_dir(key, action, couch.KEY_D, couch.KEY_A, vx)
+   vy = action_dir(key, action, couch.KEY_SPACE, couch.KEY_LEFT_CONTROL, vy)
    if key == couch.KEY_DOWN and action == couch.ACTION_PRESS then
       light.ambient = max(light.ambient - 0.1, 0.0)
    elseif key == couch.KEY_UP and action == couch.ACTION_PRESS then
