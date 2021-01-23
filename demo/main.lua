@@ -52,6 +52,10 @@ function init()
    material.diffuse = RED
    ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
+   local orbiter = couch.Mesh.FromFile("ball.obj")
+   orbiter.transform.scale = orbiter.transform.scale * 0.25;
+   orbiter.transform:Translate(1.0, 0.0, 0.0)
+   ball.children:Append(orbiter)
    
    ball1 = couch.Mesh.FromFile("ball.obj")
    
@@ -111,6 +115,7 @@ function update(delta)
    end
    ball1.transform.position.y = ball1.transform.position.y + ballvy * delta
 
+   ball.transform.rotation.y = ball.transform.rotation.y + 2.0 * delta;
    ball.transform.rotation.z = ball.transform.rotation.z + 1.0 * delta;
 end
 
