@@ -54,15 +54,16 @@ void Shader::UpdateProjection(Matrix projection) {
 }
 
 void Shader::UpdateMaterial(Material material) {
-  glUniform1i(glGetUniformLocation(id, "material.usesColor"), (int) material.usesColor);
-  glUniform3f(glGetUniformLocation(id, "material.color"),
-	      material.color.r,
-	      material.color.g,
-	      material.color.b);
   glUniform1i(glGetUniformLocation(id, "material.usesTex"), (int) material.usesTex);
   if (material.usesTex) {
     glBindTexture(GL_TEXTURE_2D, material.tex.id);
   }
+
+  glUniform3fv(glGetUniformLocation(id, "material.ambient"), 1, (cfloat*) &material.ambient);
+  glUniform3fv(glGetUniformLocation(id, "material.diffuse"), 1, (cfloat*) &material.diffuse);
+  glUniform3fv(glGetUniformLocation(id, "material.specular"), 1, (cfloat*) &material.specular);
+  glUniform1i(glGetUniformLocation(id, "material.shininess"), material.shininess);
+  
   glUniform1f(glGetUniformLocation(id, "material.alphaScissor"), material.alphaScissor);
   glUniform1i(glGetUniformLocation(id, "material.unshaded"), (int) material.unshaded);
   glUniform1i(glGetUniformLocation(id, "material.cullBack"), (int) material.cullBack);

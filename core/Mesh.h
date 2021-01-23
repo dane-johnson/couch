@@ -48,7 +48,8 @@ protected:
   SubMeshList submeshes;
   virtual void SetupMesh();
 private:
-  static SubMesh *aiMesh2SubMesh(aiMesh *mesh);
+  static SubMesh *aiMesh2SubMesh(aiMesh *mesh, aiMaterial *material);
+  static Color aiColor3D2Color(aiColor3D aicolor);
 };
 
 typedef std::list<Mesh*> MeshList;

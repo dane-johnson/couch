@@ -81,10 +81,13 @@ Mesh* Mesh::FromFile(const char *filename) {
   }
 
   aiNode *root = scene->mRootNode;
+  if (root->mNumChildren == 1) {
+    root = root->mChildren[0];
+  }
   Mesh *my_mesh = new Mesh();
   for (int i = 0; i < root->mNumMeshes; i++) {
     aiMesh *mesh_to_import = scene->mMeshes[root->mMeshes[i]];
-    my_mesh->submeshes.push_back(aiMesh2SubMesh(mesh_to_import));
+    my_mesh->submeshes.push_back(aiMesh2SubMesh(mesh_to_import, scene->mMaterials[mesh_to_import->mMaterialIndex]));
   }
 
   my_mesh->SetupMesh();
@@ -92,7 +95,7 @@ Mesh* Mesh::FromFile(const char *filename) {
   return my_mesh;
 }
 
-SubMesh *Mesh::aiMesh2SubMesh(aiMesh *aimesh){
+SubMesh *Mesh::aiMesh2SubMesh(aiMesh *aimesh, aiMaterial* material){
   SubMesh *sub = new SubMesh();
   for (int i = 0; i < aimesh->mNumVertices; i++) {
     aiVector3D aiPosition = aimesh->mVertices[i];
@@ -109,7 +112,33 @@ SubMesh *Mesh::aiMesh2SubMesh(aiMesh *aimesh){
     Index index(face[0], face[1], face[2]);
     sub->indices.push_back(index);
   }
+
+  // Get material properties
+  aiColor3D ambient;
+  if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_AMBIENT, ambient))
+    sub->material.ambient = aiColor3D2Color(ambient);
+
+  aiColor3D diffuse;
+  if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_DIFFUSE, diffuse))
+    sub->material.diffuse = aiColor3D2Color(diffuse);
+
+  aiColor3D specular;
+  if (AI_SUCCESS == material->Get(AI_MATKEY_COLOR_SPECULAR, specular))
+    sub->material.specular = aiColor3D2Color(specular);
+
+  float shininess;
+  if(AI_SUCCESS == material->Get(AI_MATKEY_SHININESS, shininess))
+    sub->material.shininess = (int) shininess;
+
   return sub;
+}
+
+Color Mesh::aiColor3D2Color(aiColor3D aicolor) {
+  Color color;
+  color.r = aicolor.r;
+  color.g = aicolor.g;
+  color.b = aicolor.b;
+  return color;
 }
 
 void Mesh::Draw(Shader *shader) {

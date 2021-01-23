@@ -39,8 +39,10 @@ Texture Texture::FromFile(const char *filename) {
 }
 
 Material::Material() {
-  usesColor = false;
   usesTex = false;
+
+  shininess = 8;
+  
   alphaScissor = 0.0f;
   unshaded = false;
   cullBack = true;
