@@ -14,6 +14,7 @@ local cam_rot_y = 0.0
 
 local SPEED = 30
 
+local WHITE = couch.Color(1.0, 1.0, 1.0)
 local RED = couch.Color(1.0, 0.0, 0.0)
 local BLUE = couch.Color(0.0, 0.0, 1.0)
 
@@ -34,15 +35,15 @@ function init()
    light.specular = 0.01
    couch.Node.GetRoot().children:Append(light)
    
-   ball = couch.Mesh.FromFile("cube.glb")
-   material = couch.Material()
-   material.color = RED
-   material.usesColor = true
+   ball = couch.Mesh.FromFile("cube.obj")
+   material = ball:GetMaterial(0)
+   material.ambient = WHITE
    ball:SetMaterial(0, material)
    couch.Node.GetRoot().children:Append(ball)
    
-   ball1 = couch.Mesh.FromFile("ball.glb")
-   material = couch.Material()
+   ball1 = couch.Mesh.FromFile("ball.obj")
+   print(material.diffuse.b)
+   material = ball1:GetMaterial(0)
    material.tex = couch.Texture.FromFile("container.png")
    material.usesTex = true
    ball1:SetMaterial(0, material)
@@ -50,12 +51,12 @@ function init()
 
    ball1.transform:Translate(0.0, 3.0, 0.0)
 
-   trough = couch.TexturedMesh("trough.glb", "wood_lowres.png")
+   trough = couch.TexturedMesh("trough.obj", "wood_lowres.png")
    couch.Node.GetRoot().children:Append(trough)
    trough.transform:Translate(10.0, 0.0, 0.0)
    trough.transform.scale = trough.transform.scale * 3.0
 
-   scaffold = couch.TexturedMesh("scaffold.glb", "grate_floor_lowres.png", "railing.png")
+   scaffold = couch.TexturedMesh("scaffold.obj", "grate_floor_lowres.png", "railing.png")
    
    material = scaffold:GetMaterial(0)
    material.alphaScissor = 0.9

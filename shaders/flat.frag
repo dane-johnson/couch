@@ -3,17 +3,21 @@
 noperspective in vec2 UV;
 in vec3 NORMAL;
 
-flat in vec3 AMBIENT;
-flat in vec3 DIFFUSE;
-flat in vec3 SPECULAR;
+in vec3 AMBIENT;
+in vec3 DIFFUSE;
+in vec3 SPECULAR;
 
 out vec4 FragColor;
 
 struct Material {
-  vec3 color;
-  bool usesColor;
   sampler2D tex;
   bool usesTex;
+
+  vec3 ambient;
+  vec3 diffuse;
+  vec3 specular;
+  int shininess;
+  
   float alphaScissor;
   bool unshaded;
   bool cullBack;
@@ -22,14 +26,10 @@ struct Material {
 uniform Material material;
 
 void main() {
-  FragColor = vec4(0.0);
-  
-  if (material.usesColor) {
-    FragColor += vec4(material.color, 1.0);
-  }
+  FragColor = vec4(AMBIENT + DIFFUSE + SPECULAR, 1.0);
   
   if (material.usesTex) {
-    FragColor += texture(material.tex, UV);
+    FragColor *= texture(material.tex, UV);
   }
   
   if (FragColor.w < material.alphaScissor) {
@@ -38,9 +38,5 @@ void main() {
 
   if (material.cullBack && !gl_FrontFacing) {
     discard;
-  }
-
-  if (!material.unshaded) {
-    FragColor *= vec4(AMBIENT + DIFFUSE + SPECULAR, 1.0);
   }
 }

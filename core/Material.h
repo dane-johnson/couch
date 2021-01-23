@@ -22,10 +22,15 @@ public:
 };
 
 struct Material {
-  Color color;
-  bool usesColor;
   Texture tex;
   bool usesTex;
+
+  Color ambient;
+  Color diffuse;
+  Color specular;
+  
+  int shininess;
+  
   cfloat alphaScissor;
   bool unshaded;
   bool cullBack;
