@@ -151,15 +151,18 @@ function onmousemotion(_, _, relx, rely)
 end
 
 function make_ground()
-   local ground = couch.TexturedMesh("ground.obj", "grass_lowres.png")
-   ground.transform.position = couch.Vector3(0.0, -2.0, 0.0)
-   ground.transform.scale = couch.Vector3(3.0, 1.0, 3.0)
+   local ground_prefab = couch.TexturedMesh("ground.obj", "grass_lowres.png")
+   ground_prefab.transform.position = couch.Vector3(0.0, -2.0, 0.0)
+   ground_prefab.transform.scale = couch.Vector3(3.0, 1.0, 3.0)
+
+   ground = couch.Spatial.new()
+   couch.Node.GetRoot().children:Append(ground)
 
    for x = -20, 20, 1 do
       for z = -20, 20, 1 do
-	 local piece = ground:Duplicate()
+	 local piece = ground_prefab:Duplicate()
 	 piece.transform.position = couch.Vector3(3.0 * x, -2.0, 3.0 * z)
-	 couch.Node.GetRoot().children:Append(piece)
+	 ground.children:Append(piece)
       end
    end
 end
