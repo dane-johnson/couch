@@ -35,6 +35,16 @@ function init()
    light.diffuse = 1.0
    light.specular = 0.1
    couch.Node.GetRoot().children:Append(light)
+
+   skybox = couch.Skybox.FromFiles(
+      "skybox/right.jpg",
+      "skybox/left.jpg",
+      "skybox/top.jpg",
+      "skybox/bottom.jpg",
+      "skybox/front.jpg",
+      "skybox/back.jpg"
+   )
+   couch.Node.GetRoot().children:Append(skybox)
    
    ball = couch.Mesh.FromFile("cube.obj")
    material = ball:GetMaterial(0)
@@ -44,6 +54,7 @@ function init()
    couch.Node.GetRoot().children:Append(ball)
    
    ball1 = couch.Mesh.FromFile("ball.obj")
+   
    print(material.diffuse.b)
    material = ball1:GetMaterial(0)
    ball1:SetMaterial(0, material)
