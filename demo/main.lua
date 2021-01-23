@@ -72,6 +72,12 @@ function init()
    
    couch.Node.GetRoot().children:Append(scaffold)
    scaffold.transform:Translate(-10.0, 0.0, 0.0)
+
+   barn = couch.TexturedMesh("barn.obj", "paintedwood.jpg", "barnroof_lowres.png", "wood_lowres.png")
+   material = barn:GetMaterial(0)
+   material.cullBack = false
+   barn:SetMaterial(0, material)
+   couch.Node.GetRoot().children:Append(barn)
 end
 
 function update(delta)
