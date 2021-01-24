@@ -161,7 +161,7 @@ function make_ground()
    for x = -20, 20, 1 do
       for z = -20, 20, 1 do
 	 local piece = ground_prefab:Duplicate()
-	 piece.transform.position = couch.Vector3(3.0 * x, -2.0, 3.0 * z)
+	 piece.transform.position = couch.Vector3(6.0 * x, -2.0, 6.0 * z)
 	 ground.children:Append(piece)
       end
    end
