@@ -46,8 +46,7 @@ void main() {
 
   UV = uv;
 
-  vec3 my_normal = (VIEW * MODEL * vec4(normal, 0.0)).xyz;
-  my_normal *= NORMAL;
+  vec3 my_normal = (VIEW * mat4(NORMAL) * vec4(normal, 0.0)).xyz;
 
   // Flat shading, we compute light per vertex
   AMBIENT = directionalLight.ambient * directionalLight.color * material.ambient;

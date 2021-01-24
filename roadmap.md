@@ -58,3 +58,19 @@ I'm a bit happier with the system now, I think it's time I started the lighting.
 We're going to use a pretty basic Phong lighting system, with 
 Flat and Garourd shaders available (This was all that was available on the PSX!)
 
+## Bump in the road (1/23/21)
+Not sure where to go next. I changed to using OBJ files for meshes, which I might need 
+to revert (shitty animation support). There are a number of systems I want to add next
+- GUI (dearimgui or Nuklear) (Maybe expose a raw opengl context for these?)
+- Physics engine (Bullet)
+- Animation system
+- General code cleanup
+- Scene editor
+- Rest of lighting engine (point lights, spotlights)
+- Audio engine
+
+## Physics
+Yeah sure let's do physics
+- [ ] Static, Kinematic and Rigidbodies
+- [ ] Collision areas
+- [ ] Ray tracing
