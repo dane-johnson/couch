@@ -26,6 +26,7 @@ public:
   IndexList indices;
   Material material;
   void Draw(Shader *shader);
+  SubMesh *Duplicate();
 private:
   Id VAO, VBO, EBO;
   void SetupSubMesh();
@@ -44,7 +45,9 @@ public:
   virtual bool IsDrawable() const {return true;}
   virtual void Draw(Shader *shader);
   virtual Name GetType() const;
-  Mesh *Duplicate();
+  virtual Mesh *Create();
+  virtual Mesh *Duplicate();
+  virtual Mesh *Instance();
 protected:
   SubMeshList submeshes;
   virtual void SetupMesh();

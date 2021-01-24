@@ -1,10 +1,11 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "Spatial.h"
+#include "Transform.h"
 
-class Camera : public Spatial {
+class Camera {
 public:
+  Transform transform;
   Camera();
   void MakeCurrent();
   static Camera *GetCurrentCamera();

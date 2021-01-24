@@ -6,6 +6,7 @@
 #include <stdlib.h>
 
 #include "types.h"
+class Node;
 #include "Node.h"
 
 namespace Util {

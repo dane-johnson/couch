@@ -41,6 +41,16 @@ void SubMesh::Draw(Shader *shader) {
   glBindVertexArray(0);
 }
 
+SubMesh *SubMesh::Duplicate() {
+  SubMesh* submesh = new SubMesh();
+  
+  submesh->VAO = VAO;
+  submesh->indices = indices;
+  submesh->material = material;
+
+  return submesh;
+}
+
 Name Mesh::GetType() const {return "Mesh";}
 
 Mesh::Mesh() {}
@@ -51,9 +61,24 @@ Mesh::~Mesh() {
   }
 }
 
+Mesh *Mesh::Create() {
+  return new Mesh;
+}
+
 Mesh *Mesh::Duplicate() {
-  Mesh *dup = new Mesh(*this);
-  return dup;
+  Mesh *mesh = static_cast<Mesh*>(Spatial::Duplicate());
+  // Duplicate submeshes
+  mesh->submeshes = SubMeshList();
+
+  for (SubMesh *submesh : submeshes) {
+    mesh->submeshes.push_back(submesh->Duplicate());
+  }
+
+  return mesh;
+}
+
+Mesh *Mesh::Instance() {
+  return static_cast<Mesh*>(Node::Instance());
 }
 
 void Mesh::SetupMesh() {
