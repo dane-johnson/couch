@@ -5,6 +5,7 @@ noperspective in vec2 UV;
 in vec3 AMBIENT;
 in vec3 DIFFUSE;
 in vec3 SPECULAR;
+flat in float kill;
 
 out vec4 FragColor;
 
@@ -36,6 +37,10 @@ void main() {
   }
 
   if (material.cullBack && !gl_FrontFacing) {
+    discard;
+  }
+
+  if (kill == 1.0) {
     discard;
   }
 }

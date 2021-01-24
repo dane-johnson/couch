@@ -15,6 +15,10 @@ out vec3 AMBIENT;
 out vec3 DIFFUSE;
 out vec3 SPECULAR;
 
+flat out float kill;
+
+const float cullDistance = 100.0;
+
 struct DirectionalLight {
   vec3 direction;
   vec3 color;
@@ -43,6 +47,11 @@ uniform Material material;
 void main() {
   vec4 vertex = PROJECTION * VIEW * MODEL * vec4(pos, 1.0);
   gl_Position = vertex;
+  if (length(vertex) > cullDistance) {
+    kill = 1.0;
+  } else {
+    kill = 0.0;
+  }
 
   UV = uv;
 
