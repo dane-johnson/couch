@@ -11,6 +11,9 @@ class Skybox : public Node {
 public:
   Skybox();
   virtual Name GetType() const;
+  virtual Skybox *Create();
+  virtual Skybox *Duplicate();
+  virtual Skybox *Instance();
   static Skybox *FromFiles(const char *right, const char* left, const char* top, const char* bottom, const char* front, const char* back);
   void DrawSkybox();
   Id id;

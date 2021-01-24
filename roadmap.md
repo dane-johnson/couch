@@ -74,3 +74,4 @@ Yeah sure let's do physics
 - [ ] Static, Kinematic and Rigidbodies
 - [ ] Collision areas
 - [ ] Ray tracing
+- [ ] Axis pinning

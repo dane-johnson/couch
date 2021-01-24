@@ -63,6 +63,22 @@ Skybox::Skybox() {
 
 Name Skybox::GetType() const { return "Skybox"; }
 
+Skybox *Skybox::Create() {
+  return new Skybox;
+}
+
+Skybox *Skybox::Duplicate() {
+  Skybox* skybox = static_cast<Skybox*>(Node::Duplicate());
+  skybox->id = id;
+  skybox->cube = cube;
+
+  return skybox;
+}
+
+Skybox *Skybox::Instance() {
+  return static_cast<Skybox*>(Node::Instance());
+}
+
 Skybox *Skybox::FromFiles(const char *right, const char* left, const char* top, const char* bottom, const char* front, const char* back) {
   // HOCUS: https://learnopengl.com/Advanced-OpenGL/Cubemaps
   Skybox *sb = new Skybox();

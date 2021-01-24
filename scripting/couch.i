@@ -18,8 +18,6 @@
 #include "Skybox.h"
 %}
 
-%rename("%(strip:[script_])s") "";
-
 typedef float cfloat;
 %ignore "cfloat";
 
@@ -39,18 +37,6 @@ public:
   }
 }
 %ignore "Vector3";
-
-%extend Spatial {
-  static Spatial* script_new() {
-    return new Spatial();
-  }
-}
-
-%extend DirectionalLight {
-  static DirectionalLight* script_new() {
-    return new DirectionalLight();
-  }
-}
 
 %include "types.h"
 %include "constants.h"
