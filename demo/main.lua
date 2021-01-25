@@ -46,6 +46,17 @@ function init()
    )
    couch.Node.GetRoot().children:Append(skybox:Instance())
 
+   local physics_ball_prefab = couch.Rigidbody()
+   local physics_ball_mesh = couch.Mesh.FromFile("ball.obj")
+   material = physics_ball_mesh:GetMaterial(0)
+   material.ambient = BLUE
+   material.diffuse = BLUE
+   physics_ball_mesh:SetMaterial(0, material)
+   physics_ball_prefab.children:Append(physics_ball_mesh);
+   physics_ball_prefab.transform.position = couch.Vector3(0.0, 30.0, -10.0)   
+   local physics_ball = physics_ball_prefab:Instance()
+   couch.Node.GetRoot().children:Append(physics_ball)
+
    make_ground()
 
    local cube_prefab = couch.Mesh.FromFile("cube.obj")

@@ -10,6 +10,10 @@ find_package(glfw3 3.3 REQUIRED)
 ## Find SWIG
 find_package(SWIG REQUIRED)
 
+## Find Bullet
+find_package(Bullet REQUIRED)
+include_directories(${BULLET_INCLUDE_DIRS})
+
 ## Find Lua
 find_package(Lua REQUIRED)
 
@@ -24,6 +28,7 @@ endif()
 target_link_libraries(couch OpenGL::GL)
 target_link_libraries(couch GLEW::GLEW)
 target_link_libraries(couch ${LUA_LIBRARIES})
+target_link_libraries(couch ${BULLET_LIBRARIES})
 
 include(UseSWIG)
 set_property(SOURCE scripting/couch.i PROPERTY CPLUSPLUS ON)

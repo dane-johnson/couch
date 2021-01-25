@@ -23,6 +23,10 @@
 #include "Light.h"
 #include "Skybox.h"
 
+#include "Rigidbody.h"
+#include "World.h"
+
+
 #include "Scripting/Lua.h"
 
 // Thirdparty Includes
@@ -37,22 +41,22 @@ const int height = 600;
 Node *root;
 
 void render(Node *curr, Shader *shader, Matrix model) {
+  if (curr->IsTransformable()) {
+    Spatial *spatial = dynamic_cast<Spatial*>(curr);
+    model = glm::rotate(model, spatial->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, spatial->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, spatial->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
+    model = glm::translate(model, spatial->transform.position);
+    model = glm::scale(model, spatial->transform.scale);
+    shader->UpdateModel(model);
+    shader->UpdateNormal(glm::mat3(glm::transpose(glm::inverse(model))));
+  }
   if (curr->IsDrawable()) {
-    if (curr->IsTransformable()) {
-      Spatial *spatial = dynamic_cast<Spatial*>(curr);
-      model = glm::rotate(model, spatial->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
-      model = glm::rotate(model, spatial->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
-      model = glm::rotate(model, spatial->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
-      model = glm::translate(model, spatial->transform.position);
-      model = glm::scale(model, spatial->transform.scale);
-      shader->UpdateModel(model);
-      shader->UpdateNormal(glm::mat3(glm::transpose(glm::inverse(model))));
-    }
     Mesh *mesh = dynamic_cast<Mesh*>(curr);
     mesh->Draw(shader);
   }
   for (Node *child : curr->children) {
-    render(child, shader, model);   
+    render(child, shader, model);
   }
 }
 
@@ -89,6 +93,8 @@ int main() {
 
   Camera defaultCamera;
 
+  World *world = World::GetWorld();
+
   Screen screen;
   ScreenShader *screenShader = new ScreenShader();
 
@@ -106,6 +112,10 @@ int main() {
   double delta = 0.0;
 
   while(!glfwWindowShouldClose(window)) {
+
+    // Physics update()
+    world->Step(delta);
+    
     // Start rendering to texture;
     screen.Enable();
 
