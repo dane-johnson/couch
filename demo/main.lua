@@ -1,12 +1,16 @@
 local min = math.min
 local max = math.max
 local cube
+local physics_ball
+local character
 local ball
 local camera
 
 local vx = 0.0
 local vy = 0.0
 local vz = 0.0
+
+local character_move_vec = couch.Vector3(0.0, 0.0, 0.0)
 
 local ballvy = -1.0
 
@@ -15,9 +19,9 @@ local cam_rot_y = 0.0
 
 local SPEED = 30
 
-local WHITE = couch.Color(1.0, 1.0, 1.0)
-local RED = couch.Color(1.0, 0.0, 0.0)
-local BLUE = couch.Color(0.0, 0.0, 1.0)
+local WHITE = couch.Vector3(1.0, 1.0, 1.0)
+local RED = couch.Vector3(1.0, 0.0, 0.0)
+local BLUE = couch.Vector3(0.0, 0.0, 1.0)
 
 local light
 
@@ -54,10 +58,25 @@ function init()
    physics_ball_mesh:SetMaterial(0, material)
    physics_ball_prefab.children:Append(physics_ball_mesh);
    physics_ball_prefab.transform.position = couch.Vector3(0.0, 30.0, -10.0)   
-   local physics_ball = physics_ball_prefab:Instance()
+   physics_ball = physics_ball_prefab:Instance()
    couch.Node.GetRoot().children:Append(physics_ball)
 
    make_ground()
+
+   local character_prefab = couch.Mesh.FromFile("capsule.obj")
+   material = character_prefab:GetMaterial(0)
+   material.ambient = BLUE
+   material.diffuse = BLUE
+   material.specular = WHITE * 0.1
+   character_prefab:SetMaterial(0, material)
+   local character_body = couch.Rigidbody()
+   character_body.mass = 1.0
+   character_body:SetCollisionShape(couch.CapsuleCollisionShape(1.0, 1.0))
+   character_body:SetCharacter(true)
+   character_body.children:Append(character_prefab)
+   character_body.transform.position = couch.Vector3(0.0, 3.0, 0.0)
+   character = character_body:Instance()
+   couch.Node.GetRoot().children:Append(character)
 
    local cube_prefab = couch.Mesh.FromFile("cube.obj")
    material = cube_prefab:GetMaterial(0)
@@ -133,6 +152,9 @@ function update(delta)
 
    cube.transform.rotation.y = cube.transform.rotation.y + 2.0 * delta;
    cube.transform.rotation.z = cube.transform.rotation.z + 1.0 * delta;
+
+   character:ApplyForce(character_move_vec * 10.0)
+   print(character_move_vec.z)
 end
 
 function action_dir(key, action, pos, neg, curr)
@@ -151,12 +173,12 @@ function onkey(key, code, action, mod)
    vz = action_dir(key, action, couch.KEY_W, couch.KEY_S, vz)
    vx = action_dir(key, action, couch.KEY_D, couch.KEY_A, vx)
    vy = action_dir(key, action, couch.KEY_SPACE, couch.KEY_LEFT_CONTROL, vy)
-   if key == couch.KEY_DOWN and action == couch.ACTION_PRESS then
-      light.ambient = max(light.ambient - 0.1, 0.0)
-   elseif key == couch.KEY_UP and action == couch.ACTION_PRESS then
-      light.ambient = light.ambient + 0.1
-      print(light.ambient)
+   
+   if key == couch.KEY_J and action == couch.ACTION_PRESS then
+      physics_ball:ApplyImpulse(couch.Vector3(0.0, 1.0, 0.0) * 10)
    end
+
+   character_move_vec.z = action_dir(key, action, couch.KEY_DOWN, couch.KEY_UP, character_move_vec.z)
 end
 
 function onmousemotion(_, _, relx, rely)
@@ -171,6 +193,13 @@ function make_ground()
 
    ground = couch.Spatial():Instance()
    couch.Node.GetRoot().children:Append(ground)
+
+   -- Add a collisionshape
+   local ground_shape_prefab = couch.Rigidbody()
+   ground_shape_prefab.mass = 0.0
+   ground_shape_prefab:SetCollisionShape(couch.BoxCollisionShape(180.0, 1.0, 180.0))
+   ground_shape_prefab.transform:Translate(0.0, -2.5, 0.0)
+   ground.children:Append(ground_shape_prefab:Instance())
 
    for x = -20, 20, 1 do
       for z = -20, 20, 1 do

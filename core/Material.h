@@ -7,11 +7,7 @@
 #include "types.h"
 #include "Util.h"
 
-struct Color {
-  cfloat r, g, b;
-  Color();
-  Color(cfloat r, cfloat g, cfloat b);
-};
+typedef Vector3 Color;
 
 class Texture {
 public:

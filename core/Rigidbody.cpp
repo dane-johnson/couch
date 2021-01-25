@@ -1,7 +1,9 @@
 #include "Rigidbody.h"
 #include "World.h"
 
-Rigidbody::Rigidbody() {}
+Rigidbody::Rigidbody() {
+  collisionShape = new btSphereShape(1.0f);
+}
 
 Rigidbody *Rigidbody::Create() {
   return new Rigidbody;
@@ -19,15 +21,35 @@ Rigidbody *Rigidbody::Duplicate() {
 Rigidbody *Rigidbody::Instance() {
   Rigidbody *rigidbody = static_cast<Rigidbody*>(Node::Instance());
 
-  rigidbody->collisionShape = new btSphereShape(1.0f);
+  rigidbody->collisionShape = collisionShape;
   rigidbody->btBody = new btRigidBody(rigidbody->mass, new RigidbodyMotionState(rigidbody), rigidbody->collisionShape);
-  assert(rigidbody);
+  rigidbody->btBody->setAngularFactor(character ? 0.0f : 1.0f);
 
   World *world = World::GetWorld();
   world->AddRigidbody(rigidbody);
 
   return rigidbody;
 }
+
+void Rigidbody::SetCollisionShape(CollisionShape collisionShape) {
+  if (this->collisionShape) {
+    delete this->collisionShape;
+  }
+  this->collisionShape = collisionShape.shape;
+}
+
+void Rigidbody::ApplyImpulse(Vector3 impulse) {
+  btBody->applyCentralImpulse(btVector3(impulse.x, impulse.y, impulse.z));
+}
+
+void Rigidbody::ApplyForce(Vector3 force) {
+  btBody->applyCentralForce(btVector3(force.x, force.y, force.z));
+}
+
+void Rigidbody::SetCharacter(bool character) {
+  this->character = character;
+}
+
 
 RigidbodyMotionState::RigidbodyMotionState(Rigidbody *rigidbody) {
   this->rigidbody = rigidbody;
