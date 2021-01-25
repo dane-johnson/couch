@@ -17,6 +17,7 @@
 #include "Light.h"
 #include "Skybox.h"
 #include "Rigidbody.h"
+#include "CollisionShape.h"
 %}
 
 typedef float cfloat;
@@ -50,3 +51,4 @@ public:
 %include "Light.h"
 %include "Skybox.h"
 %include "Rigidbody.h"
+%include "CollisionShape.h"
