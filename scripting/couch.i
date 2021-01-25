@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "Light.h"
 #include "Skybox.h"
+#include "Rigidbody.h"
 %}
 
 typedef float cfloat;
@@ -48,3 +49,4 @@ public:
 %include "Camera.h"
 %include "Light.h"
 %include "Skybox.h"
+%include "Rigidbody.h"
