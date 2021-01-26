@@ -3,9 +3,9 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include "types.h"
-#include "Material.h"
-#include "Light.h"
+#include "../types.h"
+#include "../Material.h"
+#include "../Light.h"
 
 class Shader {
 public:

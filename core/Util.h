@@ -20,7 +20,7 @@ namespace Util {
       return dynamic_cast<T*>(root);
     }
   
-    for (Node *child : root->children) {
+    for (Node *child : root->GetChildren()) {
       T* res = FindNodeByType<T>(child, type);
       if (res) {
 	return res;
