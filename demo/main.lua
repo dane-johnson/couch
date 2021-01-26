@@ -38,7 +38,8 @@ function init()
    light.ambient = 0.2
    light.diffuse = 1.0
    light.specular = 0.1
-   couch.Node.GetRoot().children:Append(light:Instance())
+   print(couch.Node.GetRoot().GetChildren)
+   couch.Node.GetRoot():AddChild(light:Instance())
 
    local skybox = couch.Skybox.FromFiles(
       "skybox/px.png",
@@ -48,7 +49,7 @@ function init()
       "skybox/pz.png",
       "skybox/nz.png"
    )
-   couch.Node.GetRoot().children:Append(skybox:Instance())
+   couch.Node.GetRoot():AddChild(skybox:Instance())
 
    local physics_ball_prefab = couch.Rigidbody()
    local physics_ball_mesh = couch.Mesh.FromFile("ball.obj")
@@ -56,10 +57,10 @@ function init()
    material.ambient = BLUE
    material.diffuse = BLUE
    physics_ball_mesh:SetMaterial(0, material)
-   physics_ball_prefab.children:Append(physics_ball_mesh);
+   physics_ball_prefab:AddChild(physics_ball_mesh);
    physics_ball_prefab.transform.position = couch.Vector3(0.0, 30.0, -10.0)   
    physics_ball = physics_ball_prefab:Instance()
-   couch.Node.GetRoot().children:Append(physics_ball)
+   couch.Node.GetRoot():AddChild(physics_ball)
 
    make_ground()
 
@@ -73,10 +74,10 @@ function init()
    character_body.mass = 1.0
    character_body:SetCollisionShape(couch.CapsuleCollisionShape(1.0, 1.0))
    character_body:SetCharacter(true)
-   character_body.children:Append(character_prefab)
+   character_body:AddChild(character_prefab)
    character_body.transform.position = couch.Vector3(0.0, 3.0, 0.0)
    character = character_body:Instance()
-   couch.Node.GetRoot().children:Append(character)
+   couch.Node.GetRoot():AddChild(character)
 
    local cube_prefab = couch.Mesh.FromFile("cube.obj")
    material = cube_prefab:GetMaterial(0)
@@ -86,21 +87,21 @@ function init()
    local orbiter = couch.Mesh.FromFile("ball.obj")
    orbiter.transform.scale = orbiter.transform.scale * 0.25;
    orbiter.transform:Translate(1.0, 0.0, 0.0)
-   cube_prefab.children:Append(orbiter)
+   cube_prefab:AddChild(orbiter)
    cube = cube_prefab:Instance()
-   couch.Node.GetRoot().children:Append(cube)
+   couch.Node.GetRoot():AddChild(cube)
    
    local ball_prefab = couch.Mesh.FromFile("ball.obj")
    material = ball_prefab:GetMaterial(0)
    ball_prefab:SetMaterial(0, material)
    ball = ball_prefab:Instance()
-   couch.Node.GetRoot().children:Append(ball)
+   couch.Node.GetRoot():AddChild(ball)
 
    ball.transform:Translate(0.0, 3.0, 0.0)
 
    local trough_prefab = couch.TexturedMesh("trough.obj", "wood_lowres.png")
    trough = trough_prefab:Instance()
-   couch.Node.GetRoot().children:Append(trough)
+   couch.Node.GetRoot():AddChild(trough)
    trough.transform:Translate(10.0, 0.0, 0.0)
 
    local scaffold_prefab = couch.TexturedMesh("scaffold.obj", "grate_floor_lowres.png", "railing.png")
@@ -114,7 +115,7 @@ function init()
    material = scaffold:GetMaterial(1)
    material.alphaScissor = 0.1
    scaffold:SetMaterial(1, material)
-   couch.Node.GetRoot().children:Append(scaffold)
+   couch.Node.GetRoot():AddChild(scaffold)
    scaffold.transform:Translate(-3.0, 3.0, 0.0)
 
    local barn_prefab = couch.TexturedMesh("barn.obj", "paintedwood.jpg", "barnroof_lowres.png", "wood_lowres.png")
@@ -125,7 +126,7 @@ function init()
    material = barn:GetMaterial(1)
    material.cullBack = false
    barn:SetMaterial(1, material)
-   couch.Node.GetRoot().children:Append(barn)
+   couch.Node.GetRoot():AddChild(barn)
    barn.transform:Translate(-15.0, 0.0, 0.0)
 end
 
@@ -192,20 +193,20 @@ function make_ground()
    ground_prefab.transform.scale = couch.Vector3(3.0, 1.0, 3.0)
 
    ground = couch.Spatial():Instance()
-   couch.Node.GetRoot().children:Append(ground)
+   couch.Node.GetRoot():AddChild(ground)
 
    -- Add a collisionshape
    local ground_shape_prefab = couch.Rigidbody()
    ground_shape_prefab.mass = 0.0
    ground_shape_prefab:SetCollisionShape(couch.BoxCollisionShape(180.0, 1.0, 180.0))
    ground_shape_prefab.transform:Translate(0.0, -2.5, 0.0)
-   ground.children:Append(ground_shape_prefab:Instance())
+   ground:AddChild(ground_shape_prefab:Instance())
 
    for x = -20, 20, 1 do
       for z = -20, 20, 1 do
 	 local piece = ground_prefab:Instance()
 	 piece.transform.position = couch.Vector3(6.0 * x, -2.0, 6.0 * z)
-	 ground.children:Append(piece)
+	 ground:AddChild(piece)
       end
    end
 end

@@ -1,7 +1,7 @@
 #ifndef SCRIPTINGLANGUAGE_H
 #define SCRIPTINGLANGUAGE_H
 
-#include "types.h"
+#include "../types.h"
 
 class ScriptingLanguage {
 public:

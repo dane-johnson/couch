@@ -1,17 +1,36 @@
 #include "Node.h"
 #include "Util.h"
 
+void NodeList::Append(Node *node) {
+  if (this->isPrefabList and not node->isPrefab) {
+    Util::Die("Attempt to add instanced node to prefab list!");
+  }
+  if (node->isPrefab and not this->isPrefabList) {
+    Util::Die("Attempt to add prefab node to instanced list!");
+  }
+  push_back(node);
+}
+
+bool NodeList::IsPrefabList() {
+  return isPrefabList;
+}
+
 Name Node::GetType() const {return "Node";}
 
-Node *Node::root = {Node().Instance()};
+bool Node::IsPrefab() {
+  return isPrefab;
+}
+
+NodeList Node::GetChildren() {
+  return children;
+}
+
+void Node::AddChild(Node *child) {
+  children.Append(child);
+}
+
 Node *Node::GetRoot() {
   return root;
-}
-bool Node::IsDrawable() const {
-  return false;
-}
-bool Node::IsTransformable() const {
-  return false;
 }
 
 Node* Node::Create() {
@@ -23,13 +42,13 @@ Node* Node::Duplicate() {
 }
 
 Node* Node::Instance() {
-  if (not this->isPrefab) {
+  if (not isPrefab) {
     Util::Die("Attempt to instance an instanced node!");
   }
   Node* instance = Duplicate();
   instance->isPrefab = false;
-  instance->children = NodeList();
   instance->children.isPrefabList = false;
+  // Instance the children to the instanced list
   for (Node *child : children) {
     instance->children.Append(child->Instance());
   }
@@ -37,12 +56,4 @@ Node* Node::Instance() {
   return instance;
 }
 
-void NodeList::Append(Node *node) {
-  if (this->isPrefabList and not node->isPrefab) {
-    Util::Die("Attempt to add instanced node to prefab list!");
-  }
-  if (node->isPrefab and not this->isPrefabList) {
-    Util::Die("Attempt to add prefab node to instanced list!");
-  }
-  push_back(node);
-}
+Node *Node::root = {Node().Instance()};

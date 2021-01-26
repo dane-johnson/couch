@@ -41,8 +41,8 @@ const int height = 600;
 Node *root;
 
 void render(Node *curr, Shader *shader, Matrix model) {
-  if (curr->IsTransformable()) {
-    Spatial *spatial = dynamic_cast<Spatial*>(curr);
+  Spatial *spatial = dynamic_cast<Spatial*>(curr);
+  if (spatial) {
     model = glm::rotate(model, spatial->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
     model = glm::rotate(model, spatial->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
     model = glm::rotate(model, spatial->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
@@ -51,11 +51,12 @@ void render(Node *curr, Shader *shader, Matrix model) {
     shader->UpdateModel(model);
     shader->UpdateNormal(glm::mat3(glm::transpose(glm::inverse(model))));
   }
-  if (curr->IsDrawable()) {
-    Mesh *mesh = dynamic_cast<Mesh*>(curr);
+
+  Mesh *mesh = dynamic_cast<Mesh*>(curr);
+  if (mesh) {
     mesh->Draw(shader);
   }
-  for (Node *child : curr->children) {
+  for (Node *child : curr->GetChildren()) {
     render(child, shader, model);
   }
 }

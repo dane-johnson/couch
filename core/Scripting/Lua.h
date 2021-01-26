@@ -1,8 +1,7 @@
 #ifndef LUA_H
 #define LUA_H
 
-#include "Input.h"
-#include "Util.h"
+#include "../Input.h"
 
 #ifdef LUA_SCRIPTING
 // Lua includes

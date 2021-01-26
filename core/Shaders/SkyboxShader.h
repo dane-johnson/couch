@@ -2,7 +2,7 @@
 #define SKYBOXSHADER_H
 
 #include "Shader.h"
-#include "Skybox.h"
+#include "../Skybox.h"
 
 class SkyboxShader : public Shader {
 public:

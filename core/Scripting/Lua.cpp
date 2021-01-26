@@ -1,4 +1,5 @@
 #include "Lua.h"
+#include "../Util.h"
 
 #ifdef LUA_SCRIPTING
 
