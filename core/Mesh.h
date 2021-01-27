@@ -1,16 +1,34 @@
+/**
+   @file
+   @author Dane Johnson <dane@danejohnson.org>
+ 
+   @section LICENSE
+ 
+   Couch  Copyright (C) 2021 Dane Johnson
+
+   This program comes with ABSOLUTELY NO WARRANTY; without event the
+   implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+   See the GNU General Public License for details at
+   https://www.gnu.org/licenses/gpl-3.0.html
+  
+   This is free software, and you are welcome to redistribute it
+   under the terms of the GNU General Public License as published
+   by the Free Software Foundation; either version 3 of the License,
+   or (at your option) any later version.
+ 
+   @section DESCRIPTION
+   
+   Meshes and their subclasses are anything that can be rendered
+   on screen. They are divided into submeshes, each of which
+   can have its own material properties.
+*/
 #ifndef MESH_H
 #define MESH_H
 
 #include <list>
 #include <vector>
 
-// Thirdparty includes
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
 #include "types.h"
-#include "Util.h"
 #include "Spatial.h"
 #include "Vertex.h"
 #include "Index.h"
@@ -35,25 +53,58 @@ private:
 
 typedef std::vector<SubMesh*> SubMeshList;
 
+/**
+   Mesh and its subclasses are anything that can be rendered on screen.
+   A mesh is made up of submeshes, each of which can have one material
+   property.
+*/
 class Mesh : public Spatial {
 public:
-  Mesh();
   ~Mesh();
+
+  /**
+     @return The number of submeshes this mesh is made up of
+  */
+  int GetNumSubmeshes();
+  /**
+     Get the material property of a submesh
+     @param submesh The index of the submesh who's material is desired
+     @return The material property
+  */
   Material GetMaterial(int submesh);
+  /**
+     Set the material property of a submesh
+     @param submesh The index of the submesh to update
+     @param material The desired material property
+  */
   void SetMaterial(int submesh, Material material);
+
+  /**
+     Create a new mesh from a Wavefront file.
+     A submesh will be generated for each material on the mesh.
+     Material properties will be generated based on the .mat
+     file, if present
+     @param filename The name of the file containing the mesh.
+     @return A new mesh prefab
+  */
   static Mesh *FromFile(const char *filename);
-  virtual bool IsDrawable() const {return true;}
+
+  /**
+     Draw this mesh, by calling Draw on all submeshes.
+     The shader will be updated on each call to the material
+     property of the submesh
+     @param shader The shader program to use to draw
+  */
   virtual void Draw(Shader *shader);
-  virtual Name GetType() const;
+
   virtual Mesh *Create();
   virtual Mesh *Duplicate();
   virtual Mesh *Instance();
+
+  virtual Name GetType() const;
 protected:
   SubMeshList submeshes;
   virtual void SetupMesh();
-private:
-  static SubMesh *aiMesh2SubMesh(aiMesh *mesh, aiMaterial *material);
-  static Color aiColor3D2Color(aiColor3D aicolor);
 };
 
 typedef std::list<Mesh*> MeshList;
