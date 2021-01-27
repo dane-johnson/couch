@@ -43,11 +43,12 @@ Node *root;
 void render(Node *curr, Shader *shader, Matrix model) {
   Spatial *spatial = dynamic_cast<Spatial*>(curr);
   if (spatial) {
-    model = glm::rotate(model, spatial->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
-    model = glm::rotate(model, spatial->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
-    model = glm::rotate(model, spatial->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
-    model = glm::translate(model, spatial->transform.position);
-    model = glm::scale(model, spatial->transform.scale);
+    Transform transform = spatial->GetTransform();
+    model = glm::rotate(model, transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
+    model = glm::rotate(model, transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
+    model = glm::rotate(model, transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
+    model = glm::translate(model, transform.position);
+    model = glm::scale(model, transform.scale);
     shader->UpdateModel(model);
     shader->UpdateNormal(glm::mat3(glm::transpose(glm::inverse(model))));
   }
@@ -126,10 +127,11 @@ int main() {
     shader->UpdateProjection(projection);
     Matrix view(1.0f);
     Camera *camera = Camera::GetCurrentCamera();
-    view = glm::rotate(view, -camera->transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
-    view = glm::rotate(view, -camera->transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
-    view = glm::rotate(view, -camera->transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
-    view = glm::translate(view, -camera->transform.position);
+    Transform camera_transform = camera->GetTransform();
+    view = glm::rotate(view, -camera_transform.rotation.x, Vector3(1.0f, 0.0f, 0.0f));
+    view = glm::rotate(view, -camera_transform.rotation.y, Vector3(0.0f, 1.0f, 0.0f));
+    view = glm::rotate(view, -camera_transform.rotation.z, Vector3(0.0f, 0.0f, 1.0f));
+    view = glm::translate(view, -camera_transform.position);
     shader->UpdateView(view);
 
     // Find the lights
