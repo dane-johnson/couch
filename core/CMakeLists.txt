@@ -8,8 +8,10 @@ find_package(glfw3 3.3 REQUIRED)
 ## Find Bullet
 find_package(Bullet REQUIRED)
 
+if (LUA_ENABLED)
 ## Find Lua
 find_package(Lua REQUIRED)
+endif ()
 
 add_library(couchlib SHARED)
 target_sources(couchlib PUBLIC
@@ -74,7 +76,9 @@ if(NOT WIN32)
 endif()
 target_link_libraries(couchlib OpenGL::GL)
 target_link_libraries(couchlib GLEW::GLEW)
-target_link_libraries(couchlib ${LUA_LIBRARIES})
+if (LUA_ENABLED)
+  target_link_libraries(couchlib ${LUA_LIBRARIES})
+endif () 
 target_link_libraries(couchlib ${BULLET_LIBRARIES})
 
 ## Add documentation
