@@ -27,10 +27,11 @@ local light
 
 function init()
    local material
+   local transform
    
    camera = couch.Camera()
    camera:MakeCurrent()
-   camera.transform:Translate(0.0, 0.0, 10.0)
+   camera:Translate(couch.Vector3(0.0, 0.0, 10.0))
 
    local light = couch.DirectionalLight()
    light.direction = couch.Vector3(0.0, -1.0, -1.0)
@@ -38,7 +39,6 @@ function init()
    light.ambient = 0.2
    light.diffuse = 1.0
    light.specular = 0.1
-   print(couch.Node.GetRoot().GetChildren)
    couch.Node.GetRoot():AddChild(light:Instance())
 
    local skybox = couch.Skybox.FromFiles(
@@ -58,7 +58,7 @@ function init()
    material.diffuse = BLUE
    physics_ball_mesh:SetMaterial(0, material)
    physics_ball_prefab:AddChild(physics_ball_mesh);
-   physics_ball_prefab.transform.position = couch.Vector3(0.0, 30.0, -10.0)   
+   physics_ball_prefab:Translate(couch.Vector3(0.0, 30.0, -10.0))
    physics_ball = physics_ball_prefab:Instance()
    couch.Node.GetRoot():AddChild(physics_ball)
 
@@ -75,7 +75,7 @@ function init()
    character_body:SetCollisionShape(couch.CapsuleCollisionShape(1.0, 1.0))
    character_body:SetCharacter(true)
    character_body:AddChild(character_prefab)
-   character_body.transform.position = couch.Vector3(0.0, 3.0, 0.0)
+   character_body:Translate(couch.Vector3(0.0, 3.0, 0.0))
    character = character_body:Instance()
    couch.Node.GetRoot():AddChild(character)
 
@@ -85,8 +85,8 @@ function init()
    material.diffuse = RED
    cube_prefab:SetMaterial(0, material)
    local orbiter = couch.Mesh.FromFile("ball.obj")
-   orbiter.transform.scale = orbiter.transform.scale * 0.25;
-   orbiter.transform:Translate(1.0, 0.0, 0.0)
+   orbiter:UniformScale(0.25);
+   orbiter:Translate(couch.Vector3(1.0, 0.0, 0.0))
    cube_prefab:AddChild(orbiter)
    cube = cube_prefab:Instance()
    couch.Node.GetRoot():AddChild(cube)
@@ -97,12 +97,12 @@ function init()
    ball = ball_prefab:Instance()
    couch.Node.GetRoot():AddChild(ball)
 
-   ball.transform:Translate(0.0, 3.0, 0.0)
+   ball:Translate(couch.Vector3(0.0, 3.0, 0.0))
 
    local trough_prefab = couch.TexturedMesh("trough.obj", "wood_lowres.png")
    trough = trough_prefab:Instance()
    couch.Node.GetRoot():AddChild(trough)
-   trough.transform:Translate(10.0, 0.0, 0.0)
+   trough:Translate(couch.Vector3(10.0, 0.0, 0.0))
 
    local scaffold_prefab = couch.TexturedMesh("scaffold.obj", "grate_floor_lowres.png", "railing.png")
    local scaffold = scaffold_prefab:Instance()
@@ -116,7 +116,7 @@ function init()
    material.alphaScissor = 0.1
    scaffold:SetMaterial(1, material)
    couch.Node.GetRoot():AddChild(scaffold)
-   scaffold.transform:Translate(-3.0, 3.0, 0.0)
+   scaffold:Translate(couch.Vector3(-3.0, 3.0, 0.0))
 
    local barn_prefab = couch.TexturedMesh("barn.obj", "paintedwood.jpg", "barnroof_lowres.png", "wood_lowres.png")
    local barn = barn_prefab:Instance()
@@ -127,35 +127,37 @@ function init()
    material.cullBack = false
    barn:SetMaterial(1, material)
    couch.Node.GetRoot():AddChild(barn)
-   barn.transform:Translate(-15.0, 0.0, 0.0)
+   barn:Translate(couch.Vector3(-15.0, 0.0, 0.0))
 end
 
 function update(delta)
    local move_vec = couch.Vector3()
-   move_vec = camera.transform.position + camera.transform:Forward() * delta * vz * SPEED
-   move_vec = move_vec + camera.transform:Right() * delta * vx * SPEED
-   move_vec = move_vec + camera.transform:Up() * delta * vy * SPEED
-   camera.transform.position = move_vec
+   local camera_transform = camera:GetTransform()
+   move_vec = camera_transform.position + camera_transform:Forward() * delta * vz * SPEED
+   move_vec = move_vec + camera_transform:Right() * delta * vx * SPEED
+   move_vec = move_vec + camera_transform:Up() * delta * vy * SPEED
+   camera_transform.position = move_vec
    
-   camera.transform.rotation.y = camera.transform.rotation.y - cam_rot_x * delta
+   camera_transform.rotation.y = camera_transform.rotation.y - cam_rot_x * delta
    cam_rot_x = 0.0
-   camera.transform.rotation.x = camera.transform.rotation.x - cam_rot_y * delta
-   camera.transform.rotation.x = min(max(camera.transform.rotation.x, -3.14 / 2.0), 3.14 / 2.0)
+   camera_transform.rotation.x = camera_transform.rotation.x - cam_rot_y * delta
+   camera_transform.rotation.x = min(max(camera_transform.rotation.x, -3.14 / 2.0), 3.14 / 2.0)
    cam_rot_y = 0.0
 
-   local loc = ball.transform.position
+   camera:SetTransform(camera_transform)
+
+   local loc = ball:GetTransform().position
    if loc.y > 4.0 then
       ballvy = -1.0
    elseif loc.y < 2.0 then
       ballvy = 1.0
    end
-   ball.transform.position.y = ball.transform.position.y + ballvy * delta
+   ball:Translate(couch.Vector3(ballvy * delta, 0.0, 0.0))
 
-   cube.transform.rotation.y = cube.transform.rotation.y + 2.0 * delta;
-   cube.transform.rotation.z = cube.transform.rotation.z + 1.0 * delta;
+   cube:RotateY(2.0 * delta)
+   cube:RotateZ(1.0 * delta)
 
    character:ApplyForce(character_move_vec * 10.0)
-   print(character_move_vec.z)
 end
 
 function action_dir(key, action, pos, neg, curr)
@@ -189,8 +191,11 @@ end
 
 function make_ground()
    local ground_prefab = couch.TexturedMesh("ground.obj", "grass_lowres.png")
-   ground_prefab.transform.position = couch.Vector3(0.0, -2.0, 0.0)
-   ground_prefab.transform.scale = couch.Vector3(3.0, 1.0, 3.0)
+   
+   local ground_prefab_transform = ground_prefab:GetTransform()
+   ground_prefab_transform.position = couch.Vector3(0.0, -2.0, 0.0)
+   ground_prefab_transform.scale = couch.Vector3(3.0, 1.0, 3.0)
+   ground_prefab:SetTransform(ground_prefab_transform)
 
    ground = couch.Spatial():Instance()
    couch.Node.GetRoot():AddChild(ground)
@@ -199,13 +204,13 @@ function make_ground()
    local ground_shape_prefab = couch.Rigidbody()
    ground_shape_prefab.mass = 0.0
    ground_shape_prefab:SetCollisionShape(couch.BoxCollisionShape(180.0, 1.0, 180.0))
-   ground_shape_prefab.transform:Translate(0.0, -2.5, 0.0)
+   ground_shape_prefab:Translate(couch.Vector3(0.0, -2.5, 0.0))
    ground:AddChild(ground_shape_prefab:Instance())
 
    for x = -20, 20, 1 do
       for z = -20, 20, 1 do
 	 local piece = ground_prefab:Instance()
-	 piece.transform.position = couch.Vector3(6.0 * x, -2.0, 6.0 * z)
+	 piece:Translate(couch.Vector3(6.0 * x, -2.0, 6.0 * z))
 	 ground:AddChild(piece)
       end
    end

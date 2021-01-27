@@ -1,8 +1,7 @@
-/**
-   @file
-   @author Dane Johnson <dane@danejohnson.org>
+/*
+   Dane Johnson <dane@danejohnson.org>
  
-   @section LICENSE
+   LICENSE
  
    Couch  Copyright (C) 2021 Dane Johnson
 
@@ -16,7 +15,7 @@
    by the Free Software Foundation; either version 3 of the License,
    or (at your option) any later version.
  
-   @section DESCRIPTION
+   DESCRIPTION
  
    Node is the parent class for all classes that would be in the scene
    tree. The root of the scene tree is always a node.

@@ -56,23 +56,26 @@ RigidbodyMotionState::RigidbodyMotionState(Rigidbody *rigidbody) {
 }
 
 void RigidbodyMotionState::getWorldTransform(btTransform &worldTrans) const {
+  Transform transform = rigidbody->GetTransform();
   worldTrans.setOrigin(btVector3(
-			 rigidbody->transform.position.x,
-			 rigidbody->transform.position.y,
-			 rigidbody->transform.position.z));
+			 transform.position.x,
+			 transform.position.y,
+			 transform.position.z));
   btQuaternion quat;
-  quat.setEuler(rigidbody->transform.rotation.z,
-		rigidbody->transform.rotation.y,
-		rigidbody->transform.rotation.x);
+  quat.setEuler(transform.rotation.z,
+		transform.rotation.y,
+		transform.rotation.x);
   worldTrans.setRotation(quat);
 }
 
 void RigidbodyMotionState::setWorldTransform(const btTransform &worldTrans) {
-  rigidbody->transform.position = Vector3(worldTrans.getOrigin().getX(),
+  Transform transform = rigidbody->GetTransform();
+  transform.position = Vector3(worldTrans.getOrigin().getX(),
 					  worldTrans.getOrigin().getY(),
 					  worldTrans.getOrigin().getZ());
   
-  worldTrans.getRotation().getEulerZYX(rigidbody->transform.rotation.z,
-				       rigidbody->transform.rotation.y,
-				       rigidbody->transform.rotation.x);
+  worldTrans.getRotation().getEulerZYX(transform.rotation.z,
+				       transform.rotation.y,
+				       transform.rotation.x);
+  rigidbody->SetTransform(transform);
 }
