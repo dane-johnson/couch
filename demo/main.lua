@@ -5,6 +5,9 @@ local physics_ball
 local character
 local ball
 local camera
+local die_cube
+
+local total = 0.0
 
 local vx = 0.0
 local vy = 0.0
@@ -90,6 +93,9 @@ function init()
    cube_prefab:AddChild(orbiter)
    cube = cube_prefab:Instance()
    couch.Node.GetRoot():AddChild(cube)
+   die_cube = cube_prefab:Instance()
+   couch.Node.GetRoot():AddChild(die_cube)
+   die_cube:Translate(couch.Vector3(0.0, 0.0, 3.0))
    
    local ball_prefab = couch.Mesh.FromFile("ball.obj")
    material = ball_prefab:GetMaterial(0)
@@ -131,6 +137,7 @@ function init()
 end
 
 function update(delta)
+   total = total + delta
    local move_vec = couch.Vector3()
    local camera_transform = camera:GetTransform()
    move_vec = camera_transform.position + camera_transform:Forward() * delta * vz * SPEED
@@ -152,12 +159,17 @@ function update(delta)
    elseif loc.y < 2.0 then
       ballvy = 1.0
    end
-   ball:Translate(couch.Vector3(ballvy * delta, 0.0, 0.0))
+   ball:Translate(couch.Vector3(0.0, ballvy * delta, 0.0))
 
    cube:RotateY(2.0 * delta)
    cube:RotateZ(1.0 * delta)
 
    character:ApplyForce(character_move_vec * 10.0)
+
+   if total > 1.0 and die_cube then
+      die_cube:QueueFree()
+      die_cube = nil
+   end
 end
 
 function action_dir(key, action, pos, neg, curr)

@@ -24,6 +24,13 @@
 #include "Node.h"
 #include "Util.h"
 
+NodeList::NodeList() {
+  isPrefabList = true;
+}
+NodeList::NodeList(bool isPrefabList) {
+  this->isPrefabList = isPrefabList;
+}
+
 void NodeList::Append(Node *node) {
   if (this->isPrefabList and not node->isPrefab) {
     Util::Die("Attempt to add instanced node to prefab list!");
@@ -34,8 +41,20 @@ void NodeList::Append(Node *node) {
   push_back(node);
 }
 
+void NodeList::Remove(Node *node) {
+  remove(node);
+}
+
 bool NodeList::IsPrefabList() {
   return isPrefabList;
+}
+
+void NodeList::FreeList() {
+  for(Node *node : *this) {
+    node->children.FreeList();
+    delete node;
+  }
+  clear();
 }
 
 Name Node::GetType() const {return "Node";}
@@ -49,7 +68,24 @@ NodeList Node::GetChildren() {
 }
 
 void Node::AddChild(Node *child) {
+  child->parent = this;
   children.Append(child);
+}
+
+Node *Node::GetParent() {
+  return parent;
+}
+
+void Node::QueueFree() {
+  parent->children.Remove(this);
+  freeList->Append(this);
+}
+
+void Node::DoFree() {
+  if (this != root) {
+    Util::Die("Tried to call DoFree from non-root node");
+  }
+  freeList->FreeList();
 }
 
 Node *Node::GetRoot() {
@@ -79,4 +115,5 @@ Node* Node::Instance() {
   return instance;
 }
 
+NodeList *Node::freeList = new NodeList(false);
 Node *Node::root = {Node().Instance()};

@@ -121,7 +121,10 @@ int main() {
     // Start rendering to texture;
     screen.Enable();
 
+    // Call update function
     lua->Update(delta);
+    // Delete freed nodes
+    root->DoFree();
 
     shader->Use();
     shader->UpdateProjection(projection);
@@ -176,7 +179,7 @@ int main() {
 
   delete screenShader;
   delete skyboxShader;
-  delete flatShader()
+  delete shader;
   lua->Close();
   delete lua;
   
