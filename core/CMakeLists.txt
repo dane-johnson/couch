@@ -80,7 +80,6 @@ target_link_libraries(couchlib ${BULLET_LIBRARIES})
 ## Add documentation
 find_package(Doxygen REQUIRED
   OPTIONAL_COMPONENTS dot mscgen dia)
-
 doxygen_add_docs(couchdocs
-  Node.h)
-
+  .
+  mainpage.dox)
