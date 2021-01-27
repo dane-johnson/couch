@@ -25,7 +25,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <vector>
+#include <list>
 
 #include "types.h"
 
@@ -34,8 +34,10 @@ class Node; // Forwards declare
    A list of nodes, tagged as either a list of prefabs
    or a list of instanced nodes.
 */
-class NodeList : public std::vector<Node*> {
+class NodeList : public std::list<Node*> {
 public:
+  NodeList();
+  NodeList(bool isPrefabList);
   /**
      Add a node to this list, will check if it is a prefab 
      or an instance.
@@ -43,13 +45,22 @@ public:
   */
   void Append(Node *node);
   /**
+     Remove a node from this list
+     @param node The node to remove
+  */
+  void Remove(Node *node);
+  /**
      Whether or not this is a list of prefabs
      @returns true if this is a prefab list,
      false if it is an instanced list.
   */
   bool IsPrefabList();
+  /**
+     Recursively frees all nodes in the list
+  */
+  void FreeList();
 private:
-  bool isPrefabList = true;
+  bool isPrefabList;
   friend class Node;
 };
 
@@ -78,6 +89,21 @@ public:
      @param child The node to add
   */
   void AddChild(Node *child);
+  /**
+     @return This node's parent;
+  */
+  Node *GetParent();
+  /**
+     Remove this node and it's children from the tree
+     and queue their memory for freeing
+   */
+  void QueueFree();
+
+  /**
+     Actually frees the memory
+     Should only be called from root
+  */
+  void DoFree();
   
   /**
      Gets the root of the game scene tree
@@ -108,7 +134,9 @@ public:
 
 private:
   NodeList children;
+  static NodeList *freeList;
   static Node *root;
+  Node *parent;
   bool isPrefab = true;
   friend class NodeList;
 };
