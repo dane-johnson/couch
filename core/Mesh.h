@@ -25,7 +25,6 @@
 #ifndef MESH_H
 #define MESH_H
 
-#include <list>
 #include <vector>
 
 #include "types.h"
@@ -106,7 +105,5 @@ protected:
   SubMeshList submeshes;
   virtual void SetupMesh();
 };
-
-typedef std::list<Mesh*> MeshList;
 
 #endif /* MESH_H */
