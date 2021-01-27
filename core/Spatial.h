@@ -51,7 +51,7 @@ public:
      Directly translates the spatial by offset
      @param offset The offset of the transform operation
   */
-  void Translate(Vector3 offset);
+  virtual void Translate(Vector3 offset);
   /**
      Rotates the Camera phi radians about the X axis
      @param phi The amount to rotate in radians

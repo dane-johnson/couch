@@ -71,7 +71,7 @@ function init()
    material.specular = WHITE * 0.1
    character_prefab:SetMaterial(0, material)
    local character_body = couch.Rigidbody()
-   character_body.mass = 1.0
+   character_body:SetMass(1.0)
    character_body:SetCollisionShape(couch.CapsuleCollisionShape(1.0, 1.0))
    character_body:SetCharacter(true)
    character_body:AddChild(character_prefab)
@@ -202,7 +202,7 @@ function make_ground()
 
    -- Add a collisionshape
    local ground_shape_prefab = couch.Rigidbody()
-   ground_shape_prefab.mass = 0.0
+   ground_shape_prefab:SetMass(0.0)
    ground_shape_prefab:SetCollisionShape(couch.BoxCollisionShape(180.0, 1.0, 180.0))
    ground_shape_prefab:Translate(couch.Vector3(0.0, -2.5, 0.0))
    ground:AddChild(ground_shape_prefab:Instance())
