@@ -174,7 +174,12 @@ int main() {
     lastTime = curTime;
   }
 
+  delete screenShader;
+  delete skyboxShader;
+  delete flatShader()
   lua->Close();
+  delete lua;
+  
   glfwDestroyWindow(window);
   glfwTerminate();
   return 0;
