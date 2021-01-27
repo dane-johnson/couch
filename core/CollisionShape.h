@@ -16,17 +16,17 @@ private:
 
 class SphereCollisionShape : public CollisionShape {
 public:
-  SphereCollisionShape(cfloat radius);
+  SphereCollisionShape(float radius);
 };
 
 class BoxCollisionShape : public CollisionShape {
 public:
-  BoxCollisionShape(cfloat width, cfloat height, cfloat depth);
+  BoxCollisionShape(float width, float height, float depth);
 };
 
 class CapsuleCollisionShape: public CollisionShape {
 public:
-  CapsuleCollisionShape(cfloat radius, cfloat height);
+  CapsuleCollisionShape(float radius, float height);
 };
 
 #endif /* COLLISIONSHAPE_H */

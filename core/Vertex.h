@@ -7,14 +7,14 @@
 
 struct Vertex {
   Vertex();
-  Vertex(cfloat x, cfloat y, cfloat z);
-  Vertex(cfloat x, cfloat y, cfloat z, cfloat u, cfloat v);
-  Vertex(cfloat x, cfloat y, cfloat z,
-	 cfloat nx, float ny, cfloat nz,
-	 cfloat u, cfloat v);
-  cfloat x, y, z;
-  cfloat nx, ny, nz;
-  cfloat u, v;
+  Vertex(float x, float y, float z);
+  Vertex(float x, float y, float z, float u, float v);
+  Vertex(float x, float y, float z,
+	 float nx, float ny, float nz,
+	 float u, float v);
+  float x, y, z;
+  float nx, ny, nz;
+  float u, v;
 };
 
 typedef std::vector<Vertex> VertexList;
