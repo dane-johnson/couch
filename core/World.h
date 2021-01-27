@@ -9,7 +9,7 @@ class World {
 public:
   static World* GetWorld();
   void AddRigidbody(Rigidbody *rigidbody);
-  void Step(cfloat delta);
+  void Step(float delta);
 private:
   static World* world;
   btDiscreteDynamicsWorld *btWorld;

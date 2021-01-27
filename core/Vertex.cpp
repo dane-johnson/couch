@@ -11,7 +11,7 @@ Vertex::Vertex() {
   v = 0.0f;
 }
 
-Vertex::Vertex(cfloat x, cfloat y, cfloat z) {
+Vertex::Vertex(float x, float y, float z) {
   this->x = x;
   this->y = y;
   this->z = z;
@@ -22,7 +22,7 @@ Vertex::Vertex(cfloat x, cfloat y, cfloat z) {
   this->v = 0.0f;
 }
 
-Vertex::Vertex(cfloat x, cfloat y, cfloat z, cfloat u, cfloat v) {
+Vertex::Vertex(float x, float y, float z, float u, float v) {
   this->x = x;
   this->y = y;
   this->z = z;
@@ -33,9 +33,9 @@ Vertex::Vertex(cfloat x, cfloat y, cfloat z, cfloat u, cfloat v) {
   this->v = v;
 }
 
-Vertex::Vertex(cfloat x, cfloat y, cfloat z,
-	       cfloat nx, float ny, cfloat nz,
-	       cfloat u, cfloat v) {
+Vertex::Vertex(float x, float y, float z,
+	       float nx, float ny, float nz,
+	       float u, float v) {
   this->x = x;
   this->y = y;
   this->z = z;

@@ -52,14 +52,14 @@ public:
      Gets the mass of this rigidbody
      @return The mass, 0.0 if this is an infinite mass object
   */
-  cfloat GetMass();
+  float GetMass();
   /**
      Sets the mass of this rigidbody.
      Note that setting mass equal to 0.0 will make it an
      infinite mass object
      @param mass The desired mass
   */
-  void SetMass(cfloat mass);
+  void SetMass(float mass);
   
   /**
      Add an instantaneous impulse to the object.
@@ -93,7 +93,7 @@ private:
   bool character = false;
   btRigidBody *btBody;
   btCollisionShape *collisionShape;
-  cfloat mass = 1.0f;
+  float mass = 1.0f;
   
   friend class World;
 };

@@ -42,25 +42,25 @@ void Spatial::Translate(Vector3 offset) {
   this->SetTransform(t);
 }
 
-void Spatial::RotateX(cfloat phi) {
+void Spatial::RotateX(float phi) {
   Transform t = this->GetTransform();
   t.rotation.x += phi;
   this->SetTransform(t);
 }
 
-void Spatial::RotateY(cfloat phi) {
+void Spatial::RotateY(float phi) {
   Transform t = this->GetTransform();
   t.rotation.y += phi;
   this->SetTransform(t);
 }
 
-void Spatial::RotateZ(cfloat phi) {
+void Spatial::RotateZ(float phi) {
   Transform t = this->GetTransform();
   t.rotation.z += phi;
   this->SetTransform(t);
 }
 
-void Spatial::UniformScale(cfloat scale) {
+void Spatial::UniformScale(float scale) {
   Transform t = this->GetTransform();
   t.scale *= scale;
   this->SetTransform(t);

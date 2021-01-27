@@ -68,11 +68,11 @@ void Rigidbody::SetCollisionShape(CollisionShape collisionShape) {
   this->collisionShape = collisionShape.shape;
 }
 
-cfloat Rigidbody::GetMass() {
+float Rigidbody::GetMass() {
   return mass;
 }
 
-void Rigidbody::SetMass(cfloat mass) {
+void Rigidbody::SetMass(float mass) {
   this->mass = mass;
   if (not IsPrefab()) {
     btBody->setMassProps(mass, btVector3(0, 0, 0));

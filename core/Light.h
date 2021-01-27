@@ -7,7 +7,7 @@
 class Light : public Spatial {
 public:
   Vector3 color;
-  cfloat ambient, diffuse, specular;
+  float ambient, diffuse, specular;
   virtual Name GetType() const;
   virtual Light *Create();
   virtual Light *Duplicate();
@@ -18,7 +18,7 @@ class DirectionalLight : public Light {
 public:
   Vector3 direction;
   DirectionalLight();
-  DirectionalLight(Vector3 direction, Vector3 color, cfloat ambient, cfloat diffuse, cfloat specular);
+  DirectionalLight(Vector3 direction, Vector3 color, float ambient, float diffuse, float specular);
   virtual Name GetType() const;
   virtual DirectionalLight *Create();
   virtual DirectionalLight *Duplicate();

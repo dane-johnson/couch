@@ -1,6 +1,6 @@
 #include "Skybox.h"
 
-cfloat vertices[] = {
+float vertices[] = {
     // positions          
     -1.0f,  1.0f, -1.0f,
     -1.0f, -1.0f, -1.0f,
@@ -57,7 +57,7 @@ Skybox::Skybox() {
   // We're just going to use position data
   // UV data is the same
   glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * (sizeof(cfloat)), (void*) 0);
+  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * (sizeof(float)), (void*) 0);
   glBindVertexArray(0);
 }
 

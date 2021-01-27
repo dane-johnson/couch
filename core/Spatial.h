@@ -56,22 +56,22 @@ public:
      Rotates the Camera phi radians about the X axis
      @param phi The amount to rotate in radians
   */
-  void RotateX(cfloat phi);
+  void RotateX(float phi);
   /**
      Rotates the Camera phi radians about the Y axis
      @param phi The amount to rotate in radians
   */
-  void RotateY(cfloat phi);
+  void RotateY(float phi);
   /**
      Rotates the Camera phi radians about the Z axis
      @param phi The amount to rotate in radians
   */
-  void RotateZ(cfloat phi);
+  void RotateZ(float phi);
   /**
      Scales the spatial by scale uniformly
      @param scale The amount to scale by.
   */
-  void UniformScale(cfloat scale);
+  void UniformScale(float scale);
   
   virtual Spatial *Create();
   virtual Spatial *Duplicate();  

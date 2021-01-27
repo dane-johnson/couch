@@ -12,7 +12,7 @@ void World::AddRigidbody(Rigidbody *rigidbody) {
   btWorld->addRigidBody(rigidbody->btBody);
 }
 
-void World::Step(cfloat delta) {
+void World::Step(float delta) {
   btWorld->stepSimulation(delta);
 }
 

@@ -63,9 +63,9 @@ void Shader::UpdateMaterial(Material material) {
     glBindTexture(GL_TEXTURE_2D, material.tex.id);
   }
 
-  glUniform3fv(glGetUniformLocation(id, "material.ambient"), 1, (cfloat*) &material.ambient);
-  glUniform3fv(glGetUniformLocation(id, "material.diffuse"), 1, (cfloat*) &material.diffuse);
-  glUniform3fv(glGetUniformLocation(id, "material.specular"), 1, (cfloat*) &material.specular);
+  glUniform3fv(glGetUniformLocation(id, "material.ambient"), 1, (float*) &material.ambient);
+  glUniform3fv(glGetUniformLocation(id, "material.diffuse"), 1, (float*) &material.diffuse);
+  glUniform3fv(glGetUniformLocation(id, "material.specular"), 1, (float*) &material.specular);
   glUniform1i(glGetUniformLocation(id, "material.shininess"), material.shininess);
   
   glUniform1f(glGetUniformLocation(id, "material.alphaScissor"), material.alphaScissor);

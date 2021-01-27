@@ -20,21 +20,18 @@
 #include "CollisionShape.h"
 %}
 
-typedef float cfloat;
-%ignore "cfloat";
-
 class Vector3 {
 public:
   Vector3();
-  Vector3(cfloat x, cfloat y, cfloat z);
-  cfloat x, y, z;
+  Vector3(float x, float y, float z);
+  float x, y, z;
 };
 
 %extend Vector3 {
   Vector3 operator+(const Vector3 &o) const {
     return *$self + o;
   }
-  Vector3 operator*(const cfloat &o) const {
+  Vector3 operator*(const float &o) const {
     return *$self * o;
   }
 }

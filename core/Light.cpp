@@ -30,7 +30,7 @@ DirectionalLight::DirectionalLight() {
   this->specular = 0.0f;
 }
 
-DirectionalLight::DirectionalLight(Vector3 direction, Vector3 color, cfloat ambient, cfloat diffuse, cfloat specular) {
+DirectionalLight::DirectionalLight(Vector3 direction, Vector3 color, float ambient, float diffuse, float specular) {
   this->direction = direction;
   this->color = color;
   this->ambient = ambient;

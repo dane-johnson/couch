@@ -27,7 +27,7 @@ struct Material {
   
   int shininess;
   
-  cfloat alphaScissor;
+  float alphaScissor;
   bool unshaded;
   bool cullBack;
   Material();

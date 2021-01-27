@@ -10,7 +10,7 @@ Vector3 operator+(const Vector3 &r, const Vector3 &l) {
   return val;
 }
 
-Vector3 operator*(const Vector3 &r, const cfloat &l) {
+Vector3 operator*(const Vector3 &r, const float &l) {
   Vector3 val(0.0f);
   val.x = r.x * l;
   val.y = r.y * l;

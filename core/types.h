@@ -12,10 +12,9 @@ typedef GLFWwindow Window;
 typedef glm::vec3 Vector3;
 typedef glm::mat4 Matrix;
 typedef std::string Name;
-typedef GLfloat cfloat;
 typedef GLuint Id;
 
-Vector3 operator*(const Vector3 &r, const cfloat &l);
+Vector3 operator*(const Vector3 &r, const float &l);
 Vector3 operator+(const Vector3 &r, const Vector3 &l);
 
 #endif /* TYPES_H */
