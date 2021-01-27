@@ -85,8 +85,9 @@ bool Lua::HasHook(const char *name) {
   return exists;
 }
 
-void Lua::LuaKeyHandler(Window *window, int key, int code, int action, int mods) {
 #ifdef LUA_SCRIPTING
+
+void Lua::LuaKeyHandler(Window *window, int key, int code, int action, int mods) {
   // lua_State *L = (lua_State*) glfwGetWindowUserPointer(window);
   lua_getglobal(L, "onkey");
   lua_pushinteger(L, key);
@@ -97,11 +98,9 @@ void Lua::LuaKeyHandler(Window *window, int key, int code, int action, int mods)
   if (err != LUA_OK) {
     Error();
   }
-#endif // LUA_SCRIPTING
 }
 
 void Lua::LuaMousePositionHandler(Window *window, double xpos, double ypos, double relx, double rely) {
-#ifdef LUA_SCRIPTING
   // lua_State *L = (lua_State*) glfwGetWindowUserPointer(window);
   lua_getglobal(L, "onmousemotion");
   lua_pushnumber(L, xpos);
@@ -112,5 +111,7 @@ void Lua::LuaMousePositionHandler(Window *window, double xpos, double ypos, doub
   if (err != LUA_OK) {
     Error();
   }
-#endif // LUA_SCRIPTING
 }
+
+#endif // LUA_SCRIPTING
+
