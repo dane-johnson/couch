@@ -31,7 +31,14 @@
 class Camera : public Spatial {
 public:
   Camera();
+  /**
+     Sets this camera as the one that Couch will use to render
+  */
   void MakeCurrent();
+  /**
+     Get the Camera that couch is using to render
+     @return The camera
+  */
   static Camera *GetCurrentCamera();
 private:
   static Camera *currentCamera;
