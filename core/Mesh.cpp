@@ -1,4 +1,37 @@
+/*
+  Dane Johnson <dane@danejohnson.org>
+ 
+  LICENSE
+ 
+  Couch  Copyright (C) 2021 Dane Johnson
+
+  This program comes with ABSOLUTELY NO WARRANTY; without event the
+  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  See the GNU General Public License for details at
+  https://www.gnu.org/licenses/gpl-3.0.html
+  
+  This is free software, and you are welcome to redistribute it
+  under the terms of the GNU General Public License as published
+  by the Free Software Foundation; either version 3 of the License,
+  or (at your option) any later version.
+ 
+  DESCRIPTION
+   
+  Meshes and their subclasses are anything that can be rendered
+  on screen. They are divided into submeshes, each of which
+  can have its own material properties.
+*/
 #include "Mesh.h"
+
+// Thirdparty includes
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+
+SubMesh *aiMesh2SubMesh(aiMesh *mesh, aiMaterial *material);
+Color aiColor3D2Color(aiColor3D aicolor);
+
 
 SubMesh::SubMesh() {}
 
@@ -51,47 +84,27 @@ SubMesh *SubMesh::Duplicate() {
   return submesh;
 }
 
-Name Mesh::GetType() const {return "Mesh";}
-
-Mesh::Mesh() {}
-
 Mesh::~Mesh() {
   for (SubMesh *sub : submeshes) {
     delete sub;
   }
 }
 
-Mesh *Mesh::Create() {
-  return new Mesh;
-}
-
-Mesh *Mesh::Duplicate() {
-  Mesh *mesh = static_cast<Mesh*>(Spatial::Duplicate());
-  // Duplicate submeshes
-  mesh->submeshes = SubMeshList();
-
-  for (SubMesh *submesh : submeshes) {
-    mesh->submeshes.push_back(submesh->Duplicate());
-  }
-
-  return mesh;
-}
-
-Mesh *Mesh::Instance() {
-  return static_cast<Mesh*>(Node::Instance());
-}
-
-void Mesh::SetupMesh() {
-  for (SubMesh *sub : submeshes) {
-    sub->SetupSubMesh();
-  }
+int Mesh::GetNumSubmeshes() {
+  return submeshes.size();
 }
 
 Material Mesh::GetMaterial(int submesh) {
+  if (submesh >= GetNumSubmeshes()) {
+    Util::Die("Submesh index out of range");
+  }
   return submeshes[submesh]->material;
 }
 
 void Mesh::SetMaterial(int submesh, Material material) {
+  if (submesh >= GetNumSubmeshes()) {
+    Util::Die("Submesh index out of range");
+  }
   submeshes[submesh]->material = material;
 }
 
@@ -125,7 +138,42 @@ Mesh* Mesh::FromFile(const char *filename) {
   return my_mesh;
 }
 
-SubMesh *Mesh::aiMesh2SubMesh(aiMesh *aimesh, aiMaterial* material){
+void Mesh::Draw(Shader *shader) {
+  for (SubMesh *sub : submeshes) {
+    sub->Draw(shader);
+  }
+}
+
+Mesh *Mesh::Create() {
+  return new Mesh;
+}
+
+Mesh *Mesh::Duplicate() {
+  Mesh *mesh = static_cast<Mesh*>(Spatial::Duplicate());
+  // Duplicate submeshes
+  mesh->submeshes = SubMeshList();
+
+  for (SubMesh *submesh : submeshes) {
+    mesh->submeshes.push_back(submesh->Duplicate());
+  }
+
+  return mesh;
+}
+
+Mesh *Mesh::Instance() {
+  return static_cast<Mesh*>(Node::Instance());
+}
+
+Name Mesh::GetType() const {return "Mesh";}
+
+void Mesh::SetupMesh() {
+  for (SubMesh *sub : submeshes) {
+    sub->SetupSubMesh();
+  }
+}
+
+
+SubMesh *aiMesh2SubMesh(aiMesh *aimesh, aiMaterial* material){
   SubMesh *sub = new SubMesh();
   for (int i = 0; i < aimesh->mNumVertices; i++) {
     aiVector3D aiPosition = aimesh->mVertices[i];
@@ -163,16 +211,10 @@ SubMesh *Mesh::aiMesh2SubMesh(aiMesh *aimesh, aiMaterial* material){
   return sub;
 }
 
-Color Mesh::aiColor3D2Color(aiColor3D aicolor) {
+Color aiColor3D2Color(aiColor3D aicolor) {
   Color color;
   color.r = aicolor.r;
   color.g = aicolor.g;
   color.b = aicolor.b;
   return color;
-}
-
-void Mesh::Draw(Shader *shader) {
-  for (SubMesh *sub : submeshes) {
-    sub->Draw(shader);
-  }
 }
