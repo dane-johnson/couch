@@ -1,4 +1,7 @@
 #include "Lua.h"
+
+#include <string>
+
 #include "../Util.h"
 
 #ifdef LUA_SCRIPTING
@@ -14,18 +17,14 @@ void Lua::Initialize() {
   // Initialize Lua
   luaL_openlibs(L);
   luaopen_couch(L);
+  lua_atpanic(L, &LuaExceptionHandler);
+
   err = luaL_loadfile(L, "main.lua");
   if (err == LUA_OK) {
-    err = lua_pcall(L, 0, 0, 0);
-    if (err != LUA_OK) {
-      Error();
-    }
+    lua_call(L, 0, 0);
     if (HasHook("init")) {
       lua_getglobal(L, "init");
-      err = lua_pcall(L, 0, 0, 0);
-      if (err != LUA_OK) {
-	Error();
-      }
+      lua_call(L, 0, 0);
     }
   } else if (err == LUA_ERRFILE) {
     Util::Die("Could not find main.lua.");
@@ -53,10 +52,7 @@ void Lua::Update(double delta) {
   if (HasHook("update")) {
     lua_getglobal(L, "update");
     lua_pushnumber(L, delta);
-    int err = lua_pcall(L, 1, 0, 0);
-    if (err != LUA_OK) {
-      Error();
-    }
+    lua_call(L, 1, 0);
   }
 #endif // LUA_SCRIPTING
 }
@@ -88,16 +84,12 @@ bool Lua::HasHook(const char *name) {
 #ifdef LUA_SCRIPTING
 
 void Lua::LuaKeyHandler(Window *window, int key, int code, int action, int mods) {
-  // lua_State *L = (lua_State*) glfwGetWindowUserPointer(window);
   lua_getglobal(L, "onkey");
   lua_pushinteger(L, key);
   lua_pushinteger(L, code);
   lua_pushinteger(L, action);
   lua_pushinteger(L, mods);
-  int err = lua_pcall(L, 4, 0, 0);
-  if (err != LUA_OK) {
-    Error();
-  }
+  lua_call(L, 4, 0);
 }
 
 void Lua::LuaMousePositionHandler(Window *window, double xpos, double ypos, double relx, double rely) {
@@ -107,10 +99,18 @@ void Lua::LuaMousePositionHandler(Window *window, double xpos, double ypos, doub
   lua_pushnumber(L, ypos);
   lua_pushnumber(L, relx);
   lua_pushnumber(L, rely);
-  int err = lua_pcall(L, 4, 0, 1);
-  if (err != LUA_OK) {
-    Error();
-  }
+  lua_call(L, 4, 0);
+}
+
+int Lua::LuaExceptionHandler(lua_State *L1) {
+  std::string err;
+  err += lua_tostring(L1, -1);
+  err += "\n";
+  luaL_traceback(L1, L1, NULL, 1);
+  err += lua_tostring(L, -1);
+  Util::Die(err);
+  // Should never get here
+  return 1;
 }
 
 #endif // LUA_SCRIPTING

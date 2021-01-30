@@ -96,7 +96,7 @@ int Mesh::GetNumSubmeshes() {
 
 Material Mesh::GetMaterial(int submesh) {
   if (submesh >= GetNumSubmeshes()) {
-    Util::Die("Submesh index out of range");
+    throw "Submesh index out of range";
   }
   return submeshes[submesh]->material;
 }

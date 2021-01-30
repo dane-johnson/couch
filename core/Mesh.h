@@ -26,6 +26,7 @@
 #define MESH_H
 
 #include <vector>
+#include <exception>
 
 #include "types.h"
 #include "Spatial.h"
