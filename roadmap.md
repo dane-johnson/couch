@@ -79,7 +79,7 @@ Yeah sure let's do physics
 ## Great Refactor
 Things are starting to smell, here's what I need to do
 - [ ] Replace all public attributes with accessors (on classes)
-- [ ] Seperate prefabs from instances
+- [X] Seperate prefabs from instances
 - [ ] Combine related files (shaders)
 - [ ] Create a testing suite
 - [ ] Have exceptions thrown to Lua if generated from a user program

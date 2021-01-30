@@ -33,10 +33,10 @@ NodeList::NodeList(bool isPrefabList) {
 
 void NodeList::Append(Node *node) {
   if (this->isPrefabList and not node->isPrefab) {
-    Util::Die("Attempt to add instanced node to prefab list!");
+    throw "Attempt to add instanced node to prefab list!";
   }
   if (node->isPrefab and not this->isPrefabList) {
-    Util::Die("Attempt to add prefab node to instanced list!");
+    throw "Attempt to add prefab node to instanced list!";
   }
   push_back(node);
 }
@@ -83,7 +83,7 @@ void Node::QueueFree() {
 
 void Node::DoFree() {
   if (this != root) {
-    Util::Die("Tried to call DoFree from non-root node");
+    throw "Tried to call DoFree from non-root node";
   }
   freeList->FreeList();
 }
@@ -102,7 +102,7 @@ Node* Node::Duplicate() {
 
 Node* Node::Instance() {
   if (not isPrefab) {
-    Util::Die("Attempt to instance an instanced node!");
+    throw "Attempt to instance an instanced node!";
   }
   Node* instance = Duplicate();
   instance->isPrefab = false;

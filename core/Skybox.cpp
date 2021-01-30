@@ -1,5 +1,7 @@
 #include "Skybox.h"
 
+#include <string>
+
 float vertices[] = {
     // positions          
     -1.0f,  1.0f, -1.0f,
@@ -91,7 +93,7 @@ Skybox *Skybox::FromFiles(const char *right, const char* left, const char* top, 
   for (int i = 0; i < 6; i++) {
     data = stbi_load(files[i], &width, &height, &nrChannels, 3);
     if (!data) {
-      Util::Die("Could not load skybox image ", files[i]);
+      throw std::string() + "Could not load skybox image " + files[i];
     }
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i,
 		 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
