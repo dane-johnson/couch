@@ -48,10 +48,10 @@ swig files and customizing the interface by hand. I also want to add a whole mes
 so that I don't have to test for keypresses. Lastly, I want to test if a function exists before
 calling it from the lua file, so stubs aren't necessary to prevent a crash
 
-- [X] Combine files
-- [X] Better interface
-- [X] Constants for keys and the like
-- [X] No crash on calling non-existant scripting hooks
+- [x] Combine files
+- [x] Better interface
+- [x] Constants for keys and the like
+- [x] No crash on calling non-existant scripting hooks
 
 ## Lighting
 I'm a bit happier with the system now, I think it's time I started the lighting.
@@ -71,15 +71,15 @@ to revert (shitty animation support). There are a number of systems I want to ad
 
 ## Physics
 Yeah sure let's do physics
-- [X] Static, Kinematic and Rigidbodies
-- [X] Collision areas
-- [X] Ray tracing
-- [X] Axis pinning
+- [x] Static, Kinematic and Rigidbodies
+- [x] Collision areas
+- [ ] Ray tracing
+- [x] Axis pinning
 
 ## Great Refactor
 Things are starting to smell, here's what I need to do
 - [ ] Replace all public attributes with accessors (on classes)
-- [X] Seperate prefabs from instances
+- [x] Seperate prefabs from instances
 - [ ] Combine related files (shaders)
 - [ ] Create a testing suite
-- [ ] Have exceptions thrown to Lua if generated from a user program
+- [x] Have exceptions thrown to Lua if generated from a user program
