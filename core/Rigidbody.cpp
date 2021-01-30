@@ -81,10 +81,12 @@ void Rigidbody::SetMass(float mass) {
 
 void Rigidbody::ApplyImpulse(Vector3 impulse) {
   btBody->applyCentralImpulse(btVector3(impulse.x, impulse.y, impulse.z));
+  btBody->setActivationState(1);
 }
 
 void Rigidbody::ApplyForce(Vector3 force) {
   btBody->applyCentralForce(btVector3(force.x, force.y, force.z));
+  btBody->setActivationState(1);
 }
 
 
