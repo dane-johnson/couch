@@ -46,6 +46,16 @@ public:
      @param transform The transform property
   */
   void SetTransform(Transform transform);
+  /**
+     Gets the translation with relation to the world origin
+     @returns the global transform
+  */
+  Transform GetGlobalTransform();
+  /**
+     Sets the transform with relation to the world origin
+     @param globalTransform The global transform property
+  */
+  void SetGlobalTransform(Transform globalTransform);
 
   /**
      Directly translates the spatial by offset
