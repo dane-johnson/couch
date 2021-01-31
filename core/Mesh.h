@@ -105,6 +105,7 @@ public:
 protected:
   SubMeshList submeshes;
   virtual void SetupMesh();
+  friend class MeshCollisionShape;
 };
 
 #endif /* MESH_H */
