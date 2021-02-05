@@ -1,3 +1,4 @@
+find_package(SWIG REQUIRED)
 include(UseSWIG)
 set_property(SOURCE couch.i PROPERTY CPLUSPLUS ON)
 set_property(SOURCE couch.i PROPERTY USE_TARGET_INCLUDE_DIRECTORIES ON)
