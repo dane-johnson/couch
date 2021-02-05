@@ -4,7 +4,6 @@
 # ASSIMP_FOUND - system has Assimp
 # ASSIMP_INCLUDE_DIR - the Assimp include directories
 # ASSIMP_LIBRARIES - link these to use Assimp
-message(STATUS "Looking for Assimp")
 FIND_PATH( ASSIMP_INCLUDE_DIR assimp/mesh.h
   /usr/include
   /usr/local/include
