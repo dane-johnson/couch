@@ -8,6 +8,9 @@ find_package(glfw3 3.3 REQUIRED)
 ## Find Bullet
 find_package(Bullet REQUIRED)
 
+## Find AssImp
+find_package(ASSIMP REQUIRED)
+
 if (LUA_ENABLED)
 ## Find Lua
 find_package(Lua REQUIRED)
@@ -71,6 +74,10 @@ target_include_directories(couchlib
   PUBLIC
   ${BULLET_INCLUDE_DIRS})
 
+target_include_directories(couchlib
+  PUBLIC
+  ${ASSIMP_INCLUDE_DIR})
+
 if(NOT WIN32)
   target_link_libraries(couchlib glfw)
 endif()
@@ -80,6 +87,7 @@ if (LUA_ENABLED)
   target_link_libraries(couchlib ${LUA_LIBRARIES})
 endif () 
 target_link_libraries(couchlib ${BULLET_LIBRARIES})
+target_link_libraries(couchlib ${ASSIMP_LIBRARY})
 
 ## Add documentation
 find_package(Doxygen REQUIRED
