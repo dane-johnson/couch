@@ -10,6 +10,7 @@ add_executable(couch core/couch.cpp)
 
 add_subdirectory(core)
 target_link_libraries(couch couchlib)
+target_link_libraries(couch couchlib_luascripting)
 
 add_subdirectory(scripting)
 if (LUA_ENABLED)

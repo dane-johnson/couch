@@ -1,3 +1,7 @@
+// NOTE: Do this here and only here, stbi will be defined where
+// this macro is included
+#define STB_IMAGE_IMPLEMENTATION
+
 #include "Material.h"
 
 #include <string>
