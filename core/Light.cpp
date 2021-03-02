@@ -22,7 +22,37 @@
 */
 #include "Light.h"
 
-Name Light::GetType() const {return "Light";}
+Vector3 Light::GetColor() {
+  return color;
+}
+
+void Light::SetColor(Vector3 color) {
+  this->color = color;
+}
+
+float Light::GetAmbient() {
+  return ambient;
+}
+
+void Light::SetAmbient(float ambient) {
+  this->ambient = ambient;
+}
+
+float Light::GetDiffuse() {
+  return diffuse;
+}
+
+void Light::SetDiffuse(float diffuse) {
+  this->diffuse = diffuse;
+}
+
+float Light::GetSpecular() {
+  return specular;
+}
+
+void Light::SetSpecular(float specular) {
+  this->specular = specular;
+}
 
 Light *Light::Duplicate() {
   Light *light = static_cast<Light*>(Spatial::Duplicate());
@@ -41,6 +71,8 @@ Light *Light::Instance() {
 Light *Light::Create() {
   return new Light;
 }
+
+Name Light::GetType() const {return "Light";}
 
 Name DirectionalLight::GetType() const {return "DirectionalLight";}
 
