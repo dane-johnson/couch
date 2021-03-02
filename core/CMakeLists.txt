@@ -53,8 +53,6 @@ target_sources(couchlib PUBLIC
   Vertex.cpp
   World.h
   World.cpp
-  Scripting/Lua.h
-  Scripting/Lua.cpp
   Scripting/ScriptingLanguage.h
   Scripting/ScriptingLanguage.cpp
   Shaders/FlatShader.h
@@ -65,6 +63,14 @@ target_sources(couchlib PUBLIC
   Shaders/Shader.cpp
   Shaders/SkyboxShader.h
   Shaders/SkyboxShader.cpp)
+
+
+add_library(couchlib_luascripting SHARED)
+target_sources(couchlib_luascripting PUBLIC
+  Scripting/Lua.h
+  Scripting/Lua.cpp)
+target_link_libraries(couchlib_luascripting couchlua)
+
 
 target_include_directories(couchlib
   PUBLIC
@@ -78,13 +84,11 @@ target_include_directories(couchlib
   PUBLIC
   ${ASSIMP_INCLUDE_DIR})
 
-if(NOT WIN32)
-  target_link_libraries(couchlib glfw)
-endif()
+target_link_libraries(couchlib glfw)
 target_link_libraries(couchlib OpenGL::GL)
 target_link_libraries(couchlib GLEW::GLEW)
 if (LUA_ENABLED)
-  target_link_libraries(couchlib ${LUA_LIBRARIES})
+  target_link_libraries(couchlib_luascripting ${LUA_LIBRARIES})
 endif () 
 target_link_libraries(couchlib ${BULLET_LIBRARIES})
 target_link_libraries(couchlib ${ASSIMP_LIBRARY})

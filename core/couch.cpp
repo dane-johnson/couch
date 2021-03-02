@@ -29,10 +29,6 @@
 
 #include "Scripting/Lua.h"
 
-// Thirdparty Includes
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 Window *window;
 
 const int width = 800;
