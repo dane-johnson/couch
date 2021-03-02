@@ -27,16 +27,72 @@
 #include "types.h"
 #include "Spatial.h"
 
+/**
+   All lights have color as well as ambient, diffuse, and specular properties.
+   In the future, light properties might be a color, but for now they are
+   strength modulations on the main light color.
+*/
 class Light : public Spatial {
 public:
-  Vector3 color;
-  float ambient, diffuse, specular;
-  virtual Name GetType() const;
+
+  /**
+     Get the color property of this light
+     @returns The color property
+  */
+  Vector3 GetColor();
+  /**
+    Set the color property of this light
+    @param color The desired color.
+  */
+  void SetColor(Vector3 color);
+
+  /** Ambient light is how much light is emitted from an object illuminated by
+      this light with no accounting for incidence angle or the location of the observer.
+      @returns The ambient intensity
+  */
+  float GetAmbient();
+  /** Set the ambient light intensity.
+      @param ambient The desired ambient intensity for this light.
+  */
+  void SetAmbient(float ambient);
+
+  /** Diffuse light is how much light is reflected by an object illuminated
+      by this light, accounting for incidence angle of the light but not the
+      location of the observer.
+      @returns The diffuse intensity.
+  */
+  float GetDiffuse();
+  /** Set the diffuse intensity.
+      @param diffuse The desired diffuse intensity for this light
+  */
+  void SetDiffuse(float diffuse);
+
+  /** Specular light is how much light is reflected by an object illuminated
+      by this light, taking into account both the incidence angle of the light
+      as well as the location of the observer. This is what creates the 
+      "Specular Artifact", the shiny bit on a 3D sphere.
+      @returns The specular intensity
+  */
+  float GetSpecular();
+  /** Set the specular intensity.
+      @param specular The desired specular intensity for this light.
+  */
+  void SetSpecular(float specular);
+    
   virtual Light *Create();
   virtual Light *Duplicate();
   virtual Light *Instance();
+
+  virtual Name GetType() const;
+
+protected:
+  Vector3 color;
+  float ambient, diffuse, specular;
 };
 
+/**
+   Directional lights are infinitely far away lights that illuminate the whole world.
+*/
 class DirectionalLight : public Light {
 public:
   Vector3 direction;

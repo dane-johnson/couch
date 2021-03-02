@@ -75,11 +75,11 @@ void Shader::UpdateMaterial(Material material) {
 
 void Shader::UpdateDirectionalLight(DirectionalLight directionalLight) {
   glUniform3fv(glGetUniformLocation(id, "directionalLight.direction"), 1, glm::value_ptr(directionalLight.direction));
-  glUniform3fv(glGetUniformLocation(id, "directionalLight.color"), 1, glm::value_ptr(directionalLight.color));
+  glUniform3fv(glGetUniformLocation(id, "directionalLight.color"), 1, glm::value_ptr(directionalLight.GetColor()));
 
-  glUniform1f(glGetUniformLocation(id, "directionalLight.ambient"), directionalLight.ambient);
-  glUniform1f(glGetUniformLocation(id, "directionalLight.diffuse"), directionalLight.diffuse);
-  glUniform1f(glGetUniformLocation(id, "directionalLight.specular"), directionalLight.specular);
+  glUniform1f(glGetUniformLocation(id, "directionalLight.ambient"), directionalLight.GetAmbient());
+  glUniform1f(glGetUniformLocation(id, "directionalLight.diffuse"), directionalLight.GetDiffuse());
+  glUniform1f(glGetUniformLocation(id, "directionalLight.specular"), directionalLight.GetSpecular());
 }
 
 Name Shader::GetName() const {

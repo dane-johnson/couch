@@ -38,10 +38,10 @@ function init()
 
    local light = couch.DirectionalLight()
    light.direction = couch.Vector3(0.0, -1.0, -1.0)
-   light.color = couch.Vector3(1.0, 1.0, 1.0)
-   light.ambient = 0.2
-   light.diffuse = 1.0
-   light.specular = 0.1
+   light:SetColor(couch.Vector3(1.0, 1.0, 1.0))
+   light:SetAmbient(0.2)
+   light:SetDiffuse(1.0)
+   light:SetSpecular(0.1)
    couch.Node.GetRoot():AddChild(light:Instance())
 
    local skybox = couch.Skybox.FromFiles(
