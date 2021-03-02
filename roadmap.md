@@ -83,3 +83,11 @@ Things are starting to smell, here's what I need to do
 - [ ] Combine related files (shaders)
 - [ ] Create a testing suite
 - [x] Have exceptions thrown to Lua if generated from a user program
+
+## More lights
+The great refactor continues, and I will incrementally make progress, 
+but this project is going to die on the vine if I don't get motivated, and
+motivation comes from new features.
+- [ ] Point Light
+- [ ] Spot Light
+- [ ] Shadows
