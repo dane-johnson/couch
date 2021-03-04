@@ -110,7 +110,6 @@ int main() {
   double delta = 0.0;
 
   while(!glfwWindowShouldClose(window)) {
-
     // Physics update()
     world->Step(delta);
     
