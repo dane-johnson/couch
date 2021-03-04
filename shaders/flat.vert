@@ -55,13 +55,16 @@ struct Material {
 uniform DirectionalLight directionalLight;
 uniform Material material;
 
+float calcDiffuseIntensity(in vec3 direction, in vec3 normal) {
+  float diff = dot(normalize(direction), normalize(normal));
+  return max(diff, 0.0);
+}
+
 void calcDirectionalLight(in vec3 normal) {
   AMBIENT += directionalLight.ambient * directionalLight.color * material.ambient;
 
   vec3 direction = -(VIEW * vec4(directionalLight.direction, 0.0)).xyz;
-  float diff = dot(normalize(direction), normalize(normal));
-  diff = max(diff, 0.0);
-  DIFFUSE += directionalLight.diffuse * diff * directionalLight.color * material.diffuse;
+  DIFFUSE += directionalLight.diffuse * directionalLight.color * material.diffuse * calcDiffuseIntensity(direction, normal);
 
   vec3 viewDir = normalize((VIEW * MODEL * vec4(pos, 1.0)).xyz);
   vec3 reflectionDir = reflect(normalize(direction), normalize(normal));
@@ -72,10 +75,13 @@ void calcDirectionalLight(in vec3 normal) {
 }
 
 void calcPointLight(in vec3 normal, in PointLight pointLight) {
-  vec4 ray = VIEW * MODEL * vec4(pos, 1.0) - VIEW * vec4(pointLight.pos, 1.0);
-  float dist = length(ray);
+  vec3 direction = vec3(VIEW * vec4(pointLight.pos, 1.0) - VIEW * MODEL * vec4(pos, 1.0)).xyz;
+  float dist = length(direction);
+  
   float attenuation = max(1.0 - dist * dist / pointLight.radius / pointLight.radius, 0.0);
   AMBIENT += pointLight.color * material.ambient * pointLight.ambient * attenuation;
+
+  DIFFUSE += pointLight.color * pointLight.diffuse * material.diffuse * calcDiffuseIntensity(direction, normal);
 }
 
 void main() {

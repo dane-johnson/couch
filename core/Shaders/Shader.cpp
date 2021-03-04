@@ -91,6 +91,8 @@ void Shader::UpdatePointLights(PointLightList pointLights) {
 
     glUniform1f(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "radius").c_str()), pointLights[i]->GetRadius());
     glUniform1f(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "ambient").c_str()), pointLights[i]->GetAmbient());
+    glUniform1f(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "diffuse").c_str()), pointLights[i]->GetDiffuse());
+    glUniform1f(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "specular").c_str()), pointLights[i]->GetSpecular());
   }
 }
 
