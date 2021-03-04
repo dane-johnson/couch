@@ -100,7 +100,7 @@ public:
 
   /**
      The direction from which this light is coming.
-     returns The direction of the light.
+     @returns The direction of the light.
   */
   Vector3 GetDirection();
   /**
