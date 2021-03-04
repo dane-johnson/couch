@@ -49,6 +49,11 @@ public:
      @param node The node to remove
   */
   void Remove(Node *node);
+  /** 
+      Check how many children this node has
+      @returns The number of children of this node
+  */
+  int Length();
   /**
      Whether or not this is a list of prefabs
      @returns true if this is a prefab list,
@@ -69,6 +74,8 @@ private:
 */
 class Node {
 public:
+  Node();
+  Node(bool isPrefab);
   virtual Name GetType() const;
 
   /**
@@ -134,8 +141,6 @@ public:
 
 private:
   NodeList children;
-  static NodeList *freeList;
-  static Node *root;
   Node *parent;
   bool isPrefab = true;
   friend class NodeList;

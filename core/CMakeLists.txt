@@ -65,7 +65,11 @@ target_sources(couchlib PUBLIC
   Shaders/SkyboxShader.cpp)
 
 
-add_library(couchlib_luascripting SHARED)
+if (WIN32)
+  add_library(couchlib_luascripting STATIC)
+else ()
+  add_library(couchlib_luascripting SHARED)
+endif ()
 target_sources(couchlib_luascripting PUBLIC
   Scripting/Lua.h
   Scripting/Lua.cpp)

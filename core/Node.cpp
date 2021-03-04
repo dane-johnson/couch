@@ -24,9 +24,15 @@
 #include "Node.h"
 #include "Util.h"
 
+// Note: Declare theses here, not in the header, otherwise
+// Windows DLLs will make two versions of the singleton.
+static NodeList freeList(false);
+static Node root(false);
+
 NodeList::NodeList() {
   isPrefabList = true;
 }
+
 NodeList::NodeList(bool isPrefabList) {
   this->isPrefabList = isPrefabList;
 }
@@ -45,6 +51,10 @@ void NodeList::Remove(Node *node) {
   remove(node);
 }
 
+int NodeList::Length() {
+  return size();
+}
+
 bool NodeList::IsPrefabList() {
   return isPrefabList;
 }
@@ -55,6 +65,14 @@ void NodeList::FreeList() {
     delete node;
   }
   clear();
+}
+
+Node::Node() {}
+Node::Node(bool isPrefab) {
+  if (!isPrefab) {
+    this->isPrefab = false;
+    children.isPrefabList = false;
+  }
 }
 
 Name Node::GetType() const {return "Node";}
@@ -78,18 +96,18 @@ Node *Node::GetParent() {
 
 void Node::QueueFree() {
   parent->children.Remove(this);
-  freeList->Append(this);
+  freeList.Append(this);
 }
 
 void Node::DoFree() {
-  if (this != root) {
+  if (this != &root) {
     throw "Tried to call DoFree from non-root node";
   }
-  freeList->FreeList();
+  freeList.FreeList();
 }
 
 Node *Node::GetRoot() {
-  return root;
+  return &root;
 }
 
 Node* Node::Create() {
@@ -115,5 +133,3 @@ Node* Node::Instance() {
   return instance;
 }
 
-NodeList *Node::freeList = new NodeList(false);
-Node *Node::root = {Node().Instance()};
