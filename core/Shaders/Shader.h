@@ -7,6 +7,8 @@
 #include "../Material.h"
 #include "../Light.h"
 
+#define NUM_POINT_LIGHTS 4
+
 class Shader {
 public:
   Id id;
@@ -21,6 +23,7 @@ public:
   void UpdateMaterial(Material material);
   
   void UpdateDirectionalLight(DirectionalLight directionalLight);
+  void UpdatePointLights(PointLightList pointLights);
 
   virtual Name GetName() const;
 };

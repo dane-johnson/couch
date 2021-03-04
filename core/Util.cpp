@@ -14,3 +14,9 @@ void Util::Die(std::string msg) {
   std::cerr << msg << std::endl;
   exit(1);
 }
+
+std::string Util::ShaderArrayName(const char* arrName, int index, const char* memberName) {
+  std::stringstream ss;
+  ss << arrName << "[" << index <<  "]." << memberName;
+  return ss.str();
+}

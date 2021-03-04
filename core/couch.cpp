@@ -141,6 +141,9 @@ int main() {
       shader->UpdateDirectionalLight(DirectionalLight());
     }
 
+    PointLightList pointLights = Util::FindNodesByType<PointLight>(root, "PointLight");
+    shader->UpdatePointLights(pointLights);
+
     // Render the scene tree
     render(root, shader, Matrix(1.0f));
 
