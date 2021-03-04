@@ -44,6 +44,8 @@ function init()
    light:SetSpecular(0.1)
    couch.Node.GetRoot():AddChild(light:Instance())
 
+   init_point_lights()
+
    local skybox = couch.Skybox.FromFiles(
       "../resources/skybox/px.png",
       "../resources/skybox/nx.png",
@@ -173,6 +175,22 @@ function update(delta)
    if total > 1.0 and die_cube then
       die_cube:QueueFree()
       die_cube = nil
+   end
+end
+
+function init_point_lights()
+   local colors = {couch.Vector3(1.0, 0.0, 0.0), couch.Vector3(0.0, 1.0, 0.0), couch.Vector3(0.0, 0.0, 1.0)}
+   for i, color in ipairs(colors) do
+      local pointLight = couch.PointLight();
+      pointLight:Translate(couch.Vector3(i * -10.0, 0, -10))
+      pointLight:SetRadius(10.0)
+      pointLight:SetColor(color)
+      pointLight:SetAmbient(1.0)
+      pointLight:SetSpecular(0.1)
+      local lightBox = couch.Mesh.FromFile("../resources/cube.obj")
+      lightBox:UniformScale(0.5);
+      pointLight:AddChild(lightBox);
+      couch.Node.GetRoot():AddChild(pointLight:Instance())
    end
 end
 

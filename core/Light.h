@@ -24,6 +24,8 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
+#include <vector>
+
 #include "types.h"
 #include "Spatial.h"
 
@@ -116,5 +118,34 @@ public:
 private:
   Vector3 direction;
 };
+
+/**
+   Point lights are omnidirectional lights that have a limited range.
+*/
+class PointLight : public Light {
+public:
+  PointLight();
+  PointLight(float radius, Vector3 color, float ambient, float diffuse, float specular);
+
+  /**
+     The radius of which the light will shine.
+     @returns The light radius.
+  */
+  float GetRadius();
+  /**
+     Sets the light radius.
+     @param radius The desired radius
+  */
+  void SetRadius(float radius);
+  
+  virtual Name GetType() const;
+  virtual PointLight *Create();
+  virtual PointLight *Duplicate();
+  virtual PointLight *Instance();
+private:
+  float radius;
+};
+
+typedef std::vector<PointLight*> PointLightList;
 
 #endif /* LIGHT_H */

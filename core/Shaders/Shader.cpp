@@ -1,5 +1,7 @@
 #include "Shader.h"
 
+#include <sstream>
+
 Shader::Shader(const char* vertexCode, const char* fragmentCode) {
   Id vertex, fragment;
   int success;
@@ -80,6 +82,16 @@ void Shader::UpdateDirectionalLight(DirectionalLight directionalLight) {
   glUniform1f(glGetUniformLocation(id, "directionalLight.ambient"), directionalLight.GetAmbient());
   glUniform1f(glGetUniformLocation(id, "directionalLight.diffuse"), directionalLight.GetDiffuse());
   glUniform1f(glGetUniformLocation(id, "directionalLight.specular"), directionalLight.GetSpecular());
+}
+
+void Shader::UpdatePointLights(PointLightList pointLights) {
+  for (int i = 0; i < pointLights.size() and i < NUM_POINT_LIGHTS; i++) {
+    glUniform3fv(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "pos").c_str()), 1, glm::value_ptr(pointLights[i]->GetTransform().position));
+    glUniform3fv(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "color").c_str()), 1, glm::value_ptr(pointLights[i]->GetColor()));
+
+    glUniform1f(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "radius").c_str()), pointLights[i]->GetRadius());
+    glUniform1f(glGetUniformLocation(id, Util::ShaderArrayName("pointLights", i, "ambient").c_str()), pointLights[i]->GetAmbient());
+  }
 }
 
 Name Shader::GetName() const {

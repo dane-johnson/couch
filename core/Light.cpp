@@ -74,8 +74,6 @@ Light *Light::Create() {
 
 Name Light::GetType() const {return "Light";}
 
-Name DirectionalLight::GetType() const {return "DirectionalLight";}
-
 DirectionalLight::DirectionalLight() {
   this->direction = Vector3(0.0f);
   this->color = Vector3(0.0f);
@@ -114,3 +112,46 @@ DirectionalLight *DirectionalLight::Duplicate() {
 DirectionalLight *DirectionalLight::Instance() {
   return static_cast<DirectionalLight*>(Node::Instance());
 }
+
+Name DirectionalLight::GetType() const {return "DirectionalLight";}
+
+PointLight::PointLight() {
+  this->radius = 0.0f;
+  this->color = Vector3(0.0f);
+  this->ambient = 0.0f;
+  this->diffuse = 0.0f;
+  this->specular = 0.0f;
+}
+
+PointLight::PointLight(float radius, Vector3 color, float ambient, float diffuse, float specular) {
+  this->radius = radius;
+  this->color = color;
+  this->ambient = ambient;
+  this->diffuse = diffuse;
+  this->specular = specular;
+}
+
+float PointLight::GetRadius() {
+  return radius;
+}
+
+void PointLight::SetRadius(float radius) {
+  this->radius = radius;
+}
+
+PointLight *PointLight::Create() {
+  return new PointLight;
+}
+
+PointLight *PointLight::Duplicate() {
+  PointLight *pointLight = static_cast<PointLight*>(Light::Duplicate());
+  pointLight->radius = radius;
+
+  return pointLight;
+}
+
+PointLight *PointLight::Instance() {
+  return static_cast<PointLight*>(Node::Instance());
+}
+
+Name PointLight::GetType() const {return "PointLight";}
