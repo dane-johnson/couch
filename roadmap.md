@@ -81,13 +81,18 @@ Things are starting to smell, here's what I need to do
 - [ ] Replace all public attributes with accessors (on classes)
 - [x] Seperate prefabs from instances
 - [ ] Combine related files (shaders)
-- [ ] Create a testing suite
+- [ ] ~~Create a testing suite~~ Let's be real here...
 - [x] Have exceptions thrown to Lua if generated from a user program
 
 ## More lights
 The great refactor continues, and I will incrementally make progress, 
 but this project is going to die on the vine if I don't get motivated, and
 motivation comes from new features.
-- [ ] Point Light
-- [ ] Spot Light
+- [x] Point Light
+- [ ] ~~Spot Light~~ Ehhh who cares...
 - [ ] Shadows
+
+## Fix the damn Windows
+- [x] Compiles for windows
+DLL Hell is still an issue, I have to distribute like 30 of them. Might go back to 
+simply including them in the package.
