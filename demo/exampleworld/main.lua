@@ -190,6 +190,9 @@ function init_point_lights()
       pointLight:SetSpecular(0.1)
       local lightBox = couch.Mesh.FromFile("../resources/cube.obj")
       lightBox:UniformScale(0.5);
+      local material = lightBox:GetMaterial(0)
+      material.ambient = color
+      lightBox:SetMaterial(0, material)
       pointLight:AddChild(lightBox);
       couch.Node.GetRoot():AddChild(pointLight:Instance())
    end

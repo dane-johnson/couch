@@ -60,18 +60,22 @@ float calcDiffuseIntensity(in vec3 direction, in vec3 normal) {
   return max(diff, 0.0);
 }
 
+float calcSpecularIntensity(in vec3 direction, in vec3 normal, in int shininess) {
+  vec3 viewDir = normalize((VIEW * MODEL * vec4(pos, 1.0)).xyz);
+  vec3 reflectionDir = reflect(normalize(direction), normalize(normal));
+  float spec = dot(viewDir, reflectionDir);
+  spec = max(spec, 0.0);
+  spec = pow(spec, shininess);
+  return spec;
+}
+
 void calcDirectionalLight(in vec3 normal) {
   AMBIENT += directionalLight.ambient * directionalLight.color * material.ambient;
 
   vec3 direction = -(VIEW * vec4(directionalLight.direction, 0.0)).xyz;
   DIFFUSE += directionalLight.diffuse * directionalLight.color * material.diffuse * calcDiffuseIntensity(direction, normal);
 
-  vec3 viewDir = normalize((VIEW * MODEL * vec4(pos, 1.0)).xyz);
-  vec3 reflectionDir = reflect(normalize(direction), normalize(normal));
-  float spec = dot(viewDir, reflectionDir);
-  spec = max(spec, 0.0);
-  spec = pow(spec, material.shininess);
-  SPECULAR += directionalLight.color * (spec * material.specular);
+  SPECULAR += directionalLight.color * material.specular * calcSpecularIntensity(direction, normal, material.shininess);
 }
 
 void calcPointLight(in vec3 normal, in PointLight pointLight) {
@@ -82,6 +86,8 @@ void calcPointLight(in vec3 normal, in PointLight pointLight) {
   AMBIENT += pointLight.color * material.ambient * pointLight.ambient * attenuation;
 
   DIFFUSE += pointLight.color * pointLight.diffuse * material.diffuse * calcDiffuseIntensity(direction, normal);
+
+  SPECULAR += pointLight.color * material.specular * calcSpecularIntensity(direction, normal, material.shininess);
 }
 
 void main() {
