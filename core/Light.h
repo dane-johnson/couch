@@ -95,13 +95,26 @@ protected:
 */
 class DirectionalLight : public Light {
 public:
-  Vector3 direction;
   DirectionalLight();
   DirectionalLight(Vector3 direction, Vector3 color, float ambient, float diffuse, float specular);
+
+  /**
+     The direction from which this light is coming.
+     returns The direction of the light.
+  */
+  Vector3 GetDirection();
+  /**
+     Set the direction from which the light is coming.
+     @param direction The desired light direction
+  */
+  void SetDirection(Vector3 direction);
+  
   virtual Name GetType() const;
   virtual DirectionalLight *Create();
   virtual DirectionalLight *Duplicate();
   virtual DirectionalLight *Instance();
+private:
+  Vector3 direction;
 };
 
 #endif /* LIGHT_H */
