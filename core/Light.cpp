@@ -12,7 +12,7 @@
   
   This is free software, and you are welcome to redistribute it
   under the terms of the GNU General Public License as published
-  by the Free Software Foundation; either version 3 of the License,
+nnn  by the Free Software Foundation; either version 3 of the License,
   or (at your option) any later version.
  
   DESCRIPTION
@@ -90,6 +90,14 @@ DirectionalLight::DirectionalLight(Vector3 direction, Vector3 color, float ambie
   this->ambient = ambient;
   this->diffuse = diffuse;
   this->specular = specular;
+}
+
+Vector3 DirectionalLight::GetDirection() {
+  return direction;
+}
+
+void DirectionalLight::SetDirection(Vector3 direction) {
+  this->direction = direction;
 }
 
 DirectionalLight *DirectionalLight::Create() {

@@ -37,7 +37,7 @@ function init()
    camera:Translate(couch.Vector3(0.0, 0.0, 10.0))
 
    local light = couch.DirectionalLight()
-   light.direction = couch.Vector3(0.0, -1.0, -1.0)
+   light:SetDirection(couch.Vector3(0.0, -1.0, -1.0))
    light:SetColor(couch.Vector3(1.0, 1.0, 1.0))
    light:SetAmbient(0.2)
    light:SetDiffuse(1.0)

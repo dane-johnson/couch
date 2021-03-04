@@ -74,7 +74,7 @@ void Shader::UpdateMaterial(Material material) {
 }
 
 void Shader::UpdateDirectionalLight(DirectionalLight directionalLight) {
-  glUniform3fv(glGetUniformLocation(id, "directionalLight.direction"), 1, glm::value_ptr(directionalLight.direction));
+  glUniform3fv(glGetUniformLocation(id, "directionalLight.direction"), 1, glm::value_ptr(directionalLight.GetDirection()));
   glUniform3fv(glGetUniformLocation(id, "directionalLight.color"), 1, glm::value_ptr(directionalLight.GetColor()));
 
   glUniform1f(glGetUniformLocation(id, "directionalLight.ambient"), directionalLight.GetAmbient());
