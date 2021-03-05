@@ -15,7 +15,6 @@ function init()
    couch.Node.GetRoot():AddChild(light:Instance())
 
    local ibox = couch.TexturedMesh("../resources/inverted_cube.obj", "../resources/paintedwood.jpg")
-   ibox:UniformScale(0.0)
    couch.Node.GetRoot():AddChild(ibox:Instance())
 
    local box = couch.Mesh.FromFile("../resources/cube.obj")
