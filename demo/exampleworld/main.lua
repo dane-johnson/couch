@@ -1,24 +1,18 @@
+package.path = package.path .. ";../scripts/?.lua"
+local freecam = require("freecam")
+
 local min = math.min
 local max = math.max
 local cube
 local physics_ball
 local character
 local ball
-local camera
 local die_cube
 
 local total = 0.0
-
-local vx = 0.0
-local vy = 0.0
-local vz = 0.0
-
 local character_move_vec = couch.Vector3(0.0, 0.0, 0.0)
 
 local ballvy = -1.0
-
-local cam_rot_x = 0.0
-local cam_rot_y = 0.0
 
 local SPEED = 30
 
@@ -31,10 +25,9 @@ local light
 function init()
    local material
    local transform
-   
-   camera = couch.Camera()
-   camera:MakeCurrent()
-   camera:Translate(couch.Vector3(0.0, 0.0, 10.0))
+
+   freecam.init_camera()
+   freecam.camera:Translate(couch.Vector3(0.0, 0.0, 10.0))
 
    local light = couch.DirectionalLight()
    light:SetDirection(couch.Vector3(0.0, -1.0, -1.0))
@@ -144,20 +137,8 @@ end
 
 function update(delta)
    total = total + delta
-   local move_vec = couch.Vector3()
-   local camera_transform = camera:GetTransform()
-   move_vec = camera_transform.position + camera_transform:Forward() * delta * vz * SPEED
-   move_vec = move_vec + camera_transform:Right() * delta * vx * SPEED
-   move_vec = move_vec + camera_transform:Up() * delta * vy * SPEED
-   camera_transform.position = move_vec
-   
-   camera_transform.rotation.y = camera_transform.rotation.y - cam_rot_x * delta
-   cam_rot_x = 0.0
-   camera_transform.rotation.x = camera_transform.rotation.x - cam_rot_y * delta
-   camera_transform.rotation.x = min(max(camera_transform.rotation.x, -3.14 / 2.0), 3.14 / 2.0)
-   cam_rot_y = 0.0
 
-   camera:SetTransform(camera_transform)
+   freecam.update_camera(delta)
 
    local loc = ball:GetTransform().position
    if loc.y > 4.0 then
@@ -211,9 +192,7 @@ function action_dir(key, action, pos, neg, curr)
 end
 
 function onkey(key, code, action, mod)
-   vz = action_dir(key, action, couch.KEY_W, couch.KEY_S, vz)
-   vx = action_dir(key, action, couch.KEY_D, couch.KEY_A, vx)
-   vy = action_dir(key, action, couch.KEY_SPACE, couch.KEY_LEFT_CONTROL, vy)
+   freecam.onkey(key, code, action, mod)
    
    if key == couch.KEY_J and action == couch.ACTION_PRESS then
       physics_ball:ApplyImpulse(couch.Vector3(0.0, 1.0, 0.0) * 10)
@@ -223,8 +202,7 @@ function onkey(key, code, action, mod)
 end
 
 function onmousemotion(_, _, relx, rely)
-   cam_rot_x = relx
-   cam_rot_y = rely
+   freecam.onmousemotion(relx, rely)
 end
 
 function make_ground()
