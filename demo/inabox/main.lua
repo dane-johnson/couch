@@ -7,7 +7,7 @@ function init()
    local material
 
    local light = couch.DirectionalLight()
-   light:SetDirection(couch.Vector3(1.0, 1.0, 1.0))
+   light:SetDirection(couch.Vector3(1.0, -2.0, -1.0))
    light:SetColor(Vector3(1.0, 1.0, 1.0))
    light:SetAmbient(0.2)
    light:SetDiffuse(1.0)
