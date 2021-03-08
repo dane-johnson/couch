@@ -148,13 +148,8 @@ int main() {
     delta = curTime - lastTime;
     lastTime = curTime;
   }
-
-  delete screenShader;
-  delete skyboxShader;
-  delete shader;
-  lua->Close();
-  delete lua;
   
+  lua->Close();
   window.Close();
   return 0;
 }
