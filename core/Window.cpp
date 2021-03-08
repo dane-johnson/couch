@@ -32,6 +32,14 @@ bool Window::ShouldClose() {
   return glfwWindowShouldClose(glfwWindow);
 }
 
+void Window::Enable() {
+  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+  glClear(GL_COLOR_BUFFER_BIT);
+  glDisable(GL_DEPTH_TEST);
+  glViewport(0, 0, width, height);
+}
+
 void Window::Update() {
   glfwSwapBuffers(glfwWindow);
   glfwPollEvents();
