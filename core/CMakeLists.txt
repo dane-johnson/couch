@@ -51,6 +51,8 @@ target_sources(couchlib PUBLIC
   Util.cpp
   Vertex.h
   Vertex.cpp
+  Window.h
+  Window.cpp
   World.h
   World.cpp
   Scripting/ScriptingLanguage.h
