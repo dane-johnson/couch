@@ -133,13 +133,11 @@ int main() {
       glDepthFunc(GL_LESS);
     }
 
-    // Stop rendering to texture
-    screen.Disable();
-    // // Render the screen
+    // Render to the window
+    window.Enable();
+    
     screenShader->Use();
     screenShader->UpdateTex(screen.tex);
-    // Ummm?
-    // glViewport(0, 0, width, height);
     screen.Draw();
 
     window.Update();

@@ -14,7 +14,6 @@ class Screen {
 public:
   Screen();
   void Enable();
-  void Disable();
   void Draw();
   const int width = 640;
   const int height = 480;

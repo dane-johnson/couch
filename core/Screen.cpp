@@ -69,13 +69,6 @@ void Screen::Enable() {
   glEnable(GL_DEPTH_TEST);
 }
 
-void Screen::Disable() {
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
-  glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT);
-  glDisable(GL_DEPTH_TEST);
-}
-
 void Screen::Draw() {
   glBindVertexArray(quad);
   glDrawArrays(GL_TRIANGLES, 0, 6);

@@ -31,19 +31,23 @@ class Window {
 public:
   /**
      Initializes the window.
-   */
+  */
   void Init();
   /**
      @returns whether or not the user tried to close the window
-   */
+  */
   bool ShouldClose();
   /**
-     Close the window.
+     Begin rendering to the window
    */
+  void Enable();
   /**
      Swap the buffers and poll for events
-   */
+  */
   void Update();
+  /**
+     Close the window.
+  */
   void Close();
 private:
   friend class Input;
