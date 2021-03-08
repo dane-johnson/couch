@@ -25,8 +25,8 @@ public:
 private:
 #ifdef LUA_SCRIPTING
   static lua_State *L;
-  static void LuaKeyHandler(Window *window, int key, int code, int action, int mods);
-  static void LuaMousePositionHandler(Window *window, double xpos, double ypos, double xrel, double yrel);
+  static void LuaKeyHandler(int key, int code, int action, int mods);
+  static void LuaMousePositionHandler(double xpos, double ypos, double xrel, double yrel);
   static int LuaExceptionHandler(lua_State *L1);
 #endif // LUA_SCRIPTING
 };

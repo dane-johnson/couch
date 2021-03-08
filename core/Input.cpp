@@ -13,19 +13,20 @@ Input *Input::GetInstance() {
   return instance;
 }
 
-void Input::Use(Window *window){
-  glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-  glfwSetKeyCallback(window, (GLFWkeyfun)HandleKeys);
-  glfwSetCursorPosCallback(window, (GLFWcursorposfun)HandleMousePosition);
+
+void Input::Use(Window window){
+  glfwSetInputMode(window.glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  glfwSetKeyCallback(window.glfwWindow, (GLFWkeyfun)HandleKeys);
+  glfwSetCursorPosCallback(window.glfwWindow, (GLFWcursorposfun)HandleMousePosition);
 }
 
-void Input::HandleKeys(Window *window, int keys, int code, int action, int mods) {
+void Input::HandleKeys(GLFWwindow *_, int keys, int code, int action, int mods) {
   for (KeyHandler keyHandler : instance->keyHandlers) {
-    keyHandler(window, keys, code, action, mods);
+    keyHandler(keys, code, action, mods);
   }
 }
 
-void Input::HandleMousePosition(Window *window, double xpos, double ypos) {
+void Input::HandleMousePosition(GLFWwindow *_, double xpos, double ypos) {
   double relx, rely;
   if (instance->firstMousePositionUpdate) {
     relx = 0.0;
@@ -36,7 +37,7 @@ void Input::HandleMousePosition(Window *window, double xpos, double ypos) {
     rely = ypos - instance->lasty;
   }
   for (MousePositionHandler mousePositionHandler : instance->mousePositionHandlers) {
-    mousePositionHandler(window, xpos, ypos, relx, rely);
+    mousePositionHandler(xpos, ypos, relx, rely);
   }
   instance->lastx = xpos;
   instance->lasty = ypos;

@@ -7,6 +7,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "types.h"
+#include "Window.h"
 
 #include "Util.h"
 
@@ -28,11 +29,6 @@
 
 
 #include "Scripting/Lua.h"
-
-Window *window;
-
-const int width = 800;
-const int height = 600;
 
 Node *root;
 
@@ -59,31 +55,9 @@ void render(Node *curr, Shader *shader, Matrix model) {
 }
 
 int main() {
-
-  int err;
-  glfwInit();
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-  glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-  glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
-  glfwWindowHintString(GLFW_X11_CLASS_NAME, "Couch");
-
-  window = glfwCreateWindow(width, height, "Couch", NULL, NULL);
-
-  if (!window) {
-    std::cerr << "Error creating window" << std::endl;
-    return 1;
-  }
-
-  glfwMakeContextCurrent(window);
-
-  err = glewInit();
-  if (err != GLEW_OK) {
-    std::cerr << "Error initializing glew" << std::endl;
-  }
-
-  glViewport(0, 0, width, height);
-
+  Window window;
+  window.Init();
+  
   root = Node::GetRoot();
 
   Input *input = Input::GetInstance();
@@ -109,7 +83,7 @@ int main() {
   double lastTime = glfwGetTime();
   double delta = 0.0;
 
-  while(!glfwWindowShouldClose(window)) {
+  while(!window.ShouldClose()) {
     // Physics update()
     world->Step(delta);
     
@@ -164,11 +138,11 @@ int main() {
     // // Render the screen
     screenShader->Use();
     screenShader->UpdateTex(screen.tex);
-    glViewport(0, 0, width, height);
+    // Ummm?
+    // glViewport(0, 0, width, height);
     screen.Draw();
-    
-    glfwSwapBuffers(window);
-    glfwPollEvents();
+
+    window.Update();
 
     double curTime = glfwGetTime();
     delta = curTime - lastTime;
@@ -181,7 +155,6 @@ int main() {
   lua->Close();
   delete lua;
   
-  glfwDestroyWindow(window);
-  glfwTerminate();
+  window.Close();
   return 0;
 }
