@@ -7,6 +7,7 @@
 #include <GL/glew.h>
 
 #include "types.h"
+#include "Framebuffer.h"
 #include "Vertex.h"
 #include "Material.h"
 
@@ -14,13 +15,14 @@ class Screen {
 public:
   Screen();
   void Enable();
+  void Disable();
   void Draw();
   const int width = 640;
   const int height = 480;
   Texture tex;
 private:
   Id quad;
-  Id framebuffer;
+  Framebuffer framebuffer;
   Id renderbuffer;
 };
 

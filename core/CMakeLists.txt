@@ -23,6 +23,8 @@ target_sources(couchlib PUBLIC
   CollisionShape.h
   CollisionShape.cpp
   constants.h
+  Framebuffer.h
+  Framebuffer.cpp
   Index.h
   Index.cpp
   Input.h

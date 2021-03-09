@@ -33,8 +33,10 @@ Screen::Screen() {
   glBindVertexArray(0);
 
   // Setup frame buffers
-  glGenFramebuffers(1, &framebuffer);
-  glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+  framebuffer.clearColor = Vector3(1.0f, 0.0f, 0.0f);
+  framebuffer.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
+  framebuffer.depthTest = true;
+  framebuffer.Bind();
 
   tex.width = width;
   tex.height = height;
@@ -59,14 +61,17 @@ Screen::Screen() {
     std::cerr << "Error setting up screen framebuffer." << std::endl;
     exit(1);
   }
-  glBindFramebuffer(GL_FRAMEBUFFER, 0);
+  FramebufferStack::GetStack()->curr->Bind();
 }
 
 void Screen::Enable() {
-  glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
-  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glEnable(GL_DEPTH_TEST);
+  FramebufferStack::GetStack()->Save(&framebuffer);
+  framebuffer.Enable();
+  framebuffer.Clear();
+}
+
+void Screen::Disable() {
+  FramebufferStack::GetStack()->Restore();
 }
 
 void Screen::Draw() {
