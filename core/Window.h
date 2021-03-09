@@ -27,6 +27,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "Framebuffer.h"
+
 class Window {
 public:
   /**
@@ -37,10 +39,6 @@ public:
      @returns whether or not the user tried to close the window
   */
   bool ShouldClose();
-  /**
-     Begin rendering to the window
-   */
-  void Enable();
   /**
      Swap the buffers and poll for events
   */

@@ -16,6 +16,7 @@
 #include "Shaders/SkyboxShader.h"
 
 #include "Screen.h"
+#include "Framebuffer.h"
 
 #include "Camera.h"
 #include "Input.h"
@@ -84,16 +85,20 @@ int main() {
   double delta = 0.0;
 
   while(!window.ShouldClose()) {
-    // Physics update()
+    // Physics update
     world->Step(delta);
-    
-    // Start rendering to texture;
-    screen.Enable();
 
-    // Call update function
+    // Script update
     lua->Update(delta);
+    
     // Delete freed nodes
     root->DoFree();
+
+    // Clear the default shader
+    FramebufferStack::GetStack()->curr->Clear();
+    
+    // Start rendering to screen
+    screen.Enable();
 
     shader->Use();
     shader->UpdateProjection(projection);
@@ -133,11 +138,12 @@ int main() {
       glDepthFunc(GL_LESS);
     }
 
-    // Render to the window
-    window.Enable();
-    
+    // Stop rendering to texture
+    screen.Disable();
+
     screenShader->Use();
     screenShader->UpdateTex(screen.tex);
+    
     screen.Draw();
 
     window.Update();
