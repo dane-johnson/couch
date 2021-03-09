@@ -16,7 +16,6 @@
 #include "Shaders/SkyboxShader.h"
 
 #include "Screen.h"
-#include "Framebuffer.h"
 
 #include "Camera.h"
 #include "Input.h"
@@ -94,9 +93,6 @@ int main() {
     // Delete freed nodes
     root->DoFree();
 
-    // Clear the default shader
-    FramebufferStack::GetStack()->curr->Clear();
-    
     // Start rendering to screen
     screen.Enable();
 
