@@ -96,3 +96,15 @@ motivation comes from new features.
 - [x] Compiles for windows
 DLL Hell is still an issue, I have to distribute like 30 of them. Might go back to 
 simply including them in the package.
+
+## Make platform available for retail
+I think I might want to sell this software at some point.
+- [ ] Add thirdparty libraries to source package
+  - [ ] Assimp
+  - [ ] Bullet
+  - [ ] Lua
+  - [ ] GLEW
+  - [ ] GLFW
+- [ ] Double check for GPL compliance
+- [ ] Host API somewhere
+- [ ] Itch.io stuff
