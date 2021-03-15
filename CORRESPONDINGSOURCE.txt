@@ -1,0 +1,19 @@
+In compliance with Section 6, Subsection B of the GPLv3, under which this software is licensed, the corresponding sources
+are available from the following locations.
+
+The Couch Game Engine: Wherever you received this program
+
+The OpenGL Extension Wrangler (GLEW): glew.sourceforge.net
+
+GLFW: www.glfw.org
+
+The LUA Programming Language and Runtime Libraries: www.lua.org
+
+Bullet Physics Library: github.com/bulletphysics
+
+The Open-Asset-Importer-Lib (ASSIMP): assimp.org
+
+GCC Libraries (libgcc, libstdc++, libssp): gcc.gnu.org
+
+If you are unable to procure sources from one or more of these servers,
+contact me via email "dane AT danejohnson DOT org".
