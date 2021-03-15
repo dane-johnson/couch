@@ -5,9 +5,6 @@ find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 find_package(glfw3 3.3 REQUIRED)
 
-## Find Bullet
-find_package(Bullet REQUIRED)
-
 if (LUA_ENABLED)
 ## Find Lua
 find_package(Lua REQUIRED)
@@ -81,17 +78,12 @@ target_include_directories(couchlib
   PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_include_directories(couchlib
-  PUBLIC
-  ${BULLET_INCLUDE_DIRS})
-
 target_link_libraries(couchlib glfw)
 target_link_libraries(couchlib OpenGL::GL)
 target_link_libraries(couchlib GLEW::GLEW)
 if (LUA_ENABLED)
   target_link_libraries(couchlib_luascripting ${LUA_LIBRARIES})
 endif () 
-target_link_libraries(couchlib ${BULLET_LIBRARIES})
 
 ## Add documentation
 find_package(Doxygen REQUIRED
