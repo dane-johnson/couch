@@ -16,7 +16,7 @@ if (LUA_ENABLED)
 find_package(Lua REQUIRED)
 endif ()
 
-add_library(couchlib SHARED)
+add_library(couchlib STATIC)
 target_sources(couchlib PUBLIC
   Camera.h
   Camera.cpp
@@ -69,11 +69,8 @@ target_sources(couchlib PUBLIC
   Shaders/SkyboxShader.cpp)
 
 
-if (WIN32)
-  add_library(couchlib_luascripting STATIC)
-else ()
-  add_library(couchlib_luascripting SHARED)
-endif ()
+add_library(couchlib_luascripting STATIC)
+
 target_sources(couchlib_luascripting PUBLIC
   Scripting/Lua.h
   Scripting/Lua.cpp)
