@@ -26,6 +26,8 @@ add_dependencies(couchlib shader_headers)
 target_include_directories(couchlib
   PUBLIC "${CMAKE_CURRENT_BINARY_DIR}/shaders/")
 
+file(COPY LICENSE CORRESPONDINGSOURCE.txt DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+
 if(WIN32)
   target_link_libraries(couch glfw3dll)
   target_link_libraries(couch ssp)
