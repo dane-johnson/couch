@@ -10,7 +10,9 @@ void Window::Init() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_FLOATING, GLFW_TRUE);
+#if GLFW_VERSION_MINOR >= 2
   glfwWindowHintString(GLFW_X11_CLASS_NAME, "Couch");
+#endif 
 
   glfwWindow = glfwCreateWindow(width, height, "Couch", NULL, NULL);
 
