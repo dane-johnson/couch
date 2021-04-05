@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.13)
 project(Couch)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
+set(CMAKE_CXX_FLAGS_RELEASE -O2)
+
 option(LUA_ENABLED "Lua scripting support" ON)
 if (LUA_ENABLED)
   add_compile_definitions(LUA_SCRIPTING)
@@ -32,7 +34,7 @@ if(WIN32)
   set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 endif(WIN32)
 
-install(TARGETS couch couchlib)
+install(TARGETS couch couchlib couchlib_luascripting)
 if (LUA_ENABLED)
-  install(TARGETS couch couchlua)
+  install(TARGETS couchlua)
 endif ()
