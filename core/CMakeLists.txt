@@ -3,7 +3,7 @@ project(Couch)
 ## Find OPENGL packages
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
-find_package(glfw3 3.3 REQUIRED)
+find_package(glfw3 REQUIRED)
 
 ## Find Bullet
 find_package(Bullet REQUIRED)
@@ -101,7 +101,7 @@ target_link_libraries(couchlib ${ASSIMP_LIBRARY})
 ## Add documentation
 option(BUILD_DOCUMENTATION "Build the Doxygen documentation" OFF)
 if(BUILD_DOCUMENTATION)
-  find_package(Doxygen REQUIRED
+  find_package(Doxygengit
     OPTIONAL_COMPONENTS dot mscgen dia)
   doxygen_add_docs(couchdocs
     .
