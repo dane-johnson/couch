@@ -34,7 +34,9 @@ if(WIN32)
   set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 endif(WIN32)
 
-install(TARGETS couch couchlib couchlib_luascripting)
+install(TARGETS couch couchlib couchlib_luascripting
+  RUNTIME DESTINATION bin
+  ARCHIVE DESTINATION lib)
 if (LUA_ENABLED)
   install(TARGETS couchlua)
 endif ()
