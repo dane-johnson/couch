@@ -99,8 +99,11 @@ target_link_libraries(couchlib ${BULLET_LIBRARIES})
 target_link_libraries(couchlib ${ASSIMP_LIBRARY})
 
 ## Add documentation
-find_package(Doxygen REQUIRED
-  OPTIONAL_COMPONENTS dot mscgen dia)
-doxygen_add_docs(couchdocs
-  .
-  mainpage.dox)
+option(BUILD_DOCUMENTATION "Build the Doxygen documentation" OFF)
+if(BUILD_DOCUMENTATION)
+  find_package(Doxygen REQUIRED
+    OPTIONAL_COMPONENTS dot mscgen dia)
+  doxygen_add_docs(couchdocs
+    .
+    mainpage.dox)
+endif()
