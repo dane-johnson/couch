@@ -39,5 +39,8 @@ install(TARGETS couch couchlib couchlib_luascripting
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
 if (LUA_ENABLED)
-  install(TARGETS couchlua)
+  install(TARGETS couchlua
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
 endif ()
