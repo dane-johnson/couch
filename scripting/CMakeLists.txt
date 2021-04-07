@@ -12,9 +12,7 @@ if (LUA_ENABLED)
     LANGUAGE lua
     SOURCES couch.i lua/helpers.i)
 
-  target_include_directories(couchlua PRIVATE
-    "${PROJECT_SOURCE_DIR}/core"
-    "${LUA_INCLUDE_DIR}")
+  target_include_directories(couchlua PRIVATE "${PROJECT_SOURCE_DIR}/core")
 
   swig_link_libraries(couchlua
     PRIVATE
