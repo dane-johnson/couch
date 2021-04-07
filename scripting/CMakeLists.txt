@@ -4,12 +4,17 @@ set_property(SOURCE couch.i PROPERTY CPLUSPLUS ON)
 set_property(SOURCE couch.i PROPERTY USE_TARGET_INCLUDE_DIRECTORIES ON)
 
 if (LUA_ENABLED)
+  ## Find Lua
+  find_package(Lua REQUIRED)
+
   swig_add_library(couchlua
     TYPE STATIC
     LANGUAGE lua
     SOURCES couch.i lua/helpers.i)
 
-  target_include_directories(couchlua PRIVATE "${PROJECT_SOURCE_DIR}/core")
+  target_include_directories(couchlua PRIVATE
+    "${PROJECT_SOURCE_DIR}/core"
+    "${LUA_INCLUDE_DIR}")
 
   swig_link_libraries(couchlua
     PRIVATE
