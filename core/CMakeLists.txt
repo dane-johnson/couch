@@ -96,7 +96,7 @@ target_link_libraries(couchlib ${ASSIMP_LIBRARY})
 ## Add documentation
 option(BUILD_DOCUMENTATION "Build the Doxygen documentation" OFF)
 if(BUILD_DOCUMENTATION)
-  find_package(Doxygengit
+  find_package(Doxygen
     OPTIONAL_COMPONENTS dot mscgen dia)
   doxygen_add_docs(couchdocs
     .
