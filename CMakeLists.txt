@@ -7,6 +7,10 @@ set(CMAKE_CXX_FLAGS_RELEASE -O2)
 option(LUA_ENABLED "Lua scripting support" ON)
 if (LUA_ENABLED)
   add_compile_definitions(LUA_SCRIPTING)
+  ## Find Lua
+  ## Do it here because it's needed in a bunch of places and the debian cmake is a stickler
+  find_package(Lua REQUIRED)
+  include_directories(${LUA_INCLUDE_DIR})
 endif ()
 add_executable(couch core/couch.cpp)
 

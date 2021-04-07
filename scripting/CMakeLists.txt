@@ -5,8 +5,6 @@ set_property(SOURCE couch.i PROPERTY USE_TARGET_INCLUDE_DIRECTORIES ON)
 
 if (LUA_ENABLED)
   ## Find Lua
-  find_package(Lua REQUIRED)
-
   swig_add_library(couchlua
     TYPE STATIC
     LANGUAGE lua

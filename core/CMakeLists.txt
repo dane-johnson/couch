@@ -11,12 +11,6 @@ find_package(Bullet REQUIRED)
 ## Find AssImp
 find_package(ASSIMP REQUIRED)
 
-if (LUA_ENABLED)
-## Find Lua
-find_package(Lua REQUIRED)
-include_directories(${LUA_INCLUDE_DIR})
-endif ()
-
 add_library(couchlib STATIC)
 target_sources(couchlib PUBLIC
   Camera.h
