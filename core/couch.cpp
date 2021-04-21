@@ -80,6 +80,7 @@ int main() {
   Lua *lua = new Lua();
   lua->Initialize();
 
+
   double lastTime = glfwGetTime();
   double delta = 0.0;
 
