@@ -45,6 +45,7 @@ Rigidbody *Rigidbody::Instance() {
   rigidbody->collisionShape = collisionShape;
   rigidbody->btBody = new btRigidBody(rigidbody->mass, new RigidbodyMotionState(rigidbody), rigidbody->collisionShape);
   rigidbody->btBody->setAngularFactor(character ? 0.0f : 1.0f);
+  rigidbody->btBody->setUserPointer(rigidbody);
 
   World *world = World::GetWorld();
   world->AddRigidbody(rigidbody);
@@ -119,8 +120,8 @@ void RigidbodyMotionState::getWorldTransform(btTransform &worldTrans) const {
 void RigidbodyMotionState::setWorldTransform(const btTransform &worldTrans) {
   Transform transform = rigidbody->GetTransform();
   transform.position = Vector3(worldTrans.getOrigin().getX(),
-					  worldTrans.getOrigin().getY(),
-					  worldTrans.getOrigin().getZ());
+			       worldTrans.getOrigin().getY(),
+			       worldTrans.getOrigin().getZ());
   
   worldTrans.getRotation().getEulerZYX(transform.rotation.z,
 				       transform.rotation.y,

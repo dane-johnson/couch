@@ -27,6 +27,13 @@
 
 #include "Rigidbody.h"
 
+struct RaycastResult {
+  bool hit;
+  Vector3 position;
+  Vector3 normal;
+  Rigidbody *object;
+};
+
 /**
    World is the object that performs the rigidbody physics simulation. Presently there is only one world.
 */
@@ -46,8 +53,11 @@ public:
      @param delta the time that has passed since the last physics update
   */
   void Step(float delta);
+
+  RaycastResult Raycast(const Vector3 &from, const Vector3 &to);
 private:
   static World* world;
+  // Some hocus pocus
   btDiscreteDynamicsWorld *btWorld;
   btDefaultCollisionConfiguration *collisionConfiguration;
   btCollisionDispatcher *dispatcher;
@@ -55,6 +65,7 @@ private:
   btSequentialImpulseConstraintSolver *solver;
   World();
   ~World();
+  
 };
 
 #endif /* WORLD_H */

@@ -37,6 +37,26 @@ void World::Step(float delta) {
   btWorld->stepSimulation(delta);
 }
 
+RaycastResult World::Raycast(const Vector3 &from, const Vector3 &to) {
+  RaycastResult rcr;
+  btVector3 btFrom = btVector3(from.x, from.y, from.z);
+  btVector3 btTo = btVector3(to.x, to.y, to.z);
+  btCollisionWorld::ClosestRayResultCallback rayCallback(btFrom, btTo);
+  rayCallback.m_collisionFilterGroup = -1; // Everything
+  btWorld->rayTest(btFrom, btTo, rayCallback);
+  rcr.hit = rayCallback.hasHit();
+  if (rcr.hit) {
+    rcr.position = Vector3(rayCallback.m_hitPointWorld.getX(),
+			   rayCallback.m_hitPointWorld.getY(),
+			   rayCallback.m_hitPointWorld.getZ());
+    rcr.normal = Vector3(rayCallback.m_hitNormalWorld.getX(),
+			 rayCallback.m_hitNormalWorld.getY(),
+			 rayCallback.m_hitNormalWorld.getZ());
+    rcr.object = (Rigidbody*) rayCallback.m_collisionObject->getUserPointer();
+  }
+  return rcr;
+}
+
 World* World::world { new World() };
 
 World::World() {

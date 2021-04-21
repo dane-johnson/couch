@@ -18,6 +18,17 @@
 #include "Skybox.h"
 #include "Rigidbody.h"
 #include "CollisionShape.h"
+struct RaycastResult {
+  bool hit;
+  Vector3 position;
+  Vector3 normal;
+  Rigidbody *object;
+};
+class World {
+public:
+  static World* GetWorld();
+  RaycastResult Raycast(const Vector3 &from, const Vector3 &to);
+};
 %}
 
 class Vector3 {
@@ -36,6 +47,19 @@ public:
   }
 }
 %ignore "Vector3";
+
+struct RaycastResult {
+  bool hit;
+  Vector3 position;
+  Vector3 normal;
+  Rigidbody *object;
+};
+class World {
+public:
+  static World* GetWorld();
+  RaycastResult Raycast(const Vector3 &from, const Vector3 &to);
+};
+
 
 %include "types.h"
 %include "constants.h"
