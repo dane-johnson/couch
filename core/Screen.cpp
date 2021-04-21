@@ -33,7 +33,7 @@ Screen::Screen() {
   glBindVertexArray(0);
 
   // Setup frame buffers
-  framebuffer.clearColor = Vector3(1.0f, 0.0f, 0.0f);
+  framebuffer.clearColor = Vector3(0.0f, 0.0f, 0.0f);
   framebuffer.clearFlags = GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
   framebuffer.depthTest = true;
   framebuffer.Bind();
