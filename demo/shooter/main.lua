@@ -37,7 +37,7 @@ function onkey(key, code, action, mod)
       local res = couch.World.GetWorld():Raycast(camera_transform.position,
 						 camera_transform.position + camera_transform:Forward() * 100.0)
       if (res.hit) then
-	 res.object:ApplyImpulse(res.normal * -100.0)
+	 res.object:ApplyImpulse(camera_transform:Forward() * 100.0)
       end
    end
 end

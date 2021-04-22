@@ -27,6 +27,9 @@
 
 #include "Rigidbody.h"
 
+/**
+   Holds information about the results of a raycast
+*/
 struct RaycastResult {
   bool hit;
   Vector3 position;
@@ -54,6 +57,12 @@ public:
   */
   void Step(float delta);
 
+  /**
+     Performs a raycast
+     @param from the start location of the raycast
+     @param to the end location of the raycast
+     @returns a RaycastResult with data collected by the raycast
+  */
   RaycastResult Raycast(const Vector3 &from, const Vector3 &to);
 private:
   static World* world;
