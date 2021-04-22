@@ -73,12 +73,12 @@ to revert (shitty animation support). There are a number of systems I want to ad
 Yeah sure let's do physics
 - [x] Static, Kinematic and Rigidbodies
 - [x] Collision areas
-- [ ] Ray tracing
+- [x] Ray tracing
 - [x] Axis pinning
 
 ## Great Refactor
 Things are starting to smell, here's what I need to do
-- [ ] Replace all public attributes with accessors (on classes)
+- [x] Replace all public attributes with accessors (on classes)
 - [x] Seperate prefabs from instances
 - [ ] Combine related files (shaders)
 - [ ] ~~Create a testing suite~~ Let's be real here...
@@ -96,3 +96,13 @@ motivation comes from new features.
 - [x] Compiles for windows
 DLL Hell is still an issue, I have to distribute like 30 of them. Might go back to 
 simply including them in the package.
+
+## Fresh Eyes (4/21/21)
+Okay big things need to happen. I need to revisit the Create/Duplicate/Instantiate cycle and rethink the way
+I'm doing prefabs. It might be best to make a generic for instances, like ```Instance<Mesh>``` or something like that
+Also the engine is being held back a lot by a lack of animation support. I think I need to give up on importing materials
+from blender and go back to importing .gltf files since they support animations. Also, I do think that I need to implement
+my own shading language dialect, I need more flexibility with the way I'm doing shaders. User interface is a big thing
+too, maybe even mouse support. I could generalize the way I'm doing "Screen" to allow 2d and 3d projection onto screens being
+rendered in the game. In any case I'm not sure how much time I'll really have to work on this coming up, but I'll definitely look
+at it more this summer.
