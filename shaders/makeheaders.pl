@@ -16,7 +16,7 @@ open my $fout, '>', $outfilename;
 print $fout "#ifndef $headerguard \n#define $headerguard\nconst char * $constname = \n";
 
 while(my $line = <$fin>) {
-    $line =~ s/\n/\\n/;
+    $line =~ s/(\r?\n)/\\n/;
     print $fout "\"$line\"\n";
 }
 

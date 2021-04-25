@@ -33,7 +33,6 @@ target_include_directories(couchlib
 file(COPY LICENSE CORRESPONDINGSOURCE.txt DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 
 if(WIN32)
-  target_link_libraries(couch glfw3dll)
   target_link_libraries(couch ssp)
   set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++")
 endif(WIN32)
