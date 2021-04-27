@@ -1,3 +1,6 @@
+// C includes
+#include <unistd.h>
+
 // C++ includes
 #include <iostream>
 
@@ -54,7 +57,12 @@ void render(Node *curr, Shader *shader, Matrix model) {
   }
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+
+  if (argc == 2) {
+    chdir(argv[1]);
+  }
+  
   Window window;
   window.Init();
   
