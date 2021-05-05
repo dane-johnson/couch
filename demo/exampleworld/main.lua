@@ -50,7 +50,7 @@ function init()
    couch.Node.GetRoot():AddChild(skybox:Instance())
 
    local physics_ball_prefab = couch.Rigidbody()
-   local physics_ball_mesh = couch.Mesh.FromFile("../resources/ball.obj")
+   local physics_ball_mesh = couch.Mesh.FromFile("../resources/ball.glb")
    material = physics_ball_mesh:GetMaterial(0)
    material.ambient = BLUE
    material.diffuse = BLUE
@@ -62,7 +62,7 @@ function init()
 
    make_ground()
 
-   local character_prefab = couch.Mesh.FromFile("../resources/capsule.obj")
+   local character_prefab = couch.Mesh.FromFile("../resources/capsule.glb")
    material = character_prefab:GetMaterial(0)
    material.ambient = BLUE
    material.diffuse = BLUE
@@ -77,12 +77,12 @@ function init()
    character = character_body:Instance()
    couch.Node.GetRoot():AddChild(character)
 
-   local cube_prefab = couch.Mesh.FromFile("../resources/cube.obj")
+   local cube_prefab = couch.Mesh.FromFile("../resources/cube.glb")
    material = cube_prefab:GetMaterial(0)
    material.ambient = RED
    material.diffuse = RED
    cube_prefab:SetMaterial(0, material)
-   local orbiter = couch.Mesh.FromFile("../resources/ball.obj")
+   local orbiter = couch.Mesh.FromFile("../resources/ball.glb")
    orbiter:UniformScale(0.25);
    orbiter:Translate(couch.Vector3(1.0, 0.0, 0.0))
    cube_prefab:AddChild(orbiter)
@@ -92,7 +92,7 @@ function init()
    couch.Node.GetRoot():AddChild(die_cube)
    die_cube:Translate(couch.Vector3(0.0, 0.0, 3.0))
    
-   local ball_prefab = couch.Mesh.FromFile("../resources/ball.obj")
+   local ball_prefab = couch.Mesh.FromFile("../resources/ball.glb")
    material = ball_prefab:GetMaterial(0)
    ball_prefab:SetMaterial(0, material)
    ball = ball_prefab:Instance()
@@ -100,12 +100,12 @@ function init()
 
    ball:Translate(couch.Vector3(0.0, 3.0, 0.0))
 
-   local trough_prefab = couch.TexturedMesh("../resources/trough.obj", "../resources/wood_lowres.png")
+   local trough_prefab = couch.TexturedMesh("../resources/trough.glb", "../resources/wood_lowres.png")
    trough = trough_prefab:Instance()
    couch.Node.GetRoot():AddChild(trough)
    trough:Translate(couch.Vector3(10.0, 0.0, 0.0))
 
-   local scaffold_prefab = couch.TexturedMesh("../resources/scaffold.obj", "../resources/grate_floor_lowres.png", "../resources/railing.png")
+   local scaffold_prefab = couch.TexturedMesh("../resources/scaffold.glb", "../resources/grate_floor_lowres.png", "../resources/railing.png")
    local scaffold = scaffold_prefab:Instance()
    material = scaffold:GetMaterial(0)
    material.alphaScissor = 0.9
@@ -119,7 +119,7 @@ function init()
    couch.Node.GetRoot():AddChild(scaffold)
    scaffold:Translate(couch.Vector3(-3.0, 3.0, 0.0))
 
-   local barn_prefab = couch.TexturedMesh("../resources/barn.obj", "../resources/paintedwood.jpg", "../resources/barnroof_lowres.png", "../resources/wood_lowres.png")
+   local barn_prefab = couch.TexturedMesh("../resources/barn.glb", "../resources/paintedwood.jpg", "../resources/barnroof_lowres.png", "../resources/wood_lowres.png")
    material = barn_prefab:GetMaterial(0)
    material.cullBack = false
    barn_prefab:SetMaterial(0, material)
@@ -169,7 +169,7 @@ function init_point_lights()
       pointLight:SetAmbient(0.2)
       pointLight:SetDiffuse(1.0)
       pointLight:SetSpecular(0.1)
-      local lightBox = couch.Mesh.FromFile("../resources/cube.obj")
+      local lightBox = couch.Mesh.FromFile("../resources/cube.glb")
       lightBox:UniformScale(0.5);
       local material = lightBox:GetMaterial(0)
       material.ambient = color
@@ -206,7 +206,7 @@ function onmousemotion(_, _, relx, rely)
 end
 
 function make_ground()
-   local ground_prefab = couch.TexturedMesh("../resources/ground.obj", "../resources/grass_lowres.png")
+   local ground_prefab = couch.TexturedMesh("../resources/ground.glb", "../resources/grass_lowres.png")
    
    local ground_prefab_transform = ground_prefab:GetTransform()
    ground_prefab_transform.position = couch.Vector3(0.0, -2.0, 0.0)

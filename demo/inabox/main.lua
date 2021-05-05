@@ -14,10 +14,10 @@ function init()
    light:SetSpecular(0.1)
    couch.Node.GetRoot():AddChild(light:Instance())
 
-   local ibox = couch.TexturedMesh("../resources/inverted_cube.obj", "../resources/paintedwood.jpg")
+   local ibox = couch.TexturedMesh("../resources/inverted_cube.glb", "../resources/paintedwood.jpg")
    couch.Node.GetRoot():AddChild(ibox:Instance())
 
-   local box = couch.Mesh.FromFile("../resources/cube.obj")
+   local box = couch.Mesh.FromFile("../resources/cube.glb")
    material = box:GetMaterial(0)
    material.ambient = Vector3(1.0, 0.0, 0.0)
    material.diffuse = Vector3(1.0, 0.0, 0.0)

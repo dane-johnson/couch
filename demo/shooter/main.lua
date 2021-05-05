@@ -13,7 +13,7 @@ function init()
    light:SetSpecular(0.1)
    couch.Node.GetRoot():AddChild(light:Instance())
 
-   local box_mesh = couch.TexturedMesh("../resources/cube.obj", "../resources/paintedwood.jpg")
+   local box_mesh = couch.TexturedMesh("../resources/cube.glb", "../resources/paintedwood.jpg")
    local box = couch.Rigidbody()
    box:SetCollisionShape(couch.BoxCollisionShape(1, 1, 1))
    box:AddChild(box_mesh)
