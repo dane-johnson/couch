@@ -12,11 +12,25 @@ if (LUA_ENABLED)
   find_package(Lua REQUIRED)
   include_directories(${LUA_INCLUDE_DIR})
 endif ()
+
+option(GUILE_ENABLED "Guile 2.0 scripting support" OFF)
+if (GUILE_ENABLED)
+  add_compile_definitions(GUILE_SCRIPTING)
+  ## Find pkg-config
+  find_package(PkgConfig REQUIRED)
+  ## Use pkg-config to find Guile 2.0
+  pkg_check_modules(GUILE REQUIRED guile-2.0)
+  include_directories(${GUILE_INCLUDE_DIRS})
+endif ()
+  
+
+
 add_executable(couch core/couch.cpp)
 
 add_subdirectory(core)
 target_link_libraries(couch couchlib)
 target_link_libraries(couch couchlib_luascripting)
+target_link_libraries(couch couchlib_guilescripting)
 
 add_subdirectory(scripting)
 if (LUA_ENABLED)

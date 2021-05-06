@@ -30,10 +30,13 @@
 #include "Rigidbody.h"
 #include "World.h"
 
-
 #include "Scripting/Lua.h"
+#include "Scripting/Guile.h"
 
 Node *root;
+
+char script_type = 'l';
+ScriptingLanguage *sl;
 
 void render(Node *curr, Shader *shader, Matrix model) {
   Spatial *spatial = dynamic_cast<Spatial*>(curr);
@@ -57,11 +60,27 @@ void render(Node *curr, Shader *shader, Matrix model) {
   }
 }
 
+void parse_args(int argc, char* argv[]) {
+  int curr = 1;
+  while (curr < argc) {
+    if (argv[curr][0] == '-') {
+      switch(argv[curr][1]) {
+      case 'l':
+	++curr;
+	script_type = argv[curr][0];
+	++curr;
+	break;
+      }
+    } else {
+      chdir(argv[curr]);
+      ++curr;
+    }
+  }
+}
+
 int main(int argc, char *argv[]) {
 
-  if (argc == 2) {
-    chdir(argv[1]);
-  }
+  parse_args(argc, argv);
   
   Window window;
   window.Init();
@@ -84,9 +103,15 @@ int main(int argc, char *argv[]) {
   
   Matrix projection = glm::perspective(glm::radians(45.0f), 800.0f/600.0f, 0.1f, 100.0f);
 
-  // TODO Allow multiple scripting languages
-  Lua *lua = new Lua();
-  lua->Initialize();
+  switch(script_type) {
+  case 'l':
+    sl = new Lua();
+    break;
+  case 'g':
+    sl = new Guile();
+    break;
+  }
+  sl->Initialize();
 
 
   double lastTime = glfwGetTime();
@@ -97,7 +122,7 @@ int main(int argc, char *argv[]) {
     world->Step(delta);
 
     // Script update
-    lua->Update(delta);
+    ScriptingLanguage::GetCurrentLanguage()->Update(delta);
     
     // Delete freed nodes
     root->DoFree();
@@ -158,7 +183,7 @@ int main(int argc, char *argv[]) {
     lastTime = curTime;
   }
   
-  lua->Close();
+  ScriptingLanguage::GetCurrentLanguage()->Close();
   window.Close();
   return 0;
 }

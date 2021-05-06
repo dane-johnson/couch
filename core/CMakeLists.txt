@@ -65,12 +65,16 @@ target_sources(couchlib PUBLIC
 
 
 add_library(couchlib_luascripting STATIC)
-
 target_sources(couchlib_luascripting PUBLIC
   Scripting/Lua.h
   Scripting/Lua.cpp)
 target_link_libraries(couchlib_luascripting couchlua)
 
+add_library(couchlib_guilescripting STATIC)
+target_sources(couchlib_guilescripting PUBLIC
+  Scripting/Guile.h
+  Scripting/Guile.cpp)
+target_link_libraries(couchlib_guilescripting couchguile)
 
 target_include_directories(couchlib
   PUBLIC
@@ -89,7 +93,10 @@ target_link_libraries(couchlib OpenGL::GL)
 target_link_libraries(couchlib GLEW::GLEW)
 if (LUA_ENABLED)
   target_link_libraries(couchlib_luascripting ${LUA_LIBRARIES})
-endif () 
+endif ()
+if (GUILE_ENABLED)
+  target_link_libraries(couchlib_guilescripting ${GUILE_LIBRARIES})
+endif ()
 target_link_libraries(couchlib ${BULLET_LIBRARIES})
 target_link_libraries(couchlib ${ASSIMP_LIBRARY})
 

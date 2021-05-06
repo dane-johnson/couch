@@ -1,0 +1,5 @@
+(define (init)
+  (display "Hello from init!")
+  (newline))
+(display "Hello from main.scm!")
+(newline)
