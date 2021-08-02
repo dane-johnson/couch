@@ -69,7 +69,7 @@ int main(int argc, char *argv[]) {
   root = Node::GetRoot();
 
   Input *input = Input::GetInstance();
-  input->Use(window);
+  input->Use(&window);
 
   Camera defaultCamera;
 

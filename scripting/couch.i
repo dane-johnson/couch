@@ -18,6 +18,7 @@
 #include "Skybox.h"
 #include "Rigidbody.h"
 #include "CollisionShape.h"
+#include "Input.h"
 struct RaycastResult {
   bool hit;
   Vector3 position;
@@ -73,3 +74,4 @@ public:
 %include "Skybox.h"
 %include "Rigidbody.h"
 %include "CollisionShape.h"
+%include "Input.h"

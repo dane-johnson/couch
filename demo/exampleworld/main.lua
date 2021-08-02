@@ -26,6 +26,8 @@ function init()
    local material
    local transform
 
+   couch.Input.GetInstance():SetMouseMode(couch.Input.CAPTURED)
+
    freecam.init_camera()
    freecam.camera:Translate(couch.Vector3(0.0, 0.0, 10.0))
 

@@ -14,10 +14,26 @@ Input *Input::GetInstance() {
 }
 
 
-void Input::Use(Window window){
-  glfwSetInputMode(window.glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-  glfwSetKeyCallback(window.glfwWindow, (GLFWkeyfun)HandleKeys);
-  glfwSetCursorPosCallback(window.glfwWindow, (GLFWcursorposfun)HandleMousePosition);
+void Input::Use(Window *window){
+	this->window = window;
+  glfwSetKeyCallback(window->glfwWindow, (GLFWkeyfun)HandleKeys);
+  glfwSetCursorPosCallback(window->glfwWindow, (GLFWcursorposfun)HandleMousePosition);
+}
+
+void Input::SetMouseMode(MouseMode mouseMode) {
+	this->mouseMode = mouseMode;
+
+	switch(mouseMode) {
+	case MouseMode::VISIBLE:
+		glfwSetInputMode(window->glfwWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+		break;
+	case MouseMode::CAPTURED:
+		glfwSetInputMode(window->glfwWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		break;
+	case MouseMode::HIDDEN:
+		glfwSetInputMode(window->glfwWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+		break;
+	}
 }
 
 void Input::HandleKeys(GLFWwindow *_, int keys, int code, int action, int mods) {
